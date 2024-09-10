@@ -1,21 +1,43 @@
+import { EModuleKey } from '@/services/base/constant';
+import { type ESourceTypeNotification, mapModuleKey } from '@/services/ThongBao/constant';
 import { type ThongBao } from '@/services/ThongBao/typing';
+import { currentRole } from '@/utils/ip';
 import { getNameFile } from '@/utils/utils';
 import { CalendarOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Button, Card, Col, Divider, Row } from 'antd';
 import moment from 'moment';
-import { useMemo } from 'react';
 import { history } from 'umi';
-import OneSignalDataToPath from './OneSignalDataToPath';
 import './style.less';
 
 const ViewThongBao = (props: { record?: ThongBao.IRecord; afterViewDetail?: () => void; hideCard?: boolean }) => {
 	const { record, afterViewDetail, hideCard } = props;
-	const pathname = useMemo(() => OneSignalDataToPath(record?.metadata), [record?._id]);
 
 	const redirectNotif = () => {
-		if (pathname) {
+		const urlMap: Record<EModuleKey, string> = {
+			[EModuleKey.CONNECT]: APP_CONFIG_URL_CONNECT,
+			[EModuleKey.CONG_CAN_BO]: APP_CONFIG_URL_CAN_BO,
+			[EModuleKey.QLDT]: APP_CONFIG_URL_DAO_TAO,
+			[EModuleKey.CORE]: APP_CONFIG_URL_CORE,
+			[EModuleKey.TCNS]: APP_CONFIG_URL_NHAN_SU,
+			[EModuleKey.CTSV]: APP_CONFIG_URL_CTSV,
+			[EModuleKey.VPS]: APP_CONFIG_URL_VPS,
+			[EModuleKey.TC]: APP_CONFIG_URL_TAI_CHINH,
+			[EModuleKey.QLKH]: APP_CONFIG_URL_QLKH,
+			[EModuleKey.KT]: APP_CONFIG_URL_KHAO_THI,
+			[EModuleKey.CSVC]: APP_CONFIG_URL_CSVC,
+		};
+
+		const sourceType = mapModuleKey[record?.sourceType as ESourceTypeNotification];
+		const sourceModule = mapModuleKey[record?.targetType as ESourceTypeNotification];
+
+		if (sourceType === currentRole) {
 			if (afterViewDetail) afterViewDetail();
-			history.push({ pathname, query: {} });
+			history.push(`/${record?.metadata?.pathWeb}`);
+		} else {
+			const baseUrl = urlMap[sourceModule as EModuleKey];
+			if (baseUrl) {
+				window.open(baseUrl + record?.metadata?.pathWeb, '_blank');
+			}
 		}
 	};
 
@@ -53,9 +75,9 @@ const ViewThongBao = (props: { record?: ThongBao.IRecord; afterViewDetail?: () =
 					</Col>
 				) : null}
 
-				{pathname ? (
+				{record?.metadata?.pathWeb && record?.targetType ? (
 					<Col span={24}>
-						<Button type='primary' onClick={redirectNotif}>
+						<Button type='primary' onClick={() => redirectNotif()}>
 							Xem chi tiết
 						</Button>
 					</Col>
