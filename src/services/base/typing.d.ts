@@ -5,6 +5,7 @@ declare module Login {
 	export interface IUser {
 		sub: string; // SsoId 'b323b6c8-2f1e-4a9b-941b-f1e466b9ba40';
 		ssoId: string;
+		email: string;
 		email_verified: boolean; // true;
 		realm_access: {
 			roles: string[];
