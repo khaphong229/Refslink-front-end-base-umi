@@ -434,3 +434,58 @@ export const compareFullname = (a: any, b: any): number => {
 
 	return compareTen === 0 ? a.toLocaleLowerCase().localeCompare(b.toLocaleLowerCase()) : compareTen;
 };
+
+/**
+ * Scroll to div element
+ * @param id
+ * @param delay
+ */
+export const handleScrollToDivElementById = (id: string, delay?: number) => {
+	if (delay) {
+		setTimeout(() => {
+			const targetDiv = document.getElementById(id);
+			// Scroll to the target div
+			if (targetDiv) {
+				targetDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+			}
+		}, delay);
+	} else {
+		const targetDiv = document.getElementById(id);
+		// Scroll to the target div
+		if (targetDiv) {
+			targetDiv.scrollIntoView({ behavior: 'smooth', block: 'center' });
+		}
+	}
+};
+
+/**
+ * Copy text to clipboard
+ * @param text
+ * @param callBack
+ */
+export const copyToClipboard = (text: string, callBack?: () => void) => {
+	navigator.clipboard
+		.writeText(text)
+		.then(function () {
+			if (callBack) callBack();
+		})
+		.catch(function (err) {
+			console.error('Could not copy text: ', err);
+		});
+};
+
+/**
+ * Convert plain text to HTML contains Link tags
+ * @param text Plain text
+ * @param targetBlank
+ * @returns HTML contains a tag
+ */
+export const createTextLinks = (text: string, targetBlank: boolean = true) => {
+	return removeHtmlTags(text || '').replace(
+		/((https?:\/\/(www\.)?)|(www\.))(\S+)/gi,
+		function (match, temp, protocol, www1, www2, url) {
+			const hyperlink = (protocol ?? 'https://') + url;
+			return `<a href="${hyperlink}"${targetBlank ? 'target="_blank" rel="noreferrer"' : ''}>${url}</a>`;
+		},
+	);
+};
