@@ -1,6 +1,6 @@
 import moment from 'moment';
 import _ from 'lodash';
-import { trim, removeHtmlTags } from '@/utils/utils';
+import { trim, removeHtmlTags, urlRegex } from '@/utils/utils';
 
 const allCharacters =
 	'a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹýếẾ';
@@ -100,16 +100,14 @@ const rules = {
 	],
 	httpLink: [
 		{
-			pattern: new RegExp(
-				/^https?:\/\/(www\.)?[-a-zA-Z0-9@:%._\+~#=]{1,256}\.[a-zA-Z0-9()]{1,6}\b([-a-zA-Z0-9()@:%_\+.~#?&//=]*)$/,
-			),
+			pattern: new RegExp(urlRegex),
 			message: 'Đường dẫn chưa đúng định dạng',
 		},
 	],
 	soDienThoai: [
 		{
 			pattern: new RegExp(/(^(09|03|07|08|05|01|02|04|06){1}[0-9]{8}$){1}/g),
-			message: 'Số điện thoại không đúng định dạng(10 số, không bao gồm kí tự đặc biệt)',
+			message: 'Số điện thoại không đúng định dạng (10 số, không bao gồm kí tự đặc biệt)',
 		},
 	],
 	ngaySinh: [
