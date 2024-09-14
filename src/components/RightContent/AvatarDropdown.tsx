@@ -1,6 +1,5 @@
-import { AppModules, landingUrl } from '@/services/base/constant';
-import { currentRole, keycloakAuthEndpoint } from '@/utils/ip';
-import { FileWordOutlined, GlobalOutlined, LogoutOutlined, SwapOutlined, UserOutlined } from '@ant-design/icons';
+import { landingUrl } from '@/services/base/constant';
+import { FileWordOutlined, GlobalOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Menu, Spin } from 'antd';
 import { type ItemType } from 'antd/lib/menu/hooks/useItems';
 import React from 'react';
@@ -27,13 +26,14 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 
 	const fullName = initialState.currentUser?.family_name
 		? `${initialState.currentUser.family_name} ${initialState.currentUser?.given_name ?? ''}`
-		: initialState.currentUser?.name;
+		: initialState.currentUser?.name ?? (initialState.currentUser?.preferred_username || '');
+	const lastNameChar = fullName.split(' ')?.at(-1)?.[0];
 
 	const items: ItemType[] = [
 		{
 			key: 'name',
 			icon: <UserOutlined />,
-			label: fullName ?? (initialState.currentUser?.preferred_username || ''),
+			label: fullName,
 		},
 		// {
 		// 	key: 'password',
@@ -89,10 +89,10 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 								/>
 							) : undefined
 						}
-						icon={!initialState.currentUser?.picture ? <UserOutlined /> : undefined}
+						icon={!initialState.currentUser?.picture ? lastNameChar ?? <UserOutlined /> : undefined}
 						alt='avatar'
 					/>
-					<span className={`${styles.name}`}>{fullName ?? (initialState.currentUser?.preferred_username || '')}</span>
+					<span className={`${styles.name}`}>{fullName}</span>
 				</span>
 			</HeaderDropdown>
 		</>
