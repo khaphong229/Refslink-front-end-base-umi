@@ -27,7 +27,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 	const fullName = initialState.currentUser?.family_name
 		? `${initialState.currentUser.family_name} ${initialState.currentUser?.given_name ?? ''}`
 		: initialState.currentUser?.name ?? (initialState.currentUser?.preferred_username || '');
-	const lastNameChar = fullName.split(' ')?.at(-1)?.[0];
+	const lastNameChar = fullName.split(' ')?.at(-1)?.[0]?.toUpperCase();
 
 	const items: ItemType[] = [
 		{
