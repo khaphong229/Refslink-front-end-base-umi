@@ -83,7 +83,13 @@ const OneSignalBounder = (props: { children: React.ReactNode }) => {
 	 */
 	useEffect(() => {
 		if (oneSignalId) {
-			if (auth.user?.access_token) initOneSignal({ playerId: oneSignalId });
+			if (auth.user?.access_token) {
+				try {
+					initOneSignal({ playerId: oneSignalId });
+				} catch (er) {
+					console.log(er);
+				}
+			}
 		}
 	}, [oneSignalId, auth.user?.access_token]);
 

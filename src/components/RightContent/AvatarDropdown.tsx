@@ -15,7 +15,7 @@ export type GlobalHeaderRightProps = {
 const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 	const { initialState } = useModel('@@initialState');
 
-	const loginOut = () => OIDCBounder.getActions()?.dangXuat();
+	const loginOut = () => OIDCBounder?.getActions()?.dangXuat();
 
 	if (!initialState || !initialState.currentUser)
 		return (

@@ -15,7 +15,7 @@ const NotAccessible = () => {
 			history.replace('/dashboard');
 	}, [initialState?.authorizedPermissions]);
 
-	const onLogout = (): void => OIDCBounder.getActions()?.dangXuat();
+	const onLogout = (): void => OIDCBounder?.getActions()?.dangXuat();
 
 	return (
 		<div
