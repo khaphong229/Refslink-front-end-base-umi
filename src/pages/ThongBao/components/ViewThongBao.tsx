@@ -28,7 +28,7 @@ const ViewThongBao = (props: { record?: ThongBao.IRecord; afterViewDetail?: () =
 		};
 
 		const sourceType = mapModuleKey[record?.sourceType as ESourceTypeNotification];
-		const sourceModule = mapModuleKey[record?.targetType as ESourceTypeNotification];
+		const sourceModule = mapModuleKey[record?.metadata?.phanHe as ESourceTypeNotification];
 
 		if (sourceType === currentRole) {
 			if (afterViewDetail) afterViewDetail();
@@ -75,7 +75,7 @@ const ViewThongBao = (props: { record?: ThongBao.IRecord; afterViewDetail?: () =
 					</Col>
 				) : null}
 
-				{record?.metadata?.pathWeb && record?.targetType ? (
+				{record?.metadata?.pathWeb && record?.metadata?.phanHe ? (
 					<Col span={24}>
 						<Button type='primary' onClick={() => redirectNotif()}>
 							Xem chi tiết

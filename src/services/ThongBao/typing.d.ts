@@ -38,5 +38,6 @@ declare module ThongBao {
 		entityId?: string;
 		entitySource?: ENotificationSource;
 		pathWeb?: string;
+		phanHe?: ESourceTypeNotification;
 	} & Record<string, any>;
 }
