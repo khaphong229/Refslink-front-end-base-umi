@@ -19,6 +19,12 @@ export const LoaiDoiTuongThongBao: Partial<Record<EReceiverType, string>> = {
 	[EReceiverType.LopHocPhan]: 'Lớp học phần',
 };
 
+export enum NotificationType {
+	ONESIGNAL = 'OneSignalService',
+	EMAIL = 'Email',
+	ALL = 'All',
+}
+
 export enum ESourceTypeNotification {
 	SLINK = 'SLINK',
 	TAI_CHINH = 'TAI_CHINH',
