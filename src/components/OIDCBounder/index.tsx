@@ -28,10 +28,13 @@ const OIDCBounder_: FC = ({ children }) => {
 				const [getPermissionsResponse, getUserInfoResponse] = await Promise.all([getPermission(), getUserInfo()]);
 				const userInfo: Login.IUser = getUserInfoResponse?.data;
 				const permissions: Login.IPermission[] = getPermissionsResponse.data;
+				const isUncheckPath = unCheckPermissionPaths.some((path) => window.location.pathname.includes(path));
 
 				if (
-					unCheckPermissionPaths.includes(window.location.pathname) ||
-					(currentRole && permissions.length && !permissions.find((item) => item.rsname === currentRole))
+					!isUncheckPath &&
+					currentRole &&
+					permissions.length &&
+					!permissions.find((item) => item.rsname === currentRole)
 				) {
 					history.replace('/403');
 				} else {
