@@ -59,6 +59,10 @@ const OIDCBounder_: FC = ({ children }) => {
 	};
 
 	useEffect(() => {
+		// Nếu đang cập nhật thì bật cái này lên
+		// history.replace('/hold-on');
+		// return;
+
 		if (unAuthPaths.includes(window.location.pathname) || auth.isLoading) return;
 
 		// Chưa login + chưa có auth params ==> Cần redirect keycloak để lấy auth params + cookie
