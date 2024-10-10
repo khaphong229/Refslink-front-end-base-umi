@@ -49,11 +49,14 @@ const OIDCBounder_: FC = ({ children }) => {
 						history.replace('/dashboard');
 				}
 			} catch {
-				notification.warn({
-					message: 'Xác thực người dùng',
-					description: 'Vui lòng đợi trong giây lát. Đang chuyển hướng ...',
-				});
-				history.replace('/user/login');
+				if (auth.isAuthenticated) auth.removeUser();
+				else {
+					notification.warn({
+						message: 'Xác thực người dùng',
+						description: 'Vui lòng đợi trong giây lát. Đang chuyển hướng...',
+					});
+					history.replace('/user/login');
+				}
 			}
 		}
 	};
