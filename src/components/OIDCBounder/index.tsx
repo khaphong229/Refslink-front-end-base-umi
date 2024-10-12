@@ -85,11 +85,14 @@ const OIDCBounder_: FC = ({ children }) => {
 					.map((key) => `${key}=${other[key]}`)
 					.join('&');
 				if (newSearch) newSearch = '?' + newSearch;
-				window.history.replaceState(
-					{},
-					document.title,
-					`${window.location.pathname}${newSearch}${window.location.hash}`,
-				);
+				// Reload trang để cập nhật access token mới
+				const pathname = window.location.pathname === '/' ? '/dashboard' : window.location.pathname;
+				window.location.replace(`${pathname}${newSearch}${window.location.hash}`);
+				// window.history.replaceState(
+				// 	{},
+				// 	document.title,
+				// 	`${window.location.pathname}${newSearch}${window.location.hash}`,
+				// );
 			}
 		}
 	}, [auth.isAuthenticated, auth.isLoading]);
