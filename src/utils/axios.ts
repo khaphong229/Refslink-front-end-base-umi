@@ -83,7 +83,7 @@ axios.interceptors.response.use(
 
 				case 401:
 					notification.error({
-						message: 'Phiên đăng nhập đã hết hạn (104)',
+						message: 'Phiên đăng nhập đã thay đổi (104)',
 						description: 'Vui lòng tải lại trang (F5) để cập nhật. Chú ý các dữ liệu chưa lưu sẽ bị mất!',
 					});
 					if (originalRequest._retry) break;
