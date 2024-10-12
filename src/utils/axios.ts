@@ -143,7 +143,7 @@ axios.interceptors.response.use(
 				case 403:
 				case 405:
 					notification.error({
-						message: 'Thao tác không được phép (3041)',
+						message: 'Thao tác không được phép (304)',
 						description: descriptionError,
 					});
 					break;
