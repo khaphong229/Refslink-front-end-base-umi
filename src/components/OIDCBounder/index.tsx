@@ -31,7 +31,10 @@ const OIDCBounder_: FC = ({ children }) => {
 			.join('&');
 		if (newSearch) newSearch = '?' + newSearch;
 		// Reload trang để cập nhật access token mới
-		const pathname = window.location.pathname === '/' ? '/dashboard' : window.location.pathname;
+		const pathname =
+			window.location.pathname === '/' || window.location.pathname === '/user/login'
+				? '/dashboard'
+				: window.location.pathname;
 		window.location.replace(`${pathname}${newSearch}${window.location.hash}`);
 		// window.history.replaceState({}, document.title, `${pathname}${newSearch}${window.location.hash}`);
 		// window.location.reload();
@@ -56,6 +59,8 @@ const OIDCBounder_: FC = ({ children }) => {
 						authorizedPermissions: permissions,
 						permissionLoading: false,
 					});
+
+					if (window.location.pathname === '/' || window.location.pathname === '/user/login') redirectLocation();
 				}
 			} catch {
 				if (auth.isAuthenticated) auth.removeUser();
