@@ -103,7 +103,7 @@ const OIDCBounder_: FC = ({ children }) => {
 		OIDCBounderHandlers = actions;
 	}, [actions]);
 
-	return <>{auth.isLoading ? <LoadingPage /> : children}</>;
+	return <>{auth.isLoading || initialState?.permissionLoading ? <LoadingPage /> : children}</>;
 };
 
 export const OIDCBounder: FC & { getActions: () => typeof OIDCBounderHandlers } = (props) => {
