@@ -167,13 +167,13 @@ axios.interceptors.response.use(
 				case 500:
 				case 502:
 					notification.error({
-						message: 'Máy chủ gặp lỗi (005)',
+						message: 'Hệ thống đang cập nhật (005)',
 						description: descriptionError,
 					});
 					break;
 
 				default:
-					message.error('Có lỗi xảy ra. Vui lòng thử lại');
+					message.error('Hệ thống đang cập nhật. Vui lòng thử lại sau');
 					break;
 			}
 		// Do something with response error
