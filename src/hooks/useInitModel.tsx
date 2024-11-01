@@ -485,6 +485,7 @@ const useInitModel = <T,>(
 		postExportModel,
 		selectedIds,
 		setSelectedIds,
+		initFilter,
 	};
 };
 
