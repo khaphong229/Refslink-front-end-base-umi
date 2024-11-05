@@ -19,6 +19,7 @@ const OIDCBounder_: FC = ({ children }) => {
 	const auth = useAuth();
 	const actions = useAuthActions();
 	const isUnauth = unAuthPaths.some((path) => window.location.pathname.includes(path));
+	let timeout: any = null;
 
 	const handleAxios = (access_token: string) => {
 		axios.defaults.headers.common.Authorization = `Bearer ${access_token}`;
@@ -89,10 +90,19 @@ const OIDCBounder_: FC = ({ children }) => {
 			return;
 		}
 
+		// Quá 5s nếu ko auth được thì xóa params
+		if (!timeout)
+			timeout = setTimeout(() => {
+				if (hasAuthParams() && !auth.isAuthenticated) redirectLocation();
+			}, 1000 * 5);
+
 		// Đã login => Xoá toàn bộ auth params được sử dụng để login trước đó
 		if (auth.isAuthenticated) {
 			if (hasAuthParams()) redirectLocation();
-			else handleLogin();
+			else {
+				if (timeout) clearTimeout(timeout);
+				handleLogin();
+			}
 		}
 	}, [auth.isAuthenticated, auth.isLoading]);
 
