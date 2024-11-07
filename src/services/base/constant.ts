@@ -120,4 +120,6 @@ export const unitPrefix = APP_CONFIG_TIEN_TO_TRUONG;
 export const tenTruongVietTatTiengAnh = APP_CONFIG_TEN_TRUONG_VIET_TAT_TIENG_ANH;
 
 /** Cài đặt hệ thống */
-export enum ESettingKey {}
+export enum ESettingKey {
+	KEY = 'KEY',
+}
