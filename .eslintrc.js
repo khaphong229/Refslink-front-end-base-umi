@@ -11,6 +11,5 @@ module.exports = {
 		'react-hooks/exhaustive-deps': 'off',
 		quotes: ['warn', 'single'],
 		semi: ['warn', 'always'],
-		'padding-line-between-statements': ['error', { blankLine: 'always', prev: 'multiline-block-like', next: '*' }],
 	},
 };
