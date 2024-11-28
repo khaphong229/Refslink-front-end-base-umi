@@ -94,12 +94,11 @@ const TableStaticData = (props: TableStaticProps) => {
 				? getFilterColumnProps(item.dataIndex, item.filterData)
 				: undefined),
 			...(item?.sortable && {
-				sorter: (a: any, b: any) =>
-					item.customSort
-						? item.customSort(a[item.dataIndex as string], b[item.dataIndex as string])
-						: a[item.dataIndex as string] > b[item.dataIndex as string]
-						? 1
-						: -1,
+				sorter: (a: any, b: any) => {
+					const aValue = _.get(a, item?.dataIndex ?? '', undefined);
+					const bValue = _.get(b, item?.dataIndex ?? '', undefined);
+					return item.customSort ? item.customSort(aValue, bValue) : aValue > bValue ? 1 : -1;
+				},
 			}),
 			// Xử lý các cột children tương tự cột chính
 			children: item.children?.map((child) => ({
