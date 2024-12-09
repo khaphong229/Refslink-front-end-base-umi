@@ -5,14 +5,32 @@ import './style.less';
 const TinyEditor = (props: {
 	value?: string;
 	onChange?: (val: string) => void;
+	/** Độ cao của editor sẽ tự động update theo nội dung đến 1 giá trị nhất định */
 	height?: number;
+	/** Chiều cao tối thiểu của editor */
 	minHeight?: number;
+	/** Ẩn hàng chức năng (File, View...) */
 	hideMenubar?: boolean;
+	/** DS chức năng rút gọn  */
 	miniToolbar?: boolean;
+	/** DS chức năng rút gọn tối đa (chỉ còn undo, redo, bold, italic...) */
 	tinyToolbar?: boolean;
 	disabled?: boolean;
+	/** Cố định toolbar nếu nội dung soạn thảo quá dài, phải dùng thanh cuộn.
+	 * Khi dùng nhiều editor trên 1 màn bắt buộc phải tắt option này đi */
+	stickyToolbar?: boolean;
 }) => {
-	const { value, onChange, height, hideMenubar, miniToolbar, disabled, minHeight, tinyToolbar } = props;
+	const {
+		value,
+		onChange,
+		height = 500,
+		hideMenubar,
+		miniToolbar,
+		disabled,
+		minHeight = 50,
+		tinyToolbar,
+		stickyToolbar = true,
+	} = props;
 
 	const triggerChange = (changedValue: string) => {
 		if (onChange) {
@@ -58,8 +76,8 @@ const TinyEditor = (props: {
 					license_key: 'gpl',
 					language_url: '/lang/vi_VN.js',
 					language: 'vi_VN',
-					max_height: height ?? 500,
-					autoresize_bottom_margin: minHeight ?? 50,
+					max_height: height,
+					autoresize_bottom_margin: minHeight,
 					menubar: hideMenubar || disabled ? false : 'file edit view format table insert tools',
 					plugins: [
 						// 'advlist',
@@ -108,7 +126,7 @@ const TinyEditor = (props: {
 						? 'undo redo | fontfamily fontsize | bold italic underline | forecolor backcolor removeformat | alignleft aligncenter alignright alignjustify | numlist bullist | emoticons'
 						: // Full toolbar
 						  'undo redo | styles fontfamily fontsize | bold italic underline strikethrough | forecolor backcolor removeformat | alignleft aligncenter alignright alignjustify | outdent indent | numlist bullist | table image media link | charmap emoticons | fullscreen preview print',
-					toolbar_sticky: true,
+					toolbar_sticky: stickyToolbar,
 					autosave_ask_before_unload: true,
 					image_advtab: true,
 					image_caption: true,
