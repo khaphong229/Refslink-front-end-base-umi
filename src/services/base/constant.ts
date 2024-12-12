@@ -123,3 +123,16 @@ export const tenTruongVietTatTiengAnh = APP_CONFIG_TEN_TRUONG_VIET_TAT_TIENG_ANH
 export enum ESettingKey {
 	KEY = 'KEY',
 }
+
+/** Định dạng file */
+export enum EDinhDangFile {
+	WORD = 'word',
+	EXCEL = 'excel',
+	POWERPOINT = 'powerpoint',
+	PDF = 'pdf',
+	IMAGE = 'image',
+	VIDEO = 'video',
+	AUDIO = 'audio',
+	TEXT = 'text',
+	UNKNOWN = 'unknown',
+}
