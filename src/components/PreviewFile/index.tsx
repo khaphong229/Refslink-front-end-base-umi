@@ -1,11 +1,18 @@
 import { EDinhDangFile } from '@/services/base/constant';
 import { getNameFile, renderMinType } from '@/utils/utils';
 import { DownloadOutlined } from '@ant-design/icons';
+import { Space } from 'antd';
 import fileDownload from 'js-file-download';
 import ButtonExtend from '../Table/ButtonExtend';
 
-const PreviewFile = (props: { file: string; mimeType: string; width?: string; height?: string }) => {
-	const { file, mimeType, width, height } = props;
+const PreviewFile = (props: {
+	file: string;
+	mimeType: string;
+	width?: string;
+	height?: string;
+	children?: React.ReactElement;
+}) => {
+	const { file, mimeType, width, height, children } = props;
 
 	const extension = renderMinType(mimeType);
 
@@ -42,7 +49,10 @@ const PreviewFile = (props: { file: string; mimeType: string; width?: string; he
 			>
 				<b>{getNameFile(file ?? '--')}</b>
 
-				<ButtonExtend type='link' tooltip='Tải xuống' icon={<DownloadOutlined />} onClick={handleDownload} />
+				<Space>
+					<ButtonExtend type='link' tooltip='Tải xuống' icon={<DownloadOutlined />} onClick={handleDownload} />
+					{children}
+				</Space>
 			</div>
 			{extension !== EDinhDangFile.UNKNOWN ? (
 				<iframe src={getIframeSrc()} width={width ?? '100%'} height={height ?? '600px'} />
