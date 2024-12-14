@@ -165,7 +165,12 @@ export function renderFileListUrl(url: string) {
 	};
 }
 
-export function renderMinType(mimeType: string) {
+/**
+ * Get file type
+ * @param mimeType Mime type or extension of file
+ * @returns
+ */
+export function getFileType(mimeType: string) {
 	if (!mimeType) return EDinhDangFile.UNKNOWN;
 
 	const mimeGroups: Record<string, string[]> = {
@@ -175,6 +180,8 @@ export function renderMinType(mimeType: string) {
 			'application/vnd.ms-word.document.macroEnabled.12',
 			'application/vnd.ms-word.template.macroEnabled.12',
 			'application/msword',
+			'doc',
+			'docx',
 		],
 		[EDinhDangFile.EXCEL]: [
 			'application/vnd.ms-excel',
@@ -188,6 +195,7 @@ export function renderMinType(mimeType: string) {
 			'application/vnd.ms-excel.addin.macroEnabled.12',
 			'application/vnd.ms-excel.sheet.binary.macroEnabled.12',
 			'application/vnd.ms-excel',
+			'xlsx',
 		],
 		[EDinhDangFile.POWERPOINT]: [
 			'application/vnd.ms-powerpoint',
@@ -202,6 +210,7 @@ export function renderMinType(mimeType: string) {
 			'application/vnd.ms-powerpoint.presentation.macroEnabled.12',
 			'application/vnd.ms-powerpoint.template.macroEnabled.12',
 			'application/vnd.ms-powerpoint.slideshow.macroEnabled.12',
+			'pptx',
 		],
 		[EDinhDangFile.PDF]: ['application/pdf'],
 		[EDinhDangFile.IMAGE]: ['image/png', 'image/jpeg', 'image/jpg', 'image/gif'],
@@ -210,13 +219,15 @@ export function renderMinType(mimeType: string) {
 		[EDinhDangFile.TEXT]: ['text/plain', 'text/csv', 'text/html'],
 	};
 
+	let result: EDinhDangFile = EDinhDangFile.UNKNOWN;
 	for (const [fileType, mimeList] of Object.entries(mimeGroups)) {
 		if (mimeList.some((mime) => mime.includes(mimeType))) {
-			return fileType as EDinhDangFile;
+			result = fileType as EDinhDangFile;
+			break;
 		}
 	}
 
-	return EDinhDangFile.UNKNOWN;
+	return result;
 }
 
 export function renderFileListUrlWithName(url: string, fileName?: string) {
