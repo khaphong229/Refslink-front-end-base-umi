@@ -3,7 +3,7 @@ import { getFileById } from '@/services/uploadFile';
 import { ip3 } from '@/utils/ip';
 import { getFileType, getNameFile } from '@/utils/utils';
 import { CopyOutlined, DownloadOutlined } from '@ant-design/icons';
-import { Space } from 'antd';
+import { message, Space } from 'antd';
 import fileDownload from 'js-file-download';
 import { useEffect, useState } from 'react';
 import ButtonExtend from '../Table/ButtonExtend';
@@ -16,7 +16,7 @@ const PreviewFile = (props: {
 	ip?: string;
 }) => {
 	const { file, width, height, children, ip = ip3 } = props;
-	const [fileType, setFileType] = useState<EDinhDangFile>();
+	const [fileType, setFileType] = useState<EDinhDangFile>(EDinhDangFile.UNKNOWN);
 
 	const getFileExtension = (url: string) => {
 		const arr = url.split('.');
@@ -30,9 +30,9 @@ const PreviewFile = (props: {
 		try {
 			if (idFile) {
 				const result = await getFileById(idFile, ip);
-				mime = result?.data?.file?.mimetype || '';
+				mime = result?.data?.file?.mimetype || EDinhDangFile.UNKNOWN;
 			} else {
-				mime = getFileExtension(url) || '';
+				mime = getFileExtension(url) || EDinhDangFile.UNKNOWN;
 			}
 		} catch (error) {
 			console.error('Error fetching file type:', error);
@@ -73,6 +73,19 @@ const PreviewFile = (props: {
 		}
 	};
 
+	const handleCopy = () => {
+		if (file) {
+			navigator.clipboard
+				.writeText(file)
+				.then(() => {
+					message.success('Đã sao chép đường dẫn!');
+				})
+				.catch((error) => {
+					console.error(error);
+				});
+		}
+	};
+
 	return (
 		<>
 			<div
@@ -89,7 +102,7 @@ const PreviewFile = (props: {
 
 				<Space wrap>
 					<ButtonExtend type='link' tooltip='Tải xuống' icon={<DownloadOutlined />} onClick={handleDownload} />
-					<ButtonExtend type='link' tooltip='Sao chép đường dẫn' icon={<CopyOutlined />} onClick={handleDownload} />
+					<ButtonExtend type='link' tooltip='Sao chép đường dẫn' icon={<CopyOutlined />} onClick={handleCopy} />
 					{children}
 				</Space>
 			</div>
