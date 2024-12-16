@@ -1,5 +1,5 @@
 import { MenuOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
-import { Drawer, Input, Modal, Table, Tooltip, type InputRef } from 'antd';
+import { AutoComplete, Drawer, Input, Modal, Table, Tooltip, type InputRef } from 'antd';
 import classNames from 'classnames';
 import _ from 'lodash';
 import { useEffect, useRef, useState } from 'react';
@@ -23,32 +23,62 @@ const TableStaticData = (props: TableStaticProps) => {
 		setSearchedColumn(undefined);
 	}, [data?.length]);
 
+	// Hàm lưu dữ liệu tìm kiếm vào localStorage
+	const updateSearchStorage = (dataIndex: string, value: string) => {
+		const savedSearchValues = JSON.parse(localStorage.getItem('dataTimKiem') || '{}');
+		const currentSearchValues = savedSearchValues[dataIndex] || [];
+
+		// Thêm giá trị mới, loại bỏ trùng lặp và giữ tối đa 10 giá trị
+		const newValues = [...currentSearchValues, value];
+		const uniqueValues = [...new Set(newValues)].slice(-10);
+
+		savedSearchValues[dataIndex] = uniqueValues;
+		localStorage.setItem('dataTimKiem', JSON.stringify(savedSearchValues));
+	};
+
 	const handleSearch = (confirm: any, dataIndex: any) => {
 		confirm();
 		setSearchedColumn(dataIndex);
 	};
 
 	const getColumnSearchProps = (dataIndex: any, columnTitle: any, render: any): Partial<IColumn<unknown>> => ({
-		filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => (
-			<div className='column-search-box' onKeyDown={(e) => e.stopPropagation()}>
-				<Input.Search
-					placeholder={`Tìm ${columnTitle}`}
-					allowClear
-					enterButton
-					value={selectedKeys[0]}
-					onChange={(e) => {
-						if (e.type === 'click') {
-							setSelectedKeys([]);
-							confirm();
-						} else {
-							setSelectedKeys(e.target.value ? [e.target.value] : []);
-						}
-					}}
-					onSearch={() => handleSearch(confirm, dataIndex)}
-					ref={searchInputRef}
-				/>
-			</div>
-		),
+		filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => {
+			const searchOptions = (JSON.parse(localStorage.getItem('dataTimKiem') || '{}')[dataIndex] || []).map(
+				(value: string) => ({ value, label: value }),
+			);
+
+			return (
+				<div className='column-search-box' onKeyDown={(e) => e.stopPropagation()}>
+					<AutoComplete
+						options={searchOptions}
+						onSelect={(value: string) => {
+							setSelectedKeys([value]);
+							handleSearch(confirm, dataIndex);
+						}}
+					>
+						<Input.Search
+							placeholder={`Tìm ${columnTitle}`}
+							allowClear
+							enterButton
+							value={selectedKeys[0]}
+							onChange={(e) => {
+								if (e.type === 'click') {
+									setSelectedKeys([]);
+									confirm();
+								} else {
+									setSelectedKeys(e.target.value ? [e.target.value] : []);
+								}
+							}}
+							onSearch={(value) => {
+								if (value) updateSearchStorage(dataIndex, value);
+								handleSearch(confirm, dataIndex);
+							}}
+							ref={searchInputRef}
+						/>
+					</AutoComplete>
+				</div>
+			);
+		},
 		filterIcon: (filtered: boolean) => <SearchOutlined className={filtered ? 'text-primary' : undefined} />,
 		onFilter: (value: any, record: any) =>
 			typeof dataIndex === 'string'

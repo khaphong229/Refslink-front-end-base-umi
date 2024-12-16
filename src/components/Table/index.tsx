@@ -12,6 +12,7 @@ import {
 	SearchOutlined,
 } from '@ant-design/icons';
 import {
+	AutoComplete,
 	Button,
 	Card,
 	ConfigProvider,
@@ -124,6 +125,19 @@ const TableBase = (props: TableBaseProps) => {
 	});
 	//#endregion
 
+	// Hàm lưu dữ liệu tìm kiếm vào localStorage
+	const updateSearchStorage = (dataIndex: string, value: string) => {
+		const savedSearchValues = JSON.parse(localStorage.getItem('dataTimKiem') || '{}');
+		const currentSearchValues = savedSearchValues[dataIndex] || [];
+
+		// Thêm giá trị mới, loại bỏ trùng lặp và giữ tối đa 10 giá trị
+		const newValues = [...currentSearchValues, value];
+		const uniqueValues = [...new Set(newValues)].slice(-10);
+
+		savedSearchValues[dataIndex] = uniqueValues;
+		localStorage.setItem('dataTimKiem', JSON.stringify(savedSearchValues));
+	};
+
 	//#region Get Search Column Props
 	const handleSearch = (dataIndex: any, value: string, confirm?: () => void) => {
 		if (!value) {
@@ -156,39 +170,59 @@ const TableBase = (props: TableBaseProps) => {
 	const getColumnSearchProps = (dataIndex: any, columnTitle: any): Partial<IColumn<unknown>> => {
 		const filterColumn = getFilterColumn(dataIndex, EOperatorType.CONTAIN, true);
 		return {
-			filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => (
-				<div className='column-search-box' onKeyDown={(e) => e.stopPropagation()}>
-					<Input.Search
-						placeholder={`Tìm ${columnTitle}`}
-						allowClear
-						enterButton
-						value={selectedKeys[0]}
-						onChange={(e) => {
-							if (e.type === 'click') {
-								setSelectedKeys([]);
-								confirm();
-							} else {
-								setSelectedKeys(e.target.value ? [e.target.value] : []);
-							}
-						}}
-						onSearch={(value) => handleSearch(dataIndex, value, confirm)}
-						ref={searchInputRef}
-					/>
-					{buttons?.filter !== false && hasFilter ? (
-						<div>
-							Xem thêm{' '}
-							<a
-								onClick={() => {
-									setVisibleFilter(true);
-									confirm();
+			filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => {
+				const options = (JSON.parse(localStorage.getItem('dataTimKiem') || '{}')[dataIndex] || []).map(
+					(value: string) => ({
+						value,
+						label: value,
+					}),
+				);
+
+				return (
+					<div className='column-search-box' onKeyDown={(e) => e.stopPropagation()}>
+						<AutoComplete
+							options={options}
+							onSelect={(value: string) => {
+								setSelectedKeys([value]);
+								handleSearch(dataIndex, value, confirm);
+							}}
+						>
+							<Input.Search
+								placeholder={`Tìm ${columnTitle}`}
+								allowClear
+								enterButton
+								value={selectedKeys[0]}
+								onChange={(e) => {
+									if (e.type === 'click') {
+										setSelectedKeys([]);
+										confirm();
+									} else {
+										setSelectedKeys(e.target.value ? [e.target.value] : []);
+									}
 								}}
-							>
-								Bộ lọc tùy chỉnh
-							</a>
-						</div>
-					) : null}
-				</div>
-			),
+								onSearch={(value) => {
+									if (value) updateSearchStorage(dataIndex, value);
+									handleSearch(dataIndex, value, confirm);
+								}}
+								ref={searchInputRef}
+							/>
+						</AutoComplete>
+						{buttons?.filter !== false && hasFilter ? (
+							<div>
+								Xem thêm{' '}
+								<a
+									onClick={() => {
+										setVisibleFilter(true);
+										confirm();
+									}}
+								>
+									Bộ lọc tùy chỉnh
+								</a>
+							</div>
+						) : null}
+					</div>
+				);
+			},
 			filteredValue: filterColumn?.values ?? [],
 			filterIcon: () => {
 				const values = getFilterColumn(dataIndex, undefined, true)?.values;
