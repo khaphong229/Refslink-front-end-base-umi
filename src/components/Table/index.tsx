@@ -39,7 +39,7 @@ import ModalExport from './Export';
 import ModalImport from './Import';
 import ModalCustomFilter from './ModalCustomFilter';
 import { EOperatorType } from './constant';
-import { findFiltersInColumns } from './function';
+import { findFiltersInColumns, updateSearchStorage } from './function';
 import './style.less';
 import type { IColumn, TDataOption, TFilter, TableBaseProps } from './typing';
 
@@ -124,19 +124,6 @@ const TableBase = (props: TableBaseProps) => {
 		sortOrder: getSortValue(dataIndex),
 	});
 	//#endregion
-
-	// Hàm lưu dữ liệu tìm kiếm vào localStorage
-	const updateSearchStorage = (dataIndex: string, value: string) => {
-		const savedSearchValues = JSON.parse(localStorage.getItem('dataTimKiem') || '{}');
-		const currentSearchValues = savedSearchValues[dataIndex] || [];
-
-		// Thêm giá trị mới, loại bỏ trùng lặp và giữ tối đa 10 giá trị
-		const newValues = [...currentSearchValues, value];
-		const uniqueValues = [...new Set(newValues)].slice(-10);
-
-		savedSearchValues[dataIndex] = uniqueValues;
-		localStorage.setItem('dataTimKiem', JSON.stringify(savedSearchValues));
-	};
 
 	//#region Get Search Column Props
 	const handleSearch = (dataIndex: any, value: string, confirm?: () => void) => {

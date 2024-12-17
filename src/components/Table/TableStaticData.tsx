@@ -9,6 +9,7 @@ import { SortableContainer, SortableElement, SortableHandle } from 'react-sortab
 import ButtonExtend from './ButtonExtend';
 import './style.less';
 import type { IColumn, TDataOption, TableStaticProps } from './typing';
+import { updateSearchStorage } from './function';
 
 const TableStaticData = (props: TableStaticProps) => {
 	const { Form, showEdit, setShowEdit, addStt, data, children, hasCreate, hasTotal, rowSortable } = props;
@@ -22,19 +23,6 @@ const TableStaticData = (props: TableStaticProps) => {
 		setSearchText('');
 		setSearchedColumn(undefined);
 	}, [data?.length]);
-
-	// Hàm lưu dữ liệu tìm kiếm vào localStorage
-	const updateSearchStorage = (dataIndex: string, value: string) => {
-		const savedSearchValues = JSON.parse(localStorage.getItem('dataTimKiem') || '{}');
-		const currentSearchValues = savedSearchValues[dataIndex] || [];
-
-		// Thêm giá trị mới, loại bỏ trùng lặp và giữ tối đa 10 giá trị
-		const newValues = [...currentSearchValues, value];
-		const uniqueValues = [...new Set(newValues)].slice(-10);
-
-		savedSearchValues[dataIndex] = uniqueValues;
-		localStorage.setItem('dataTimKiem', JSON.stringify(savedSearchValues));
-	};
 
 	const handleSearch = (confirm: any, dataIndex: any) => {
 		confirm();
