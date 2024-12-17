@@ -72,6 +72,6 @@ export const buildUpLoadMultiFile = async (
 	return null;
 };
 
-export const getFileById = (id: string, ip?: string) => {
-	return axios.get(`${ip ?? ip3}/file/${id}`, { responseType: 'arraybuffer' });
+export const getFileInfo = (id: string, ip?: string) => {
+	return axios.get(`${ip ?? ip3}/file/info/${id}`);
 };

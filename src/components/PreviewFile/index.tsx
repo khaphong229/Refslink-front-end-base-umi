@@ -1,5 +1,5 @@
 import { EDinhDangFile } from '@/services/base/constant';
-import { getFileById } from '@/services/uploadFile';
+import { getFileInfo } from '@/services/uploadFile';
 import { ip3 } from '@/utils/ip';
 import { getFileType, getNameFile } from '@/utils/utils';
 import { CopyOutlined, DownloadOutlined } from '@ant-design/icons';
@@ -29,7 +29,7 @@ const PreviewFile = (props: {
 
 		try {
 			if (idFile) {
-				const result = await getFileById(idFile, ip);
+				const result = await getFileInfo(idFile, ip);
 				mime = result?.data?.file?.mimetype || EDinhDangFile.UNKNOWN;
 			} else {
 				mime = getFileExtension(url) || EDinhDangFile.UNKNOWN;
