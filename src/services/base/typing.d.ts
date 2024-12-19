@@ -1,5 +1,5 @@
 import type { Settings as LayoutSettings } from '@ant-design/pro-layout';
-import type { EModuleKey, ESettingKey } from './constant';
+import type { EModuleKey, EScopeFile, ESettingKey, EStorageFile } from './constant';
 
 declare module Login {
 	export interface IUser {
@@ -50,4 +50,21 @@ export interface IInitialState {
 export interface ISetting {
 	key: ESettingKey;
 	value: any;
+}
+
+export interface IFile {
+	file: {
+		_id: string;
+		author: string;
+		authorName: string;
+		mimetype: string;
+		name: string;
+		scope: EScopeFile;
+		size: number;
+		storageType: EStorageFile;
+
+		updatedAt: Date;
+		createdAt: Date;
+	};
+	url: string;
 }
