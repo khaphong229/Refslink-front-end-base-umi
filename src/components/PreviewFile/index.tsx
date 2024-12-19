@@ -30,7 +30,11 @@ const PreviewFile = (props: {
 		try {
 			if (idFile) {
 				const result = await getFileInfo(idFile, ip);
-				mime = result?.data?.file?.mimetype || EDinhDangFile.UNKNOWN;
+				if (result?.data?.file?.mimetype) {
+					mime = result?.data?.file?.mimetype;
+				} else {
+					mime = getFileExtension(url) || EDinhDangFile.UNKNOWN;
+				}
 			} else {
 				mime = getFileExtension(url) || EDinhDangFile.UNKNOWN;
 			}
