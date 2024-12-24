@@ -180,6 +180,7 @@ export function getFileType(mimeType: string) {
 			'application/vnd.ms-word.document.macroEnabled.12',
 			'application/vnd.ms-word.template.macroEnabled.12',
 			'application/msword',
+
 			'doc',
 			'docx',
 		],
@@ -195,6 +196,8 @@ export function getFileType(mimeType: string) {
 			'application/vnd.ms-excel.addin.macroEnabled.12',
 			'application/vnd.ms-excel.sheet.binary.macroEnabled.12',
 			'application/vnd.ms-excel',
+
+			'xls',
 			'xlsx',
 		],
 		[EDinhDangFile.POWERPOINT]: [
@@ -210,6 +213,8 @@ export function getFileType(mimeType: string) {
 			'application/vnd.ms-powerpoint.presentation.macroEnabled.12',
 			'application/vnd.ms-powerpoint.template.macroEnabled.12',
 			'application/vnd.ms-powerpoint.slideshow.macroEnabled.12',
+
+			'ppt',
 			'pptx',
 		],
 		[EDinhDangFile.PDF]: ['application/pdf'],

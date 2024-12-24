@@ -3,7 +3,7 @@ import type { IFile } from '@/services/base/typing';
 import { getFileInfo } from '@/services/uploadFile';
 import { ip3 } from '@/utils/ip';
 import { getFileType, getNameFile } from '@/utils/utils';
-import { CopyOutlined, DownloadOutlined } from '@ant-design/icons';
+import { CopyOutlined, DownloadOutlined, FullscreenExitOutlined } from '@ant-design/icons';
 import { message, Space } from 'antd';
 import fileDownload from 'js-file-download';
 import { useEffect, useState } from 'react';
@@ -16,8 +16,9 @@ const PreviewFile = (props: {
 	children?: React.ReactElement;
 	ip?: string;
 }) => {
-	const { file, width, height, children, ip = ip3 } = props;
+	const { file, width = '100%', height = '600px', children, ip = ip3 } = props;
 	const [fileType, setFileType] = useState<EDinhDangFile>(EDinhDangFile.UNKNOWN);
+	const [iframeSrc, setIframeSrc] = useState<string>('');
 
 	const getFileExtension = (url: string) => {
 		const arr = url.split('.');
@@ -31,32 +32,18 @@ const PreviewFile = (props: {
 		try {
 			if (idFile) {
 				const result = await getFileInfo(idFile, ip);
-				const fileInFo: IFile = result?.data;
-				if (fileInFo?.file?.mimetype) {
-					mime = fileInFo?.file?.mimetype;
-				} else {
-					mime = getFileExtension(url) || EDinhDangFile.UNKNOWN;
-				}
+				const fileInfo: IFile = result?.data;
+				return fileInfo?.file?.mimetype || getFileExtension(url) || EDinhDangFile.UNKNOWN;
 			} else {
 				mime = getFileExtension(url) || EDinhDangFile.UNKNOWN;
 			}
 		} catch (error) {
 			console.error('Error fetching file type:', error);
+			return EDinhDangFile.UNKNOWN;
 		}
 
 		return getFileType(mime);
 	};
-
-	useEffect(() => {
-		const fetchFileType = async () => {
-			if (file) {
-				const res = await getFileTypeFromUrl(file);
-				setFileType(res ?? EDinhDangFile.UNKNOWN);
-			}
-		};
-
-		fetchFileType();
-	}, [file]);
 
 	const getIframeSrc = () => {
 		if (!file) return '';
@@ -92,6 +79,20 @@ const PreviewFile = (props: {
 		}
 	};
 
+	useEffect(() => {
+		const fetchFileType = async (): Promise<void> => {
+			if (file) {
+				const mimeType = await getFileTypeFromUrl(file);
+				setFileType(getFileType(mimeType) ?? EDinhDangFile.UNKNOWN);
+			}
+		};
+		fetchFileType();
+	}, [file]);
+
+	useEffect(() => {
+		setIframeSrc(getIframeSrc());
+	}, [fileType]);
+
 	return (
 		<>
 			<div
@@ -109,11 +110,17 @@ const PreviewFile = (props: {
 				<Space wrap>
 					<ButtonExtend type='link' tooltip='Tải xuống' icon={<DownloadOutlined />} onClick={handleDownload} />
 					<ButtonExtend type='link' tooltip='Sao chép đường dẫn' icon={<CopyOutlined />} onClick={handleCopy} />
+					<ButtonExtend
+						type='link'
+						tooltip='Mở rộng'
+						icon={<FullscreenExitOutlined />}
+						onClick={() => window.open(iframeSrc, '_blank')}
+					/>
 					{children}
 				</Space>
 			</div>
 			{fileType !== EDinhDangFile.UNKNOWN ? (
-				<iframe src={getIframeSrc()} width={width ?? '100%'} height={height ?? '600px'} />
+				<iframe src={iframeSrc} width={width} height={height} />
 			) : (
 				<div
 					style={{
