@@ -367,6 +367,19 @@ canvas {
 
 // Card Statistics Small
 .card-stat-small {
+	&.pointer {
+		cursor: pointer;
+	}
+
+	&.highlight {
+		background-color: #f2fce1bf;
+
+		.text {
+			color: var(--primary-color);
+			font-weight: 600;
+		}
+	}
+
 	.ant-card-body {
 		display: flex;
 		gap: 8px;
