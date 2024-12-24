@@ -38,21 +38,40 @@ const PreviewFile = (props: {
 				mime = getFileExtension(url) || EDinhDangFile.UNKNOWN;
 			}
 		} catch (error) {
-			console.error('Error fetching file type:', error);
+			console.error(error);
 			return EDinhDangFile.UNKNOWN;
 		}
 
-		return getFileType(mime);
+		return mime;
 	};
 
-	const getIframeSrc = () => {
+	const getIframeSrc = (type: EDinhDangFile) => {
 		if (!file) return '';
 		const officeFileType = [EDinhDangFile.WORD, EDinhDangFile.EXCEL, EDinhDangFile.POWERPOINT];
-		if (fileType && officeFileType.includes(fileType)) {
+		if (type && officeFileType.includes(type)) {
 			return `https://view.officeapps.live.com/op/embed.aspx?src=${encodeURIComponent(file)}`;
+		} else {
+			return file;
 		}
-		return file;
 	};
+
+	useEffect(() => {
+		const fetchFileType = async () => {
+			try {
+				const res = await getFileTypeFromUrl(file);
+				setFileType(getFileType(res) as EDinhDangFile);
+
+				if (res) {
+					const val = getIframeSrc(getFileType(res) as EDinhDangFile);
+					setIframeSrc(val);
+				}
+			} catch (error) {
+				console.error(error);
+			}
+		};
+
+		fetchFileType();
+	}, [file]);
 
 	const handleDownload = async () => {
 		if (file) {
@@ -78,20 +97,6 @@ const PreviewFile = (props: {
 				});
 		}
 	};
-
-	useEffect(() => {
-		const fetchFileType = async (): Promise<void> => {
-			if (file) {
-				const mimeType = await getFileTypeFromUrl(file);
-				setFileType(getFileType(mimeType) ?? EDinhDangFile.UNKNOWN);
-			}
-		};
-		fetchFileType();
-	}, [file]);
-
-	useEffect(() => {
-		setIframeSrc(getIframeSrc());
-	}, [fileType]);
 
 	return (
 		<>
