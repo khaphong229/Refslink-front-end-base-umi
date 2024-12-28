@@ -31,14 +31,17 @@ const TableStaticData = (props: TableStaticProps) => {
 
 	const getColumnSearchProps = (dataIndex: any, columnTitle: any, render: any): Partial<IColumn<unknown>> => ({
 		filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => {
-			const searchOptions = (JSON.parse(localStorage.getItem('dataTimKiem') || '{}')[dataIndex] || []).map(
-				(value: string) => ({ value, label: value }),
+			const options = _.reverse(
+				(JSON.parse(localStorage.getItem('dataTimKiem') || '{}')[dataIndex] || []).map((value: string) => ({
+					value,
+					label: value,
+				})),
 			);
 
 			return (
 				<div className='column-search-box' onKeyDown={(e) => e.stopPropagation()}>
 					<AutoComplete
-						options={searchOptions}
+						options={options}
 						onSelect={(value: string) => {
 							setSelectedKeys([value]);
 							handleSearch(confirm, dataIndex);
