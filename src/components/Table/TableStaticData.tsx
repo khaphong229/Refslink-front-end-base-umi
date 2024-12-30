@@ -31,11 +31,11 @@ const TableStaticData = (props: TableStaticProps) => {
 
 	const getColumnSearchProps = (dataIndex: any, columnTitle: any, render: any): Partial<IColumn<unknown>> => ({
 		filterDropdown: ({ setSelectedKeys, selectedKeys, confirm, clearFilters }) => {
-			const options = _.reverse(
-				(JSON.parse(localStorage.getItem('dataTimKiem') || '{}')[dataIndex] || []).map((value: string) => ({
+			const options = (JSON.parse(localStorage.getItem('dataTimKiem') || '{}')[dataIndex] || []).map(
+				(value: string) => ({
 					value,
 					label: value,
-				})),
+				}),
 			);
 
 			return (

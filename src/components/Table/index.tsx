@@ -158,11 +158,11 @@ const TableBase = (props: TableBaseProps) => {
 		const filterColumn = getFilterColumn(dataIndex, EOperatorType.CONTAIN, true);
 		return {
 			filterDropdown: ({ setSelectedKeys, selectedKeys, confirm }) => {
-				const options = _.reverse(
-					(JSON.parse(localStorage.getItem('dataTimKiem') || '{}')[dataIndex] || []).map((value: string) => ({
+				const options = (JSON.parse(localStorage.getItem('dataTimKiem') || '{}')[dataIndex] || []).map(
+					(value: string) => ({
 						value,
 						label: value,
-					})),
+					}),
 				);
 
 				return (
