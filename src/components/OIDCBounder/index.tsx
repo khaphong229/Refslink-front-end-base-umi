@@ -1,10 +1,11 @@
 import { useAuthActions } from '@/hooks/useAuthActions';
 import { getPermission, getUserInfo } from '@/services/base/api';
+import { primaryColor } from '@/services/base/constant';
 import { type Login } from '@/services/base/typing';
 import axios from '@/utils/axios';
 import { currentRole } from '@/utils/ip';
 import { oidcConfig } from '@/utils/oidcConfig';
-import { notification } from 'antd';
+import { ConfigProvider, notification } from 'antd';
 import queryString from 'query-string';
 import { useEffect, type FC } from 'react';
 import { AuthProvider, hasAuthParams, useAuth } from 'react-oidc-context';
@@ -113,6 +114,11 @@ const OIDCBounder_: FC = ({ children }) => {
 	useEffect(() => {
 		OIDCBounderHandlers = actions;
 	}, [actions]);
+
+	useEffect(() => {
+		// Đổi màu real time => Hỗ trợ đổi tenant
+		ConfigProvider.config({ theme: { primaryColor } });
+	}, []);
 
 	return <>{(auth.isLoading || initialState?.permissionLoading) && !isUnauth ? <LoadingPage /> : children}</>;
 };

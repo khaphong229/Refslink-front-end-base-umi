@@ -1,17 +1,11 @@
-import { primaryColor } from '@/services/base/constant';
 import { ToolOutlined } from '@ant-design/icons';
 import { Button, ConfigProvider, Modal, Tooltip } from 'antd';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import FormPostIssue from './Form';
 import { unTechnicalSupportPaths } from './constant';
 
 const TechnicalSupportBounder = (props: { children: React.ReactNode }) => {
 	const [visible, setVisible] = useState<boolean>(false);
-
-	useEffect(() => {
-		// Đổi màu real time => Hỗ trợ đổi tenant
-		ConfigProvider.config({ theme: { primaryColor } });
-	}, []);
 
 	return (
 		<ConfigProvider>
