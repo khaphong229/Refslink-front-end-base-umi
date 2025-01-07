@@ -1,4 +1,3 @@
-import JsonEditor from '@/components/JsonEditor';
 import TableBase from '@/components/Table';
 import { EOperatorType } from '@/components/Table/constant';
 import type { IColumn } from '@/components/Table/typing';
@@ -13,10 +12,10 @@ import { useModel } from 'umi';
 
 const renderSection = (label: string, data: any) => (
 	<>
-		<div className='fw500' style={{ marginBottom: 8, marginTop: 8 }}>
+		<div className='fw500' style={{ marginTop: 8 }}>
 			{label}:
 		</div>
-		<JsonEditor value={JSON.stringify(data ?? {}, undefined, 2)} />
+		{data ? <pre>{JSON.stringify(data ?? {}, undefined, 2)}</pre> : null}
 	</>
 );
 
@@ -30,7 +29,7 @@ const ModalAuditLog = (props: {
 	const { visible, setVisible, actions = {}, title = 'Lịch sử thao tác', modelName = 'tienich.auditlog' } = props;
 	const { page, limit, getModel, setRecord, record } = useModel(modelName as any);
 	const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
-	const [paneSize, setPaneSize] = useState('40%');
+	const [paneSize, setPaneSize] = useState('50%');
 
 	const handlePaneSizeChange = (size: any) => {
 		setPaneSize(size[0]);
@@ -51,12 +50,14 @@ const ModalAuditLog = (props: {
 	});
 
 	const columns: IColumn<AuditLog.IRecord>[] = [
+		{ title: 'TT', dataIndex: 'index', align: 'center', width: 60, onCell },
 		{
 			title: 'Mã người dùng',
 			dataIndex: 'uCode',
 			align: 'center',
 			width: 120,
 			filterType: 'string',
+			sortable: true,
 			onCell,
 		},
 		{
@@ -79,7 +80,9 @@ const ModalAuditLog = (props: {
 			title: 'Thời gian',
 			dataIndex: 'createdAt',
 			align: 'center',
-			width: 140,
+			width: 150,
+			filterType: 'datetime',
+			sortable: true,
 			render: (val) => val && moment(val).format('HH:mm:ss, DD/MM/YYYY'),
 			onCell,
 		},
@@ -113,7 +116,7 @@ const ModalAuditLog = (props: {
 			<SplitPane split={isMobile ? 'horizontal' : 'vertical'} onChange={handlePaneSizeChange}>
 				<Pane initialSize={paneSize} minSize='30%'>
 					<Card
-						title='Danh sách giảng viên'
+						title='Danh sách thao tác'
 						bordered={false}
 						bodyStyle={{ padding: '8px 0 0' }}
 						headStyle={{ padding: 0 }}
@@ -125,11 +128,13 @@ const ModalAuditLog = (props: {
 							getData={getData}
 							widthDrawer={1000}
 							hideCard
-							buttons={{ create: false, filter: false }}
+							buttons={{ create: false }}
 							otherProps={{ size: 'small' }}
+							addStt={false}
 						/>
 					</Card>
 				</Pane>
+
 				<Pane minSize='30%'>
 					<Card
 						title='Chi tiết thao tác'

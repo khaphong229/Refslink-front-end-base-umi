@@ -4,7 +4,11 @@ import './style.less';
 type Props = Omit<EditorProps, 'defaultLanguage' | 'language'>;
 
 const JsonEditor = ({ height = 230, ...props }: Props) => {
-	return <Editor {...props} language='json' height={height} />;
+	return (
+		<div className='monaco-wrapper'>
+			<Editor {...props} language='json' height={height} />
+		</div>
+	);
 };
 
 export default JsonEditor;
