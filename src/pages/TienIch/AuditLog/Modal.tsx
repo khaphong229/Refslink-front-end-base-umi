@@ -1,23 +1,54 @@
-import ExpandText from '@/components/ExpandText';
+import JsonEditor from '@/components/JsonEditor';
 import TableBase from '@/components/Table';
 import { EOperatorType } from '@/components/Table/constant';
 import type { IColumn } from '@/components/Table/typing';
 import type { AuditLog } from '@/services/TienIch/AuditLog/typing';
-import { Button, Modal } from 'antd';
+import { Button, Card, Descriptions, Modal } from 'antd';
 import moment from 'moment';
+import { useState } from 'react';
+import { useMediaQuery } from 'react-responsive';
+import SplitPane from 'react-split-pane';
+import Pane from 'react-split-pane/lib/Pane';
 import { useModel } from 'umi';
+
+const renderSection = (label: string, data: any) => (
+	<>
+		<div className='fw500' style={{ marginBottom: 8, marginTop: 8 }}>
+			{label}:
+		</div>
+		<JsonEditor value={JSON.stringify(data ?? {}, undefined, 2)} />
+	</>
+);
 
 const ModalAuditLog = (props: {
 	visible: boolean;
 	setVisible: (val: boolean) => void;
 	title: string;
 	actions?: Record<any, string>;
+	modelName?: string;
 }) => {
-	const { page, limit, getModel } = useModel('tienich.auditlog');
-	const { visible, setVisible, actions = {}, title = 'Lịch sử thao tác' } = props;
+	const { visible, setVisible, actions = {}, title = 'Lịch sử thao tác', modelName = 'tienich.auditlog' } = props;
+	const { page, limit, getModel, setRecord, record } = useModel(modelName as any);
+	const isMobile = useMediaQuery({ query: '(max-width: 767px)' });
+	const [paneSize, setPaneSize] = useState('40%');
+
+	const handlePaneSizeChange = (size: any) => {
+		setPaneSize(size[0]);
+	};
 
 	const getData = () =>
-		getModel(undefined, [{ field: 'action', values: Object.keys(actions), operator: EOperatorType.INCLUDE }]);
+		getModel(undefined, [{ field: 'action', values: Object.keys(actions), operator: EOperatorType.INCLUDE }]).then(
+			(res: any) => setRecord(res?.[0]),
+		);
+
+	const onCell = (rec: AuditLog.IRecord) => ({
+		onClick: () => setRecord(rec),
+		style: {
+			cursor: 'pointer',
+			fontWeight: rec._id === record?._id ? 600 : undefined,
+			backgroundColor: rec._id === record?._id ? 'var(--primary-1)' : undefined,
+		},
+	});
 
 	const columns: IColumn<AuditLog.IRecord>[] = [
 		{
@@ -26,12 +57,14 @@ const ModalAuditLog = (props: {
 			align: 'center',
 			width: 120,
 			filterType: 'string',
+			onCell,
 		},
 		{
 			title: 'Họ tên',
 			dataIndex: 'uName',
 			width: 160,
 			filterType: 'string',
+			onCell,
 		},
 		{
 			title: 'Hành động',
@@ -40,12 +73,7 @@ const ModalAuditLog = (props: {
 			filterType: 'select',
 			filterData: Object.keys(actions).map((i) => ({ label: actions[i], value: i })),
 			render: (val) => val && actions[val],
-		},
-		{
-			title: 'Tham số',
-			dataIndex: 'param',
-			width: 220,
-			render: (val) => <ExpandText>{JSON.stringify(val)}</ExpandText>,
+			onCell,
 		},
 		{
 			title: 'Thời gian',
@@ -53,6 +81,7 @@ const ModalAuditLog = (props: {
 			align: 'center',
 			width: 140,
 			render: (val) => val && moment(val).format('HH:mm:ss, DD/MM/YYYY'),
+			onCell,
 		},
 		// {
 		// 	title: 'Thao tác',
@@ -80,16 +109,53 @@ const ModalAuditLog = (props: {
 	];
 
 	return (
-		<Modal title={title} visible={visible} onCancel={() => setVisible(false)} footer={null} width={1000}>
-			<TableBase
-				columns={columns}
-				dependencies={[page, limit]}
-				modelName='tienich.auditlog'
-				getData={getData}
-				widthDrawer={1000}
-				hideCard
-				buttons={{ create: false, filter: false }}
-			/>
+		<Modal title={title} visible={visible} onCancel={() => setVisible(false)} footer={null} width={1200}>
+			<SplitPane split={isMobile ? 'horizontal' : 'vertical'} onChange={handlePaneSizeChange}>
+				<Pane initialSize={paneSize} minSize='30%'>
+					<Card
+						title='Danh sách giảng viên'
+						bordered={false}
+						bodyStyle={{ padding: '8px 0 0' }}
+						headStyle={{ padding: 0 }}
+					>
+						<TableBase
+							columns={columns}
+							dependencies={[page, limit]}
+							modelName={modelName}
+							getData={getData}
+							widthDrawer={1000}
+							hideCard
+							buttons={{ create: false, filter: false }}
+							otherProps={{ size: 'small' }}
+						/>
+					</Card>
+				</Pane>
+				<Pane minSize='30%'>
+					<Card
+						title='Chi tiết thao tác'
+						bordered={false}
+						bodyStyle={{ padding: '8px 0 0', maxHeight: 630, overflowY: 'auto' }}
+						headStyle={{ padding: 0 }}
+					>
+						<Descriptions column={1}>
+							<Descriptions.Item label='Mã người dùng'>{record?.uCode ?? '--'}</Descriptions.Item>
+							<Descriptions.Item label='Họ và tên'>{record?.uName ?? '--'}</Descriptions.Item>
+							<Descriptions.Item label='Địa chỉ Email'>{record?.uEmail ?? '--'}</Descriptions.Item>
+							<Descriptions.Item label='Loại hành động'>
+								{record?.action ? actions[record?.action] : '--'}
+							</Descriptions.Item>
+							<Descriptions.Item label='Địa chỉ IP'>{record?.ip ?? '--'}</Descriptions.Item>
+							<Descriptions.Item label='Trình duyệt/Thiết bị'>{record?.userAgent ?? '--'}</Descriptions.Item>
+							<Descriptions.Item label='Phương thức truy cập'>{record?.requestType ?? '--'}</Descriptions.Item>
+						</Descriptions>
+
+						{renderSection('Dữ liệu', record?.data)}
+						{renderSection('Tham số', record?.param)}
+						{renderSection('Truy vấn', record?.query)}
+						{renderSection('Dữ liệu trả về', record?.response)}
+					</Card>
+				</Pane>
+			</SplitPane>
 
 			<div className='form-footer'>
 				<Button onClick={() => setVisible(false)}>Đóng</Button>
