@@ -18,10 +18,11 @@ const TechnicalSupportBounder = (props: { children: React.ReactNode }) => {
 							onClick={() => setVisible(true)}
 							style={{
 								position: 'fixed',
-								bottom: 100,
-								right: 34,
+								bottom: 90,
+								right: 24,
 								zIndex: 10,
 								boxShadow: 'rgba(0, 0, 0, 0.2) 1px 1px 8px 3px',
+								padding: 0,
 							}}
 							shape='circle'
 							size='large'
