@@ -1,4 +1,6 @@
-import type { ESourceTypeNotification, EReceiverType, ENotificationSource } from './constant';
+import type { EVaiTroKhaoSat } from '@/services/TienIch/constant';
+import type { ENotificationSource, ESourceTypeNotification } from './constant';
+import { type EReceiverType } from './constant';
 
 declare module ThongBao {
 	export interface IRecord {
@@ -7,11 +9,19 @@ declare module ThongBao {
 		senderName: string;
 		sender?: string;
 		description?: string;
+		type?: string;
 		content?: string;
 		imageUrl?: string;
+		idTagEmail?: string;
 
+		tagEmail: {
+			_id: '65582e549dcae9f3309e415e';
+			ten: 'Thông báo trúng tuyển';
+			moTa: 'Đây là thông báo trúng tuyển';
+			__v: 0;
+		};
 		filter?: {
-			roles: EVaiTroBieuMau[];
+			roles: EVaiTroKhaoSat[];
 			idKhoaSinhVien: string;
 			idKhoa: string;
 			idNganh: string;
@@ -21,8 +31,6 @@ declare module ThongBao {
 		receiverType: EReceiverType;
 		users?: string[];
 
-		// oneSignalData?: any;
-		taiLieuDinhKem?: string[];
 		createdAt: string; // '2023-06-27T07:47:29.693Z';
 		read: boolean;
 
@@ -30,9 +38,63 @@ declare module ThongBao {
 		targetType?: ESourceTypeNotification;
 		notificationInternal: boolean;
 		thoiGianHieuLuc: Date;
+		taiLieuDinhKem: string[];
 
 		metadata?: TNotificationSource;
+
+		userList: IUser[];
+
+		oneSignalData?: string | null;
+		urlFile?: string[] | null;
 	}
+
+	export interface IThongKe {
+		tatCa: 20;
+		theoKhoaSinhVien: 4;
+		theoLopHanhChinh: 5;
+		theoLopHocPhan: 1823;
+		theoNganh: 2;
+		theoNguoiDung: 25;
+		theoTopic: 0;
+		theoKhoa: 2;
+	}
+
+	export interface IThongKeNguoiNhan {
+		chuaDoc: 54;
+		daDoc: 1;
+	}
+
+	export interface IUser {
+		ssoId: string;
+		code: string;
+		// firstname: string;
+		// lastname: string;
+		fullname: string;
+		username: string;
+		email: string;
+		email365: string;
+		maKhoaSinhVien: string;
+		maNganh: string;
+		vaiTro?: EVaiTroKhaoSat;
+		tenLopHanhChinh?: string;
+		trangThaiSinhVien?: string;
+		tenKhoaSinhVien?: string;
+		tenNganh?: string;
+
+		danToc?: string;
+		maDonVi?: string;
+		tenDonVi?: string;
+		idDonVi?: string;
+		trangThaiLamViec?: string;
+		gioiTinh?: string;
+	}
+
+	export type TReceiver = {
+		ssoId: string;
+		username: string;
+		fullname: string;
+		read?: boolean;
+	};
 
 	export type TNotificationSource = {
 		entityId?: string;

@@ -1,3 +1,5 @@
+import type { ThongBao } from './typing';
+
 export enum EReceiverType {
 	// Topic = 'Topic',
 	User = 'User',
@@ -12,17 +14,35 @@ export enum EReceiverType {
 export const LoaiDoiTuongThongBao: Partial<Record<EReceiverType, string>> = {
 	[EReceiverType.User]: 'Người dùng cụ thể',
 	[EReceiverType.All]: 'Toàn ' + APP_CONFIG_TIEN_TO_TRUONG,
-	[EReceiverType.Khoa]: 'Khoa',
+	[EReceiverType.Khoa]: 'Đơn vị',
 	[EReceiverType.KhoaSinhVien]: 'Khóa sinh viên',
 	[EReceiverType.Nganh]: 'Ngành đào tạo',
 	[EReceiverType.LopHanhChinh]: 'Lớp hành chính',
 	[EReceiverType.LopHocPhan]: 'Lớp học phần',
 };
 
+export const FieldLoaiDoiTuongThongBao: Partial<Record<EReceiverType, keyof ThongBao.IThongKe>> = {
+	[EReceiverType.All]: 'tatCa',
+	[EReceiverType.Khoa]: 'theoKhoa',
+	[EReceiverType.KhoaSinhVien]: 'theoKhoaSinhVien',
+	[EReceiverType.Nganh]: 'theoNganh',
+	[EReceiverType.LopHanhChinh]: 'theoLopHanhChinh',
+	[EReceiverType.LopHocPhan]: 'theoLopHocPhan',
+};
+
+export const ColorLoaiDoiTuongThongBao: Partial<Record<EReceiverType, string>> = {
+	[EReceiverType.All]: 'blue',
+	[EReceiverType.Khoa]: 'blue',
+	[EReceiverType.KhoaSinhVien]: 'blue',
+	[EReceiverType.Nganh]: 'blue',
+	[EReceiverType.LopHanhChinh]: 'blue',
+	[EReceiverType.LopHocPhan]: 'blue',
+};
+
 export enum NotificationType {
-	ONESIGNAL = 'OneSignalService',
-	EMAIL = 'Email',
-	ALL = 'All',
+	ONESIGNAL = 'OneSignalService', //Thông báo thường
+	EMAIL = 'Email', //Thông báo email
+	ALL = 'All', //Thông báo tất cả
 }
 
 export enum ESourceTypeNotification {
@@ -73,4 +93,14 @@ export enum ENotificationSource {
 /** Những URL/Source chỉ sử dụng trong phân hệ hiện tại */
 export const mapUrlNotifSource: Partial<Record<ENotificationSource, string>> = {
 	[ENotificationSource.LOP_HANH_CHINH]: 'xxx',
+};
+
+export enum EVaiTroKhaoSat {
+	SINH_VIEN = 'sinh_vien',
+	NHAN_VIEN = 'nhan_vien',
+}
+
+export const TenVaiTroKhaoSat = {
+	[EVaiTroKhaoSat.SINH_VIEN]: 'Sinh viên',
+	[EVaiTroKhaoSat.NHAN_VIEN]: 'Cán bộ, giảng viên',
 };
