@@ -1,7 +1,7 @@
 import useInitModel from '@/hooks/useInitModel';
 import { guiThongBaoDanhSach, importNguoiNhanThongBao } from '@/services/ThongBao';
+import type { EVaiTroKhaoSat } from '@/services/ThongBao/constant';
 import { type ThongBao } from '@/services/ThongBao/typing';
-import type { EVaiTroKhaoSat } from '@/services/TienIch/constant';
 import { ipNotif } from '@/utils/ip';
 import { useState } from 'react';
 

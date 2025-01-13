@@ -21,15 +21,7 @@ export default () => {
 			const params = {
 				page,
 				limit,
-				filters: [
-					...filters,
-					// {
-					// 	active: true,
-					// 	field: 'trangThai',
-					// 	operator: EOperatorType.INCLUDE,
-					// 	values: [ETrangThaiNhanSu.DANG_LAM_VIEC, ETrangThaiNhanSu.DA_BIET_PHAI],
-					// },
-				],
+				filters: filters,
 			};
 			const response = await postReceiver(payload, params);
 			setDanhSach(response?.data?.data?.result ?? []);
@@ -50,15 +42,7 @@ export default () => {
 			const params = {
 				page,
 				limit: 100,
-				filters: [
-					...filters,
-					// {
-					// 	active: true,
-					// 	field: 'trangThai',
-					// 	operator: EOperatorType.INCLUDE,
-					// 	values: [ETrangThaiNhanSu.DANG_LAM_VIEC, ETrangThaiNhanSu.DA_BIET_PHAI],
-					// },
-				],
+				filters: filters,
 			};
 			const response = await postReceiver(payload, params);
 			setDanhSachCanBo(response?.data?.data?.result ?? []);

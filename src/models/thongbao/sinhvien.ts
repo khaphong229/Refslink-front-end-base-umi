@@ -1,9 +1,6 @@
 import type { TFilter } from '@/components/Table/typing';
 import { postReceiver } from '@/services/ThongBao';
-import {
-	// ETrangThaiHocSv,
-	EVaiTroKhaoSat,
-} from '@/services/ThongBao/constant';
+import { EVaiTroKhaoSat } from '@/services/ThongBao/constant';
 import { type ThongBao } from '@/services/ThongBao/typing';
 import { useState } from 'react';
 
@@ -22,15 +19,7 @@ export default () => {
 			const params = {
 				page,
 				limit,
-				filters: [
-					...filters,
-					// {
-					// 	active: true,
-					// 	field: 'trangThaiHoc',
-					// 	operator: EOperatorType.NOT_INCLUDE,
-					// 	values: [ETrangThaiHocSv.THOI_HOC, ETrangThaiHocSv.BUOC_THOI_HOC],
-					// },
-				],
+				filters: filters,
 			};
 			const response = await postReceiver(payload, params);
 			setDanhSach(response?.data?.data?.result ?? []);
