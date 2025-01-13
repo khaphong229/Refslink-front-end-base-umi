@@ -1,3 +1,4 @@
+import { EModuleKey } from '../base/constant';
 import type { ThongBao } from './typing';
 
 export enum EReceiverType {
@@ -47,16 +48,16 @@ export enum NotificationType {
 
 export enum ESourceTypeNotification {
 	SLINK = 'SLINK',
-	TAI_CHINH = 'TAI_CHINH',
-	QLDT = 'QLDT',
-	VAN_PHONG_SO = 'VAN_PHONG_SO',
-	CONG_TAC_SINH_VIEN = 'CONG_TAC_SINH_VIEN',
 	CONG_CAN_BO = 'CONG_CAN_BO',
+	QLDT = 'QLDT',
 	TCNS = 'TCNS',
+	CONG_TAC_SINH_VIEN = 'CONG_TAC_SINH_VIEN',
+	VAN_PHONG_SO = 'VAN_PHONG_SO',
+	TAI_CHINH = 'TAI_CHINH',
 	KHAO_THI = 'KHAO_THI',
+	CSVC = 'CSVC',
 	NOTIFICATION = 'NOTIFICATION',
 	PORTAL = 'PORTAL',
-	CSVC = 'CSVC',
 }
 
 export const mapModuleKey: Partial<Record<ESourceTypeNotification, string>> = {
@@ -71,6 +72,20 @@ export const mapModuleKey: Partial<Record<ESourceTypeNotification, string>> = {
 	[ESourceTypeNotification.NOTIFICATION]: '',
 	[ESourceTypeNotification.PORTAL]: '',
 	[ESourceTypeNotification.CSVC]: 'co-so-vat-chat',
+};
+
+export const mapModuleKeyToSourceType: Partial<Record<EModuleKey, string>> = {
+	[EModuleKey.CONNECT]: ESourceTypeNotification.SLINK,
+	[EModuleKey.CONG_CAN_BO]: ESourceTypeNotification.CONG_CAN_BO,
+	[EModuleKey.QLDT]: ESourceTypeNotification.QLDT,
+	[EModuleKey.TCNS]: ESourceTypeNotification.TCNS,
+	[EModuleKey.CTSV]: ESourceTypeNotification.CONG_TAC_SINH_VIEN,
+	[EModuleKey.VPS]: ESourceTypeNotification.VAN_PHONG_SO,
+	[EModuleKey.TC]: ESourceTypeNotification.TAI_CHINH,
+	[EModuleKey.KT]: ESourceTypeNotification.KHAO_THI,
+	[EModuleKey.CSVC]: ESourceTypeNotification.CSVC,
+	[EModuleKey.QLKH]: '',
+	[EModuleKey.CORE]: '',
 };
 
 /** Danh mục tất cả các loại thông báo */

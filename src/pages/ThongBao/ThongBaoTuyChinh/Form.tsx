@@ -1,7 +1,9 @@
 import TinyEditor from '@/components/TinyEditor';
 import UploadFile from '@/components/Upload/UploadFile';
+import { AppModules } from '@/services/base/constant';
 import { dowLoadBieuMauNguoiNhan } from '@/services/ThongBao';
 import { EVaiTroKhaoSat, TenVaiTroKhaoSat } from '@/services/ThongBao/constant';
+import { currentRole } from '@/utils/ip';
 import rules from '@/utils/rules';
 import { resetFieldsForm } from '@/utils/utils';
 import { DownloadOutlined } from '@ant-design/icons';
@@ -44,7 +46,7 @@ const FormThongBaoTuyChinh = (props: any) => {
 			type,
 			values.title,
 			values.content,
-			APP_CONFIG_TITLE_KHAO_THI, //Thay đổi theo từng phân hệ
+			AppModules[currentRole].title,
 			values.vaiTroNguoiNhan,
 			'0',
 		)

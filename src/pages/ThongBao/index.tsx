@@ -3,10 +3,10 @@ import TableBase from '@/components/Table';
 import ButtonExtend from '@/components/Table/ButtonExtend';
 import { EOperatorType } from '@/components/Table/constant';
 import { type IColumn } from '@/components/Table/typing';
-import type { NotificationType } from '@/services/ThongBao/constant';
+import { NotificationType } from '@/services/ThongBao/constant';
 import { type ThongBao } from '@/services/ThongBao/typing';
 import { DeleteOutlined, EyeOutlined, LeftOutlined, PlusCircleOutlined, RightOutlined } from '@ant-design/icons';
-import { Button, DatePicker, Modal, Popconfirm, Segmented, Space, Tabs, Tooltip } from 'antd';
+import { Button, DatePicker, Modal, Popconfirm, Segmented, Space, Tabs } from 'antd';
 import moment from 'moment';
 import { useState } from 'react';
 import { useModel } from 'umi';
@@ -17,7 +17,7 @@ import ViewThongBao from './ViewThongBao/CardView';
 import TableReceiverThongBao from './ViewThongBao/TableReceiver';
 
 const ThongBaoPage = (props: { notiType: NotificationType }) => {
-	const { notiType } = props;
+	const { notiType = NotificationType.ONESIGNAL } = props; //Nếu sử dụng luôn, không truyền vào mặc định là thông báo thường
 	const {
 		page,
 		limit,
@@ -101,6 +101,14 @@ const ThongBaoPage = (props: { notiType: NotificationType }) => {
 			),
 		},
 		{
+			title: 'Nhãn dán',
+			dataIndex: 'idTagEmail',
+			width: 150,
+			render: (val, recordVal) => recordVal?.tagEmail?.ten,
+			onCell,
+			hide: notiType === NotificationType.ONESIGNAL,
+		},
+		{
 			title: 'Mô tả',
 			dataIndex: 'description',
 			width: 280,
@@ -141,31 +149,16 @@ const ThongBaoPage = (props: { notiType: NotificationType }) => {
 			fixed: 'right',
 			render: (recordThongBao: ThongBao.IRecord) => (
 				<>
-					<Tooltip title='Xem chi tiết'>
-						<Button
-							onClick={() => {
-								setRecord(recordThongBao);
-								setVisible(true);
-							}}
-							type='link'
-							icon={<EyeOutlined />}
-						/>
-					</Tooltip>
-					{/* <Tooltip title='Sửa'>
-						<Button
-							disabled={activeKey === 'tu_dong'}
-							onClick={() => {
-								setRecord(recordThongBao);
-								setEdit(true);
-								setVisibleForm(true);
-							}}
-							shape='circle'
-							type={'link'}
-							icon={<EditOutlined />}
-						/>
-					</Tooltip> */}
-					{/*<Divider type="vertical" />*/}
-					<Tooltip title='Xóa'>
+					<ButtonExtend
+						tooltip='Xem chi tiết'
+						onClick={() => {
+							setRecord(recordThongBao);
+							setVisible(true);
+						}}
+						type='link'
+						icon={<EyeOutlined />}
+					/>
+					{notiType === NotificationType.ONESIGNAL ? (
 						<Popconfirm
 							disabled={activeKey === 'tu_dong'}
 							onConfirm={() => {
@@ -173,9 +166,16 @@ const ThongBaoPage = (props: { notiType: NotificationType }) => {
 							}}
 							title='Bạn có chắc chắn muốn xóa?'
 						>
-							<Button disabled={activeKey === 'tu_dong'} shape='circle' type='link' danger icon={<DeleteOutlined />} />
+							<ButtonExtend
+								tooltip='Xóa'
+								disabled={activeKey === 'tu_dong'}
+								shape='circle'
+								type='link'
+								danger
+								icon={<DeleteOutlined />}
+							/>
 						</Popconfirm>
-					</Tooltip>
+					) : null}
 				</>
 			),
 		},
@@ -217,7 +217,7 @@ const ThongBaoPage = (props: { notiType: NotificationType }) => {
 			)}
 
 			<TableBase
-				title='Thông báo'
+				title={notiType === NotificationType.ONESIGNAL ? 'Thông báo' : 'Gửi Email'}
 				columns={columns}
 				modelName='thongbao.thongbao'
 				widthDrawer={1000}

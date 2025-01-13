@@ -1,8 +1,10 @@
 import ExpandText from '@/components/ExpandText';
 import TableStaticData from '@/components/Table/TableStaticData';
 import type { IColumn } from '@/components/Table/typing';
+import { AppModules } from '@/services/base/constant';
 import type { NotificationType } from '@/services/ThongBao/constant';
 import type { ThongBao } from '@/services/ThongBao/typing';
+import { currentRole } from '@/utils/ip';
 import { Button } from 'antd';
 import moment from 'moment';
 import { useModel } from 'umi';
@@ -23,7 +25,7 @@ const ConfirmThongBaoTuyChinh = (props: { getData: () => void; type: Notificatio
 			type,
 			recordThongBaoDanhSach.title,
 			recordThongBaoDanhSach.content,
-			APP_CONFIG_TITLE_KHAO_THI,
+			AppModules[currentRole].title,
 			recordThongBaoDanhSach.vaiTroNguoiNhan,
 			'1',
 			getData,

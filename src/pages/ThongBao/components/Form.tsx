@@ -2,12 +2,20 @@ import FormWaiting from '@/components/Loading/FormWaiting';
 import MyDatePicker from '@/components/MyDatePicker';
 import TinyEditor from '@/components/TinyEditor';
 import UploadFile from '@/components/Upload/UploadFile';
-import { EReceiverType, EVaiTroKhaoSat, LoaiDoiTuongThongBao, TenVaiTroKhaoSat } from '@/services/ThongBao/constant';
+import {
+	EReceiverType,
+	EVaiTroKhaoSat,
+	LoaiDoiTuongThongBao,
+	mapModuleKeyToSourceType,
+	NotificationType,
+	TenVaiTroKhaoSat,
+} from '@/services/ThongBao/constant';
 import { type ThongBao } from '@/services/ThongBao/typing';
 import { buildUpLoadFile, buildUpLoadMultiFile } from '@/services/uploadFile';
+import { currentRole } from '@/utils/ip';
 import rules from '@/utils/rules';
 import { resetFieldsForm } from '@/utils/utils';
-import { Button, Card, Col, Form, Input, Modal, Row, Segmented, Select, Tabs, message } from 'antd';
+import { Button, Card, Col, Form, Input, message, Modal, Row, Segmented, Select, Tabs } from 'antd';
 import { useEffect, useState } from 'react';
 import { useModel } from 'umi';
 import GroupTagVaiTro from './GroupTagVaiTro';
@@ -70,8 +78,7 @@ const FormThongBao = (props: any) => {
 			values.notificationInternal = false;
 
 			values.type = notiType;
-			//SourceType là phân hệ gửi thông báo
-			// values.sourceType = ESourceTypeNotification.VAN_PHONG_SO;
+			values.sourceType = mapModuleKeyToSourceType[currentRole];
 			delete values.loaiNguoiDung;
 
 			if (edit) {
@@ -100,14 +107,16 @@ const FormThongBao = (props: any) => {
 		<Card title={`${edit ? 'Chỉnh sửa' : 'Thêm mới'} ${title?.toLowerCase()}`}>
 			<Form layout='vertical' onFinish={onFinish} form={form}>
 				<Row gutter={[12, 0]}>
-					<Col span={24} md={6}>
-						<Form.Item name='imageUrl' label='Ảnh đại diện'>
-							<UploadFile isAvatarSmall />
-						</Form.Item>
-					</Col>
-					<Col span={24} md={18}>
-						<Row>
-							<Col span={24}>
+					{notiType === NotificationType.ONESIGNAL && (
+						<Col span={24} md={6}>
+							<Form.Item name='imageUrl' label='Ảnh đại diện'>
+								<UploadFile isAvatarSmall />
+							</Form.Item>
+						</Col>
+					)}
+					<Col span={24} md={notiType === NotificationType.ONESIGNAL ? 18 : 24}>
+						<Row gutter={[12, 0]}>
+							<Col span={notiType === NotificationType.ONESIGNAL ? 24 : 12}>
 								<Form.Item
 									name='title'
 									label='Tiêu đề'
@@ -116,6 +125,13 @@ const FormThongBao = (props: any) => {
 									<Input placeholder='Nhập tiêu đề' />
 								</Form.Item>
 							</Col>
+							{notiType === NotificationType.EMAIL && (
+								<Col span={12}>
+									<Form.Item name='idTagEmail' label='Nhãn dán' rules={[...rules.required]}>
+										{/* <SelectTag />  Tùy chỉnh trong từng phân hệ */}
+									</Form.Item>
+								</Col>
+							)}
 							<Col span={24}>
 								<Form.Item name='description' label='Mô tả' rules={[...rules.text, ...rules.length(500)]}>
 									<Input.TextArea rows={3} placeholder='Nhập mô tả' />
@@ -125,7 +141,11 @@ const FormThongBao = (props: any) => {
 					</Col>
 
 					<Col span={24} md={8}>
-						<Form.Item name='receiverType' label='Đối tượng nhận thông báo' rules={[...rules.required]}>
+						<Form.Item
+							name='receiverType'
+							label={notiType === NotificationType.ONESIGNAL ? 'Đối tượng nhận thông báo' : 'Đối tượng nhận email'}
+							rules={[...rules.required]}
+						>
 							<Select
 								options={Object.entries(LoaiDoiTuongThongBao)
 									.filter(([value]) => value !== EReceiverType.User)
@@ -180,7 +200,7 @@ const FormThongBao = (props: any) => {
 						</Col>
 					) : null}
 
-					{/* Tùy chính cho từng phân hệ */}
+					{/* Tùy chỉnh cho từng phân hệ */}
 					{/* {receiverType !== EReceiverType.All ? (
 						<Col span={24}>
 							<Form.Item name='danhSachDoiTuong' label={LoaiDoiTuongThongBao[receiverType]} rules={[...rules.required]}>
@@ -189,7 +209,7 @@ const FormThongBao = (props: any) => {
 								) : receiverType === EReceiverType.KhoaSinhVien ? (
 									<SelectKhoaSinhVien multiple />
 								) : receiverType === EReceiverType.LopHanhChinh ? (
-									<SelectLopHanhChinhDebounce multiple keyValue='_id' />
+									<SelectLopHanhChinhDebounce multiple />
 								) : receiverType === EReceiverType.LopHocPhan ? (
 									<SelectLopHocPhanDebounce multiple />
 								) : receiverType === EReceiverType.Nganh ? (
@@ -232,7 +252,13 @@ const FormThongBao = (props: any) => {
 					) : null}
 
 					<Col span={24}>
-						<Form.Item name='content' label='Nội dung chi tiết thông báo' rules={[...rules.requiredHtml]}>
+						<Form.Item
+							name='content'
+							label={
+								notiType === NotificationType.ONESIGNAL ? 'Nội dung chi tiết thông báo' : 'Nội dung chi tiết email'
+							}
+							rules={[...rules.requiredHtml]}
+						>
 							<TinyEditor height={300} hideMenubar />
 						</Form.Item>
 					</Col>
