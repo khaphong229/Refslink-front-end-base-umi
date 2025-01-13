@@ -10,7 +10,9 @@ export default () => {
 	const [page, setPage] = useState<number>(1);
 	const [limit, setLimit] = useState<number>(10);
 	const [total, setTotal] = useState<number>(0);
-	const [filters, setFilters] = useState<TFilter<ThongBao.IUser>[]>([]);
+	const [filters, setFilters] = useState<TFilter<ThongBao.IUser>[]>([
+		// Nên để mặc đinh trang thái nhân sự là Đang học
+	]);
 
 	const getModel = async (danhSachDoiTuong?: Record<string, string[]>): Promise<ThongBao.IUser[]> => {
 		setLoading(true);
@@ -19,7 +21,7 @@ export default () => {
 			const params = {
 				page,
 				limit,
-				filters: filters,
+				filters: [...(filters || [])],
 			};
 			const response = await postReceiver(payload, params);
 			setDanhSach(response?.data?.data?.result ?? []);

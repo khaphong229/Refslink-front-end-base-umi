@@ -2,7 +2,6 @@ import type { TFilter } from '@/components/Table/typing';
 import { postReceiver } from '@/services/ThongBao';
 import { EVaiTroKhaoSat } from '@/services/ThongBao/constant';
 import { type ThongBao } from '@/services/ThongBao/typing';
-
 import { useState } from 'react';
 
 export default () => {
@@ -12,7 +11,9 @@ export default () => {
 	const [page, setPage] = useState<number>(1);
 	const [limit, setLimit] = useState<number>(10);
 	const [total, setTotal] = useState<number>(0);
-	const [filters, setFilters] = useState<TFilter<ThongBao.IUser>[]>([]);
+	const [filters, setFilters] = useState<TFilter<ThongBao.IUser>[]>([
+		// Nên để mặc đinh trang thái nhân sự là Đang làm việc
+	]);
 
 	const getModel = async (danhSachDoiTuong?: Record<string, string[]>): Promise<ThongBao.IUser[]> => {
 		setLoading(true);
@@ -21,7 +22,7 @@ export default () => {
 			const params = {
 				page,
 				limit,
-				filters: filters,
+				filters: [...(filters || [])],
 			};
 			const response = await postReceiver(payload, params);
 			setDanhSach(response?.data?.data?.result ?? []);
@@ -41,8 +42,8 @@ export default () => {
 			const payload = { role: EVaiTroKhaoSat.NHAN_VIEN, canBoChuChot: true, ...(danhSachDoiTuong ?? {}) };
 			const params = {
 				page,
-				limit: 100,
-				filters: filters,
+				limit: 150,
+				filters: [...(filters || [])],
 			};
 			const response = await postReceiver(payload, params);
 			setDanhSachCanBo(response?.data?.data?.result ?? []);

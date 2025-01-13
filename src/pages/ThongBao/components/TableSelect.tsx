@@ -106,6 +106,27 @@ const TableSelectUser = (props: {
 			width: 180,
 			onCell,
 		},
+		type === EVaiTroKhaoSat.SINH_VIEN
+			? {
+					title: 'Trạng thái học',
+					dataIndex: 'trangThaiHoc',
+					align: 'center',
+					width: 120,
+					// filterType: 'select',
+					// filterData: Object.values(ETrangThaiHocSv),
+					// render: (val, rec) => <Tag color={colorTrangThaiHocSv[val as ETrangThaiHocSv]}>{val}</Tag>,
+					onCell,
+			  }
+			: {
+					title: 'Trạng thái',
+					dataIndex: 'trangThai',
+					align: 'center',
+					width: 120,
+					// filterType: 'select',
+					// filterData: Object.values(ETrangThaiNhanSu),
+					// render: (val, rec) => <Tag color={MapColorETrangThaiNhanSu[val as ETrangThaiNhanSu]}>{val}</Tag>,
+					onCell,
+			  },
 	];
 
 	return (

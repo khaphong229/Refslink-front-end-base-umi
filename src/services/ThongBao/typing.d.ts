@@ -87,6 +87,9 @@ declare module ThongBao {
 		idDonVi?: string;
 		trangThaiLamViec?: string;
 		gioiTinh?: string;
+
+		trangThaiHoc?: string; //Lấy Enum từ các phân hệ
+		trangThai?: string; //Lấy Enum từ các phân hệ
 	}
 
 	export type TReceiver = {
