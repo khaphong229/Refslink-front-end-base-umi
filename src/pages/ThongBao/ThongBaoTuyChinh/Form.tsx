@@ -92,7 +92,28 @@ const FormThongBaoTuyChinh = (props: any) => {
 						<UploadFile maxCount={1} />
 					</Form.Item>
 				</Col>
-				<Form.Item name='content' label='Nội dung chi tiết thông báo' rules={[...rules.requiredHtml]}>
+				<Form.Item
+					name='content'
+					label='Nội dung chi tiết thông báo'
+					rules={[...rules.requiredHtml]}
+					extra={
+						<div>
+							<p>Hướng dẫn:</p>
+							<ul style={{ margin: 0, paddingLeft: '20px', marginTop: -10 }}>
+								<li>
+									Các giá trị trong cú pháp <strong>{'{{..}}'}</strong> tương ứng với tên cột trong file Excel bạn tải
+									lên.
+								</li>
+								<li>Đảm bảo file Excel có tiêu đề cột chính xác và đầy đủ ở hàng đầu tiên (A1, B1, ...).</li>
+								<li>
+									Ví dụ: Nếu file Excel có cột <strong>HOTEN</strong>, bạn có thể sử dụng <strong>{'{{HOTEN}}'}</strong>{' '}
+									để hiển thị giá trị từ cột đó.
+								</li>
+								<li>Hãy kiểm tra file Excel để tránh lỗi trong quá trình xử lý.</li>
+							</ul>
+						</div>
+					}
+				>
 					<TinyEditor height={300} hideMenubar />
 				</Form.Item>
 			</Row>
