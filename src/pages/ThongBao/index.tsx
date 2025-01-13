@@ -3,10 +3,10 @@ import TableBase from '@/components/Table';
 import ButtonExtend from '@/components/Table/ButtonExtend';
 import { EOperatorType } from '@/components/Table/constant';
 import { type IColumn } from '@/components/Table/typing';
-import { NotificationType } from '@/services/ThongBao/constant';
+import type { NotificationType } from '@/services/ThongBao/constant';
 import { type ThongBao } from '@/services/ThongBao/typing';
 import { DeleteOutlined, EyeOutlined, LeftOutlined, PlusCircleOutlined, RightOutlined } from '@ant-design/icons';
-import { Button, Card, DatePicker, Modal, Popconfirm, Segmented, Space, Tabs, Tooltip } from 'antd';
+import { Button, DatePicker, Modal, Popconfirm, Segmented, Space, Tabs, Tooltip } from 'antd';
 import moment from 'moment';
 import { useState } from 'react';
 import { useModel } from 'umi';
@@ -67,7 +67,7 @@ const ThongBaoPage = (props: { notiType: NotificationType }) => {
 		getModel(
 			{
 				notificationInternal: activeKey === 'tu_dong',
-				type: NotificationType.ONESIGNAL,
+				type: notiType,
 			},
 			[{ active: true, field: 'createdAt', operator: EOperatorType.BETWEEN, values: value }],
 		);
@@ -182,7 +182,7 @@ const ThongBaoPage = (props: { notiType: NotificationType }) => {
 	];
 
 	return (
-		<Card title='Thông báo'>
+		<>
 			<Tabs activeKey={activeKey} onChange={(value) => setActiveKey(value.toString())}>
 				<Tabs.TabPane tab='Ban hành thông báo' key='ban_hanh' />
 				<Tabs.TabPane tab='Thông báo tự động' key='tu_dong' />
@@ -317,7 +317,7 @@ const ThongBaoPage = (props: { notiType: NotificationType }) => {
 			</Modal>
 
 			<CardFormThongBaoTuyChinh getData={getData} type={notiType} />
-		</Card>
+		</>
 	);
 };
 
