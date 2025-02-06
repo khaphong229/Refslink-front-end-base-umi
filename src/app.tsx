@@ -116,9 +116,9 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
 		childrenRender: (dom) => (
 			<OIDCBounder>
 				<ErrorBoundary>
-					<TechnicalSupportBounder>
-						<OneSignalBounder>{dom}</OneSignalBounder>
-					</TechnicalSupportBounder>
+					{/* <TechnicalSupportBounder> */}
+					<OneSignalBounder>{dom}</OneSignalBounder>
+					{/* </TechnicalSupportBounder> */}
 				</ErrorBoundary>
 			</OIDCBounder>
 		),

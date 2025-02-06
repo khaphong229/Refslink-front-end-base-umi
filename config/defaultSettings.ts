@@ -6,7 +6,7 @@ const Settings: LayoutSettings & {
 	borderRadiusBase: string;
 	siderWidth: number;
 } = {
-	navTheme: 'dark',
+	navTheme: 'light',
 	primaryColor: process.env.APP_CONFIG_PRIMARY_COLOR,
 	borderRadiusBase: '2px',
 	layout: 'mix',
@@ -14,11 +14,11 @@ const Settings: LayoutSettings & {
 	fixedHeader: false,
 	fixSiderbar: true,
 	colorWeak: false,
-	title: process.env.APP_CONFIG_TITLE_NHAN_SU ?? '',
+	title: 'LẬP TRÌNH WEB - RIPT',
 	pwa: false,
 	logo: '/logo.png',
 	iconfontUrl: '',
-	headerTheme: 'dark',
+	headerTheme: 'light',
 	headerHeight: 60,
 	siderWidth: 220,
 };

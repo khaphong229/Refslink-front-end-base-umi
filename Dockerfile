@@ -5,7 +5,7 @@ FROM node:16-alpine AS development
 # Set environment variables
 ENV APP_CONFIG_IP_ROOT=https://gw.ript.vn/
 ENV APP_CONFIG_ONE_SIGNAL_ID=f3857a81-2891-49be-87a7-903a4a1a54be
-ENV APP_CONFIG_SENTRY_DSN=https://75869bc5882ff3efdc90da60fc2e9e10@sentry.aisoftech.vn/7
+ENV APP_CONFIG_SENTRY_DSN=
 ENV APP_CONFIG_KEYCLOAK_AUTHORITY=https://sso.ript.vn/realms/ript
 ENV APP_CONFIG_PREFIX_OF_KEYCLOAK_CLIENT_ID=ript-
 ENV APP_CONFIG_APP_VERSION=231115

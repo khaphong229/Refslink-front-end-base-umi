@@ -37,7 +37,7 @@
     "serve": "umi-serve",
     "tsc": "tsc --noEmit",
     "prepare": "husky install",
-    "sentry:sourcemaps": "sentry-cli sourcemaps inject --org aisoft --project sentry-ript build && sentry-cli --url https://sentry.aisoftech.vn/ sourcemaps upload --org aisoft --project sentry-ript build"
+    "sentry:sourcemaps": ""
   },
   "lint-staged": {
     "**/*.less": "stylelint --syntax less",
