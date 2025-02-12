@@ -8,6 +8,7 @@ const RandomUser = () => {
 	const [visible, setVisible] = useState<boolean>(false);
 	const [isEdit, setIsEdit] = useState<boolean>(false);
 	const [row, setRow] = useState<RandomUser.Record>();
+
 	useEffect(() => {
 		getDataUser();
 	}, []);
@@ -26,7 +27,7 @@ const RandomUser = () => {
 			width: 100,
 		},
 		{
-			title: 'Sửa/xóa',
+			title: 'Action',
 			width: 200,
 			align: 'center',
 			render: (record) => {
@@ -39,7 +40,7 @@ const RandomUser = () => {
 								setIsEdit(true);
 							}}
 						>
-							Sửa
+							Edit
 						</Button>
 						<Button
 							style={{ marginLeft: 10 }}
@@ -51,7 +52,7 @@ const RandomUser = () => {
 							}}
 							type='primary'
 						>
-							Xóa
+							Delete
 						</Button>
 					</div>
 				);
@@ -110,9 +111,9 @@ const RandomUser = () => {
 					</Form.Item>
 					<div className='form-footer'>
 						<Button htmlType='submit' type='primary'>
-							{isEdit ? 'Chỉnh sửa' : 'Thêm mới'}
+							{isEdit ? 'Save' : 'Insert'}
 						</Button>
-						<Button onClick={() => setVisible(false)}>Hủy</Button>
+						<Button onClick={() => setVisible(false)}>Cancel</Button>
 					</div>
 				</Form>
 			</Modal>
