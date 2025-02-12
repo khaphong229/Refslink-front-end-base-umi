@@ -5,8 +5,14 @@ export default () => {
 	const [data, setData] = useState([]);
 
 	const getDataUser = async () => {
-		const res = await getData();
-		setData(res?.data ?? []);
+		const dataLocal: any = JSON.parse(localStorage.getItem('data') as any);
+		if (!dataLocal?.length) {
+			const res = await getData();
+			localStorage.setItem('data', JSON.stringify(res?.data ?? []));
+			setData(res?.data ?? []);
+			return;
+		}
+		setData(dataLocal);
 	};
 
 	return {
