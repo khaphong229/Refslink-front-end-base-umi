@@ -20,6 +20,12 @@
 	// DEFAULT MENU
 	{
 		path: '/dashboard',
+		name: 'Rút gọn link mới',
+		component: './TrangChu',
+		icon: 'HomeOutlined',
+	},
+	{
+		path: '/dashboard',
 		name: 'Dashboard',
 		component: './TrangChu',
 		icon: 'HomeOutlined',
