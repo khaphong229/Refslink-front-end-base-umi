@@ -1,13 +1,28 @@
-﻿export default [
+import { layout } from '@/app';
+import component from '@/locales/en-US/component';
+
+export default [
 	{
-		path: '/user',
+		path: '/',
 		layout: false,
 		routes: [
 			{
-				path: '/user/login',
+				path: '/login',
 				layout: false,
 				name: 'login',
 				component: './user/Login',
+			},
+			{
+				path: '/register',
+				layout: false,
+				name: 'register',
+				component: './user/Register',
+			},
+			{
+				path: '/auth/verify-email/:token',
+				layout: false,
+				name: 'authentication',
+				component: './user/Auth',
 			},
 			{
 				path: '/user',
@@ -18,6 +33,12 @@
 
 	///////////////////////////////////
 	// DEFAULT MENU
+	{
+		path: '/dashboard',
+		name: 'Rút gọn link mới',
+		component: './TrangChu',
+		icon: 'HomeOutlined',
+	},
 	{
 		path: '/dashboard',
 		name: 'Dashboard',
@@ -36,20 +57,6 @@
 		component: './RandomUser',
 		icon: 'ArrowsAltOutlined',
 	},
-
-	// DANH MUC HE THONG
-	// {
-	// 	name: 'DanhMuc',
-	// 	path: '/danh-muc',
-	// 	icon: 'copy',
-	// 	routes: [
-	// 		{
-	// 			name: 'ChucVu',
-	// 			path: 'chuc-vu',
-	// 			component: './DanhMuc/ChucVu',
-	// 		},
-	// 	],
-	// },
 
 	{
 		path: '/notification',
