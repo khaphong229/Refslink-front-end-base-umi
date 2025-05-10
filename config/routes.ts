@@ -1,10 +1,10 @@
 ﻿export default [
 	{
-		path: '/user',
+		path: '/',
 		layout: false,
 		routes: [
 			{
-				path: '/user/login',
+				path: '/login',
 				layout: false,
 				name: 'login',
 				component: './user/Login',
@@ -43,19 +43,6 @@
 		icon: 'ArrowsAltOutlined',
 	},
 
-	// DANH MUC HE THONG
-	// {
-	// 	name: 'DanhMuc',
-	// 	path: '/danh-muc',
-	// 	icon: 'copy',
-	// 	routes: [
-	// 		{
-	// 			name: 'ChucVu',
-	// 			path: 'chuc-vu',
-	// 			component: './DanhMuc/ChucVu',
-	// 		},
-	// 	],
-	// },
 
 	{
 		path: '/notification',
