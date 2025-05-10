@@ -94,9 +94,16 @@ const Login: React.FC = () => {
 				<div className={styles.main}>
 					<Tabs activeKey={type} onChange={setType}>
 						<Tabs.TabPane
+							key='email'
+							tab={intl.formatMessage({
+								id: 'pages.lggin.accountLogin.emailTab',
+								defaultMessage: 'tab',
+							})}
+						/>
+						<Tabs.TabPane
 							key='account'
 							tab={intl.formatMessage({
-								id: 'pages.login.accountLogin.tab',
+								id: 'pages.login.accountLogin.googleTab',
 								defaultMessage: 'tab',
 							})}
 						/>
@@ -111,7 +118,7 @@ const Login: React.FC = () => {
 
 					{type === 'account' ? (
 						<LoginWithKeycloak />
-					) : type === 'accountAdmin' ? (
+					) : type === 'email' ? (
 						<Form
 							form={form}
 							onFinish={async (values) => handleSubmit(values as { login: string; password: string })}
