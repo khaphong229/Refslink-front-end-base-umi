@@ -1,4 +1,6 @@
-﻿export default [
+﻿import { layout } from "@/app";
+
+export default [
 	{
 		path: '/',
 		layout: false,
@@ -8,6 +10,12 @@
 				layout: false,
 				name: 'login',
 				component: './user/Login',
+			},
+			{
+				path:'/register',
+				layout:false,
+				name:'register',
+				component:'./user/Register'
 			},
 			{
 				path: '/user',
