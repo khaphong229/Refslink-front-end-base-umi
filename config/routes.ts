@@ -1,4 +1,5 @@
 ﻿import { layout } from "@/app";
+import component from "@/locales/en-US/component";
 
 export default [
 	{
@@ -17,6 +18,13 @@ export default [
 				name:'register',
 				component:'./user/Register'
 			},
+			{
+				path:'/auth/verify-email/:token',
+				layout:false,
+				name:"authentication",
+				component:'./user/Auth'
+			}
+			,
 			{
 				path: '/user',
 				redirect: '/user/login',

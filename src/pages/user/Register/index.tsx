@@ -16,6 +16,7 @@ import {
 } from '@ant-design/icons';
 import './style.less';
 import { useHistory } from 'react-router';
+ import { Register, RegisterPayload } from '@/services/Auth';
 
 const { Option } = Select;
 
@@ -38,26 +39,36 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
     history.push("/login")
   }
 
-  const handleSubmit = async (values: any) => {
-    try {
-      setSubmitting(true);
-      // Here you would typically send the registration request to your API
-      // const response = await registerApi(values);
-      
-      // Simulating API call with timeout
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      message.success('Đăng ký tài khoản thành công!');
-      
+
+
+const handleSubmit = async (values: any) => {
+  try {
+    setSubmitting(true);
+
+    const payload: RegisterPayload = {
+      name: values.name,
+      email: values.email,
+      password: values.password,
+    };
+
+    const res = await Register(payload);
+
+    if (res.status === 200) {
+      message.success('Đăng ký tài khoản thành công! Vui lòng kiểm tra email để xác thực.');
       if (onSuccess) {
         onSuccess(values);
       }
-    } catch (error) {
-      message.error('Đăng ký thất bại. Vui lòng thử lại sau.');
-    } finally {
-      setSubmitting(false);
+      history.push("/login");
+    } else {
+      message.error(res.data.message || 'Đăng ký thất bại. Vui lòng thử lại sau.');
     }
-  };
+  } catch (error: any) {
+    message.error(error.response?.data?.message || 'Đăng ký thất bại. Vui lòng thử lại sau.');
+  } finally {
+    setSubmitting(false);
+  }
+};
+
 
   return (
     <div className="register-container">
@@ -73,7 +84,7 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
           onFinish={handleSubmit}
         >
           <Form.Item
-            name="fullName"
+            name="name"
             rules={[{ required: true, message: 'Vui lòng nhập họ và tên!' }]}
           >
             <Input
@@ -94,26 +105,6 @@ const RegisterForm: React.FC<RegisterFormProps> = ({
               prefix={<MailOutlined className="site-form-item-icon" />}
               placeholder="Email"
               size="large"
-            />
-          </Form.Item>
-          
-          <Form.Item
-            name="phone"
-            rules={[{ required: true, message: 'Vui lòng nhập số điện thoại!' }]}
-          >
-            <Input
-              prefix={<PhoneOutlined className="site-form-item-icon" />}
-              placeholder="Số điện thoại"
-              size="large"
-              addonBefore={
-                <Form.Item name="prefix" noStyle>
-                  <Select style={{ width: 70 }}>
-                    <Option value="84">+84</Option>
-                    <Option value="86">+86</Option>
-                    <Option value="1">+1</Option>
-                  </Select>
-                </Form.Item>
-              }
             />
           </Form.Item>
           
