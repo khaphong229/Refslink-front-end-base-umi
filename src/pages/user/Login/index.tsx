@@ -3,6 +3,8 @@ import { Form, Input, Button, Checkbox, message } from 'antd';
 import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import './index.less';
 import { useHistory } from 'react-router-dom';
+import axios from 'axios';
+import { loginApi } from '@/services/Auth';
 
 interface LoginFormProps {
 	onSuccess?: (values: any) => void;
@@ -25,6 +27,15 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onRegisterClick, onFor
 			// Here you would typically send the login request to your API
 			// const response = await loginApi(values.username, values.password);
 
+			const response = await loginApi({
+				email:values.email,
+				password: values.password
+			})
+
+
+			localStorage.setItem('access_token',response.access_token)
+
+
 			// Simulating API call with timeout
 			await new Promise((resolve) => setTimeout(resolve, 1000));
 
@@ -33,6 +44,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onRegisterClick, onFor
 			if (onSuccess) {
 				onSuccess(values);
 			}
+			history.push('/dashboard')
 		} catch (error) {
 			message.error('Đăng nhập thất bại. Vui lòng kiểm tra lại tên đăng nhập và mật khẩu.');
 		} finally {
@@ -53,8 +65,8 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onRegisterClick, onFor
 					initialValues={{ remember: true }}
 					onFinish={handleSubmit}
 				>
-					<Form.Item name='username' rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập!' }]}>
-						<Input prefix={<UserOutlined className='site-form-item-icon' />} placeholder='Tên đăng nhập' size='large' />
+					<Form.Item name='email' rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập!' }]}>
+						<Input prefix={<UserOutlined className='site-form-item-icon' />} placeholder='Email đăng nhập' size='large' />
 					</Form.Item>
 
 					<Form.Item name='password' rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}>
