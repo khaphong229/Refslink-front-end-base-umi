@@ -57,23 +57,6 @@ export default [
 		component: './RandomUser',
 		icon: 'ArrowsAltOutlined',
 	},
-<<<<<<< HEAD
-
-	// DANH MUC HE THONG
-	// {
-	// 	name: 'DanhMuc',
-	// 	path: '/danh-muc',
-	// 	icon: 'copy',
-	// 	routes: [
-	// 		{
-	// 			name: 'ChucVu',
-	// 			path: 'chuc-vu',
-	// 			component: './DanhMuc/ChucVu',
-	// 		},
-	// 	],
-	// },
-=======
->>>>>>> f6b1d12827259a3599447dfc5a99a93446ba5e2a
 
 	{
 		path: '/notification',
