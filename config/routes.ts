@@ -1,6 +1,6 @@
-﻿
-﻿import { layout } from "@/app";
-import component from "@/locales/en-US/component";
+﻿import { layout } from '@/app';
+import component from '@/locales/en-US/component';
+import { icons } from 'antd/lib/image/PreviewGroup';
 
 export default [
 	{
@@ -14,18 +14,29 @@ export default [
 				component: './user/Login',
 			},
 			{
-				path:'/register',
-				layout:false,
-				name:'register',
-				component:'./user/Register'
+				path: '/register',
+				layout: false,
+				name: 'register',
+				component: './user/Register',
 			},
 			{
-				path:'/auth/verify-email/:token',
-				layout:false,
-				name:"authentication",
-				component:'./user/Auth'
-			}
-			,
+				path: '/auth/verify-email/:token',
+				layout: false,
+				name: 'authentication',
+				component: './user/Auth',
+			},
+			{
+				path: '/links',
+				name: 'Quản lý link',
+				component: './LinkManagement',
+				layout: false,
+			},
+			{
+				path: '/popular-link',
+				name: 'Top link',
+				component: './Popular',
+				layout: false,
+			},
 			{
 				path: '/user',
 				redirect: '/user/login',
@@ -37,15 +48,15 @@ export default [
 	// DEFAULT MENU
 	{
 		path: '/dashboard',
-		name: 'Rút gọn link mới',
+		name: 'Thống kê',
 		component: './TrangChu',
 		icon: 'HomeOutlined',
 	},
 	{
-		path: '/dashboard',
-		name: 'Dashboard',
-		component: './TrangChu',
-		icon: 'HomeOutlined',
+		path: '/links',
+		name: 'Quản lý link',
+		component: './LinkManagement',
+		icon: 'FormOutlined',
 	},
 	{
 		path: '/gioi-thieu',
@@ -54,12 +65,29 @@ export default [
 		hideInMenu: true,
 	},
 	{
-		path: '/random-user',
-		name: 'RandomUser',
-		component: './RandomUser',
-		icon: 'ArrowsAltOutlined',
+		path: '/popular-link',
+		name: 'Top link',
+		component: './Popular',
+		icon:'BarChartOutlined'
 	},
-
+	{
+		path :'/withdraws',
+		name:'Rút tiền',
+		component:'./Withdraw',
+		icon:'DollarOutlined'
+	},
+	{
+		path:'/settings',
+		name:'Cài đặt',
+		component:'./Setting',
+		icon: 'SettingOutlined'
+	},
+	{
+		path:'/support',
+		name:'Hỗ trợ',
+		component:'./Support',
+		icon: 'UserDeleteOutlined'
+	},
 
 	{
 		path: '/notification',
