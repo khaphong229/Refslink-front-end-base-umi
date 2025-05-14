@@ -1,6 +1,7 @@
 export default {
 	'pages.layouts.userLayout.title': 'HỆ THỐNG ĐÀO TẠO TRỰC TUYẾN',
-	'pages.login.accountLogin.tab': 'Tài khoản người dùng',
+	'pages.lggin.accountLogin.emailTab': 'Tài khoản E-mail',
+	'pages.login.accountLogin.googleTab': 'Tài khoản Google',
 	'pages.login.accountLoginAdmin.tab': 'Tài khoản quản trị viên',
 	'pages.login.accountRegister.tab': 'Đăng ký tài khoản',
 	'pages.login.accountLogin.errorMessage': 'Incorrect username/password（admin/ant.design)',

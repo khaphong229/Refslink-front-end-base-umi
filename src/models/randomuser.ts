@@ -13,7 +13,11 @@ export default () => {
 			const res = await getData();
 			localStorage.setItem('data', JSON.stringify(res?.data ?? []));
 			setData(res?.data ?? []);
+<<<<<<< HEAD
 			return;
+=======
+			return; 
+>>>>>>> f6b1d12827259a3599447dfc5a99a93446ba5e2a
 		}
 		setData(dataLocal);
 	};

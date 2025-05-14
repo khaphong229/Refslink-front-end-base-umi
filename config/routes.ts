@@ -1,13 +1,28 @@
-﻿export default [
+import { layout } from '@/app';
+import component from '@/locales/en-US/component';
+
+export default [
 	{
-		path: '/user',
+		path: '/',
 		layout: false,
 		routes: [
 			{
-				path: '/user/login',
+				path: '/login',
 				layout: false,
 				name: 'login',
 				component: './user/Login',
+			},
+			{
+				path: '/register',
+				layout: false,
+				name: 'register',
+				component: './user/Register',
+			},
+			{
+				path: '/auth/verify-email/:token',
+				layout: false,
+				name: 'authentication',
+				component: './user/Auth',
 			},
 			{
 				path: '/user',
@@ -42,6 +57,7 @@
 		component: './RandomUser',
 		icon: 'ArrowsAltOutlined',
 	},
+<<<<<<< HEAD
 
 	// DANH MUC HE THONG
 	// {
@@ -56,6 +72,8 @@
 	// 		},
 	// 	],
 	// },
+=======
+>>>>>>> f6b1d12827259a3599447dfc5a99a93446ba5e2a
 
 	{
 		path: '/notification',

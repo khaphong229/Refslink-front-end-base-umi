@@ -16,7 +16,7 @@ const Settings: LayoutSettings & {
 	colorWeak: false,
 	title: 'REFSLINK',
 	pwa: false,
-	logo: '/logo.png',
+	logo: '/logoUrl.png',
 	iconfontUrl: '',
 	headerTheme: 'light',
 	headerHeight: 60,
