@@ -12,6 +12,7 @@ interface LoginFormProps {
 	loading?: boolean;
 }
 
+
 const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onRegisterClick, onForgotPassword, loading = false }) => {
 	const [form] = Form.useForm();
 	const history = useHistory();

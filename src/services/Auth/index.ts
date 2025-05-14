@@ -22,6 +22,11 @@ export interface LoginResponse {
   auth_type: string;
 }
 
+export const Register = async(data:RegisterPayload) => {
+  const response = await axios.post(`${API_URL}/register`,data)
+  return response.data
+}
+
 export const loginApi = async(data:LoginRequest): Promise<LoginResponse> =>{
   const response = await axios.post<LoginResponse>(`${API_URL}/login`,data)
   return response.data
