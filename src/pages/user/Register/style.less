@@ -1,0 +1,224 @@
+/* index.less */
+
+// Variables
+@primary-color: #1890ff;
+@text-color: rgba(0, 0, 0, 0.85);
+@heading-color: rgba(0, 0, 0, 0.85);
+@layout-body-background: #f0f2f5;
+@border-radius-base: 4px;
+@success-color: #52c41a;
+@error-color: #f5222d;
+@box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+
+// Mixins
+.transition(@property: all, @duration: 0.3s, @timing: ease-in-out) {
+  transition: @property @duration @timing;
+}
+
+// Shared form styles - can be used by both login and register forms
+.form-container-base() {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: @layout-body-background;
+  padding: 20px;
+}
+
+.form-wrapper-base() {
+  width: 100%;
+  max-width: 400px;
+  background-color: white;
+  padding: 32px;
+  border-radius: @border-radius-base;
+  box-shadow: @box-shadow;
+}
+
+.form-title-base() {
+  font-size: 24px;
+  font-weight: bold;
+  color: @heading-color;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.form-subtitle-base() {
+  font-size: 14px;
+  color: rgba(0, 0, 0, 0.45);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.form-button-base() {
+  width: 100%;
+  height: 42px;
+  font-weight: 500;
+  font-size: 16px;
+  border-radius: @border-radius-base;
+  .transition();
+  
+  &:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 8px rgba(24, 144, 255, 0.35);
+  }
+  
+  &:active {
+    transform: translateY(0);
+  }
+}
+
+.social-divider() {
+  position: relative;
+  text-align: center;
+  margin: 16px 0;
+  
+  &:before, &:after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    width: calc(50% - 60px);
+    height: 1px;
+    background-color: #e8e8e8;
+  }
+  
+  &:before {
+    left: 0;
+  }
+  
+  &:after {
+    right: 0;
+  }
+  
+  span {
+    display: inline-block;
+    padding: 0 16px;
+    background-color: white;
+    position: relative;
+    color: rgba(0, 0, 0, 0.45);
+  }
+}
+
+// Login form specific styles
+.login-container {
+  .form-container-base();
+}
+
+.login-form-wrapper {
+  .form-wrapper-base();
+}
+
+.login-title {
+  .form-title-base();
+}
+
+.login-subtitle {
+  .form-subtitle-base();
+}
+
+.login-form {
+  .ant-form-item {
+    margin-bottom: 20px;
+  }
+  
+  .site-form-item-icon {
+    color: rgba(0, 0, 0, 0.25);
+  }
+  
+  .login-form-forgot {
+    float: right;
+    padding: 0;
+    height: auto;
+  }
+  
+  .login-form-button {
+    .form-button-base();
+  }
+  
+  .login-form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  .login-form-register {
+    text-align: center;
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+}
+
+// Register form specific styles
+.register-container {
+  .form-container-base();
+}
+
+.register-form-wrapper {
+  .form-wrapper-base();
+}
+
+.register-title {
+  .form-title-base();
+}
+
+.register-subtitle {
+  .form-subtitle-base();
+}
+
+.register-form {
+  .ant-form-item {
+    margin-bottom: 20px;
+  }
+  
+  .site-form-item-icon {
+    color: rgba(0, 0, 0, 0.25);
+  }
+  
+  .register-form-button {
+    .form-button-base();
+  }
+  
+  .register-form-login {
+    text-align: center;
+    margin-top: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .register-social {
+    .register-social-divider {
+      .social-divider();
+    }
+    
+    .register-google-button {
+      background-color: #fff;
+      color: rgba(0, 0, 0, 0.65);
+      border-color: #d9d9d9;
+      margin-bottom: 12px;
+      
+      svg {
+        margin-right: 8px;
+      }
+      
+      &:hover {
+        color: rgba(0, 0, 0, 0.65);
+        border-color: #d9d9d9;
+        background-color: rgba(0, 0, 0, 0.02);
+      }
+    }
+    
+   
+  }
+  
+}
+
+// Responsive styles
+@media (max-width: 576px) {
+  .login-form-wrapper,
+  .register-form-wrapper {
+    padding: 24px 16px;
+  }
+  
+  .login-title,
+  .register-title {
+    font-size: 20px;
+  }
+}
