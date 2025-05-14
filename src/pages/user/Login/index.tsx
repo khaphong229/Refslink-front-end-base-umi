@@ -13,7 +13,6 @@ interface LoginFormProps {
 	loading?: boolean;
 }
 
-
 const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onRegisterClick, onForgotPassword, loading = false }) => {
 	const [form] = Form.useForm();
 	const history = useHistory();
@@ -29,13 +28,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onRegisterClick, onFor
 			// const response = await loginApi(values.username, values.password);
 
 			const response = await loginApi({
-				email:values.email,
-				password: values.password
-			})
+				email: values.email,
+				password: values.password,
+			});
 
-
-			localStorage.setItem('access_token',response.access_token)
-
+			localStorage.setItem('access_token', response.access_token);
 
 			// Simulating API call with timeout
 			await new Promise((resolve) => setTimeout(resolve, 1000));
@@ -45,27 +42,7 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onRegisterClick, onFor
 			if (onSuccess) {
 				onSuccess(values);
 			}
-			history.push('/dashboard')
-		} catch (error) {
-			message.error('Đăng nhập thất bại. Vui lòng kiểm tra lại tên đăng nhập và mật khẩu.');
-		} finally {
-			setSubmitting(false);
-		}
-	};
-	const handleSubmit = async (values: any) => {
-		try {
-			setSubmitting(true);
-			// Here you would typically send the login request to your API
-			// const response = await loginApi(values.username, values.password);
-
-			// Simulating API call with timeout
-			await new Promise((resolve) => setTimeout(resolve, 1000));
-
-			message.success('Đăng nhập thành công!');
-
-			if (onSuccess) {
-				onSuccess(values);
-			}
+			history.push('/dashboard');
 		} catch (error) {
 			message.error('Đăng nhập thất bại. Vui lòng kiểm tra lại tên đăng nhập và mật khẩu.');
 		} finally {
@@ -73,42 +50,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onRegisterClick, onFor
 		}
 	};
 
-	return (
-		<div className='login-container'>
-			<div className='login-form-wrapper'>
-				<h1 className='login-title'>Đăng nhập</h1>
-				<p className='login-subtitle'>Vui lòng nhập thông tin đăng nhập của bạn</p>
-
-				<Form
-					form={form}
-					name='login'
-					className='login-form'
-					initialValues={{ remember: true }}
-					onFinish={handleSubmit}
-				>
-					<Form.Item name='username' rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập!' }]}>
-						<Input prefix={<UserOutlined className='site-form-item-icon' />} placeholder='Tên đăng nhập' size='large' />
-					</Form.Item>
-
-					<Form.Item name='password' rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}>
-						<Input.Password
-							prefix={<LockOutlined className='site-form-item-icon' />}
-							placeholder='Mật khẩu'
-							size='large'
-						/>
-					</Form.Item>
-
-					<Form.Item>
-						<div className='login-form-options'>
-							<Form.Item name='remember' valuePropName='checked' noStyle>
-								<Checkbox>Ghi nhớ đăng nhập</Checkbox>
-							</Form.Item>
-
-							<Button type='link' className='login-form-forgot' onClick={onForgotPassword}>
-								Quên mật khẩu?
-							</Button>
-						</div>
-					</Form.Item>
 	return (
 		<div className='login-container'>
 			<div className='login-form-wrapper'>
@@ -123,7 +64,11 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onRegisterClick, onFor
 					onFinish={handleSubmit}
 				>
 					<Form.Item name='email' rules={[{ required: true, message: 'Vui lòng nhập tên đăng nhập!' }]}>
-						<Input prefix={<UserOutlined className='site-form-item-icon' />} placeholder='Email đăng nhập' size='large' />
+						<Input
+							prefix={<UserOutlined className='site-form-item-icon' />}
+							placeholder='Email đăng nhập'
+							size='large'
+						/>
 					</Form.Item>
 
 					<Form.Item name='password' rules={[{ required: true, message: 'Vui lòng nhập mật khẩu!' }]}>
@@ -198,8 +143,6 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onRegisterClick, onFor
 								Đăng nhập với Google
 							</Button>
 						</Form.Item>
-
-
 					</div>
 				</Form>
 			</div>
@@ -208,4 +151,3 @@ const LoginForm: React.FC<LoginFormProps> = ({ onSuccess, onRegisterClick, onFor
 };
 
 export default LoginForm;
-
