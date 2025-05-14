@@ -1,6 +1,3 @@
-import { layout } from '@/app';
-import component from '@/locales/en-US/component';
-
 export default [
 	{
 		path: '/',
