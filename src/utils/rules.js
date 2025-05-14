@@ -1,6 +1,7 @@
 import moment from 'moment';
 import _ from 'lodash';
 import { trim, removeHtmlTags, urlRegex } from '@/utils/utils';
+import message from '@/locales/vi-VN/global/message';
 
 const allCharacters =
 	'a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹýếẾ';
@@ -40,6 +41,12 @@ const rules = {
 		{
 			whitespace: true,
 			message: 'Toàn kí tự trắng không hợp lệ',
+		},
+	],
+	urlApiWeb: [
+		{
+			pattern: new RegExp(`&url=$`),
+			message: 'Đường dẫn không đúng! Vui lòng nhập lại đường dẫn kết thúc bằng "&url="',
 		},
 	],
 

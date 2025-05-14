@@ -3,6 +3,7 @@ import { message, notification } from 'antd';
 import axios from 'axios';
 // import { history } from 'umi';
 import data from './data';
+import { ipRoot } from '@/utils/ip';
 
 // function routeLogin(errorCode: string) {
 //   // notification.warning({
@@ -48,6 +49,7 @@ import data from './data';
 // );
 
 // Add a response interceptor
+
 axios.interceptors.response.use(
 	(response) =>
 		// Do something with response data

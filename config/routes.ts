@@ -35,27 +35,29 @@ export default [
 	// DEFAULT MENU
 	{
 		path: '/dashboard',
-		name: 'Rút gọn link mới',
-		component: './TrangChu',
-		icon: 'HomeOutlined',
-	},
-	{
-		path: '/dashboard',
 		name: 'Dashboard',
-		component: './TrangChu',
-		icon: 'HomeOutlined',
+		component: './ThongKe',
+		icon: 'PieChartOutlined',
 	},
 	{
-		path: '/gioi-thieu',
-		name: 'About',
-		component: './TienIch/GioiThieu',
-		hideInMenu: true,
+		path: '/api-web',
+		name: 'API Trang rút gọn',
+		component: './ApiWeb',
+		icon: 'GlobalOutlined',
 	},
+
+	// DANH MUC HE THONG
 	{
-		path: '/random-user',
-		name: 'RandomUser',
-		component: './RandomUser',
-		icon: 'ArrowsAltOutlined',
+		name: 'DanhMuc',
+		path: '/danh-muc',
+		icon: 'copy',
+		routes: [
+			{
+				name: 'ChucVu',
+				path: 'chuc-vu',
+				component: './DanhMuc/ChucVu',
+			},
+		],
 	},
 
 	{
@@ -82,6 +84,7 @@ export default [
 	},
 	{
 		path: '/',
+		component: './TrangChu',
 	},
 	{
 		path: '/403',
