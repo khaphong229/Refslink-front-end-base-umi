@@ -1,5 +1,6 @@
 import React from 'react';
 import { Card, Form, Input, message, Button } from 'antd';
+import rules from '@/utils/rules';
 
 const { TextArea } = Input;
 
@@ -15,50 +16,19 @@ const SupportForm: React.FC = () => {
 	return (
 		<Card title='Gửi yêu cầu hỗ trợ'>
 			<Form form={form} layout='vertical' onFinish={handleSubmit}>
-				<Form.Item name='full_name' label='Họ và tên' rules={[{ required: true, message: 'Vui lòng nhập họ và tên' }]}>
+				<Form.Item name='full_name' label='Họ và tên' rules={[...rules.required, ...rules.ten]}>
 					<Input placeholder='Nguyễn Văn A' />
 				</Form.Item>
 
-				<Form.Item
-					name='email'
-					label='Email'
-					rules={[
-						{
-							required: true,
-							message: 'Vui lòng nhập email',
-						},
-						{
-							type: 'email',
-							message: 'Email không đúng định dạng',
-						},
-					]}
-				>
+				<Form.Item name='email' label='Email' rules={[...rules.email, ...rules.text, ...rules.required]}>
 					<Input placeholder='nguyenvana@gmail.com'></Input>
 				</Form.Item>
 
-				<Form.Item
-					label='Chủ đề '
-					name='subject'
-					rules={[
-						{
-							required: true,
-							message: 'Vui lòng nhập tiêu đề vấn đề ',
-						},
-					]}
-				>
+				<Form.Item label='Chủ đề ' name='subject' rules={[...rules.required, ...rules.text]}>
 					<Input placeholder='Ví dụ: Không thể rút gọn link' />
 				</Form.Item>
 
-				<Form.Item
-					label='Mô tả chi tiết'
-					name='description'
-					rules={[
-						{
-							required: true,
-							message: 'Vui lòng nhập mô tả chi tiết',
-						},
-					]}
-				>
+				<Form.Item label='Mô tả chi tiết' name='description' rules={[...rules.required, ...rules.description]}>
 					<TextArea rows={4} placeholder='Mô tả chi tiết vấn đề của bạn' />
 				</Form.Item>
 

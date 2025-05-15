@@ -27,10 +27,10 @@ export default [
 				component: './user/Auth',
 			},
 			{
-				path:'/dashboard',
-				layout:false,
-				name:'Bảng điều khiển',
-				component:'./Dashboard'
+				path: '/dashboard',
+				layout: false,
+				name: 'Bảng điều khiển',
+				component: './Dashboard',
 			},
 
 			{
@@ -46,21 +46,35 @@ export default [
 				layout: false,
 			},
 			{
-				path:'/support',
-				name:'Hỗ trợ',
-				component:'./Support',
-				layout:false
+				path: '/support',
+				name: 'Hỗ trợ',
+				component: './Support',
+				layout: false,
 			},
 			{
-				path:'/settings',
-				routes:[
+				path:'/withdraws',
+				name:"Rút gọn",
+				component:'./Withdraw',
+				layout:false
+			},
+
+			{
+				path: '/settings',
+				routes: [
 					{
-						path:'profile',
-						name:'Hồ sơ',
-						component:'./Support',
-						exact:true
-					}
-				]
+						path: 'profile',
+						name: 'Hồ sơ',
+						component: './Support',
+						exact: true,
+					},
+					{
+						path: 'change-password',
+						name: 'Đổi mật khẩu',
+						component: './user/ChangePassword',
+						exact: true,
+					},
+					
+				],
 			},
 			{
 				path: '/user',
@@ -93,34 +107,39 @@ export default [
 		path: '/popular-link',
 		name: 'Top link',
 		component: './Popular',
-		icon:'BarChartOutlined'
+		icon: 'BarChartOutlined',
 	},
 	{
-		path :'/withdraws',
-		name:'Rút tiền',
-		component:'./Withdraw',
-		icon:'DollarOutlined'
+		path: '/withdraws',
+		name: 'Rút tiền',
+		component: './Withdraw',
+		icon: 'DollarOutlined',
 	},
 	{
-		path:'/settings',
-		name:'Cài đặt',
-		component:'./Setting',
+		path: '/settings',
+		name: 'Cài đặt',
+		component: './Setting',
 		icon: 'SettingOutlined',
-		routes:[
+		routes: [
 			{
-						path:'profile',
-						name:'Hồ sơ',
-						component:'./Support',
-						exact:true
-					}
-		]
-		
+				path: 'profile',
+				name: 'Hồ sơ',
+				component: './Support',
+				exact: true,
+			},
+			{
+				path: 'change-password',
+				name: 'Đổi mật khẩu',
+				component: './user/ChangePassword',
+				exact: true,
+			},
+		],
 	},
 	{
-		path:'/support',
-		name:'Hỗ trợ',
-		component:'./Support',
-		icon: 'UserDeleteOutlined'
+		path: '/support',
+		name: 'Hỗ trợ',
+		component: './Support',
+		icon: 'UserDeleteOutlined',
 	},
 
 	{

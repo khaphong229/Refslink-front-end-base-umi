@@ -179,6 +179,12 @@ const rules = {
 			message: 'Bắt buộc',
 		},
 	],
+	description:[
+		{
+			required:true,
+			message:'Vui lòng nhập mô tả'
+		}
+	],
 	requiredHtml: [
 		{
 			validator: (__, value, callback) => {

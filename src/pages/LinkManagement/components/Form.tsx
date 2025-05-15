@@ -44,9 +44,6 @@ const CreateLinkModal: React.FC<Props> = ({visible,onCancel, onCreate}) =>{
                 </Form.Item>
 
             </Form>
-
-            
-
         </Modal>
     )
 }
