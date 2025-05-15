@@ -1,23 +1,20 @@
 export default [
 	{
-		path: '/',
+		path: '/user',
 		layout: false,
 		routes: [
 			{
 				path: '/login',
-				layout: false,
 				name: 'login',
 				component: './user/Login',
 			},
 			{
 				path: '/register',
-				layout: false,
 				name: 'register',
 				component: './user/Register',
 			},
 			{
 				path: '/auth/verify-email/:token',
-				layout: false,
 				name: 'authentication',
 				component: './user/Auth',
 			},
