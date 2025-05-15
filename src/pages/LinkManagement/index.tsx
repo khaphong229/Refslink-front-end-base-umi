@@ -133,6 +133,7 @@ const LinkSimpleManager: React.FC = () => {
 			<Button type='primary' icon={<PlusOutlined />} onClick={() => setIsModalOpen(true)}>
 				Tạo Link
 			</Button>
+			
 
 			<div className='search-bar'>
 				<Input

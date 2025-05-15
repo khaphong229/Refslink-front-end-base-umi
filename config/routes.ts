@@ -1,6 +1,7 @@
 ﻿import { layout } from '@/app';
 import component from '@/locales/en-US/component';
 import { icons } from 'antd/lib/image/PreviewGroup';
+import path from 'path';
 
 export default [
 	{
@@ -26,6 +27,13 @@ export default [
 				component: './user/Auth',
 			},
 			{
+				path:'/dashboard',
+				layout:false,
+				name:'Bảng điều khiển',
+				component:'./Dashboard'
+			},
+
+			{
 				path: '/links',
 				name: 'Quản lý link',
 				component: './LinkManagement',
@@ -36,6 +44,23 @@ export default [
 				name: 'Top link',
 				component: './Popular',
 				layout: false,
+			},
+			{
+				path:'/support',
+				name:'Hỗ trợ',
+				component:'./Support',
+				layout:false
+			},
+			{
+				path:'/settings',
+				routes:[
+					{
+						path:'profile',
+						name:'Hồ sơ',
+						component:'./Support',
+						exact:true
+					}
+				]
 			},
 			{
 				path: '/user',
@@ -80,7 +105,16 @@ export default [
 		path:'/settings',
 		name:'Cài đặt',
 		component:'./Setting',
-		icon: 'SettingOutlined'
+		icon: 'SettingOutlined',
+		routes:[
+			{
+						path:'profile',
+						name:'Hồ sơ',
+						component:'./Support',
+						exact:true
+					}
+		]
+		
 	},
 	{
 		path:'/support',

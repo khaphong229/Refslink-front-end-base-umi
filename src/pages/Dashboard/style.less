@@ -1,0 +1,53 @@
+.dashboard {
+  padding: 24px;
+
+  .header-row {
+    margin-bottom: 24px;
+  }
+
+  .stat-row {
+    margin-bottom: 24px;
+  }
+
+  .stat-card {
+    color: white;
+    border-radius: 8px;
+    text-align: center;
+    height: 120px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+
+    .icon {
+      font-size: 24px;
+      margin-bottom: 8px;
+    }
+
+    .value {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    &.orange {
+      background-color: #f59e0b;
+    }
+
+    &.blue {
+      background-color: #0ea5e9;
+    }
+
+    &.green {
+      background-color: #10b981;
+    }
+
+    &.red {
+      background-color: #ef4444;
+    }
+  }
+
+  .top-links {
+    .ant-table {
+      margin-top: 16px;
+    }
+  }
+}
