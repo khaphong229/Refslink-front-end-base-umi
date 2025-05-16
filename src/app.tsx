@@ -16,6 +16,7 @@ import NotFoundContent from './pages/exception/404';
 import type { IInitialState } from './services/base/typing';
 import './styles/global.less';
 import { currentRole } from './utils/ip';
+import { ROUTER_ADMIN } from '@/constants/router';
 
 /**  loading */
 export const initialStateConfig = {
@@ -84,10 +85,24 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
 		onPageChange: () => {
 			if (initialState?.currentUser) {
 				const { location } = history;
+
+				const userRole = localStorage.getItem('user_role');
+				const isAdminRoute = location.pathname.startsWith('/admin');
+
+				if (isAdminRoute && userRole !== 'admin') {
+					history.replace(ROUTER_ADMIN.LOGIN);
+					return;
+				}
+
+				if (!isAdminRoute && userRole === 'admin') {
+					history.replace('/admin/dashboard');
+					return;
+				}
+
 				const isUncheckPath = unCheckPermissionPaths.some((path) => window.location.pathname.includes(path));
 
 				if (location.pathname === '/') {
-					history.replace('/dashboard');
+					history.replace(userRole === 'admin' ? '/admin/dashboard' : 'dashboard');
 				} else if (
 					!isUncheckPath &&
 					currentRole &&

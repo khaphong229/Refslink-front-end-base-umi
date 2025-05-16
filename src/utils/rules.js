@@ -218,7 +218,7 @@ const rules = {
 	],
 	password: [
 		{
-			pattern: new RegExp('^[0-9a-zA-Z~!@#$%^&*(_)+/<>?}{:;",.=|]{4,}$'),
+			pattern: new RegExp('^[0-9a-zA-Z~!@#$%^&*(_)+/<>?}{:;",.=|]{6,}$'),
 			message: 'Độ dài ít nhất 4 kí tự, không sử dụng ký tự khoảng trắng',
 		},
 		// {

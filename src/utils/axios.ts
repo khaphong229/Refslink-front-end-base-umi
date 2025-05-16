@@ -34,19 +34,20 @@ import { ipRoot } from '@/utils/ip';
  * Chuyển sang xử lý access_token with OIDC auth ở Technical Support
  */
 // Add a request interceptor
-// axios.interceptors.request.use(
-//   (config) => {
-//     if (!config.headers.Authorization) {
-//       const token = localStorage.getItem('token');
-//       if (token) {
-//         // eslint-disable-next-line no-param-reassign
-//         config.headers.Authorization = `Bearer ${token}`;
-//       }
-//     }
-//     return config;
-//   },
-//   (error) => Promise.reject(error),
-// );
+axios.interceptors.request.use(
+	(config) => {
+		if (!config.headers.Authorization) {
+			const userRole = localStorage.getItem('user_role');
+			const token = userRole === 'admin' ? localStorage.getItem('admin_token') : localStorage.getItem('token');
+			if (token) {
+				// eslint-disable-next-line no-param-reassign
+				config.headers.Authorization = `Bearer ${token}`;
+			}
+		}
+		return config;
+	},
+	(error) => Promise.reject(error),
+);
 
 // Add a response interceptor
 

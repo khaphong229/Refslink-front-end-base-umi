@@ -1,22 +1,40 @@
 export default [
+	// Admin
+	{
+		path: '/admin',
+		layout: '@/layouts/AdminLayout',
+		wrappers: ['@/components/AdminRoute'],
+		routes: [
+			{
+				path: '/admin/login',
+				component: './admin/Login',
+			},
+			{
+				path: '/admin/dashboard',
+				component: './admin/Dashboard',
+			},
+		],
+	},
+
+	// Client
 	{
 		path: '/user',
 		layout: false,
 		routes: [
 			{
-				path: '/login',
-				name: 'login',
+				path: '/user/login',
+				name: 'Đăng nhập',
 				component: './user/Login',
 			},
 			{
-				path: '/register',
-				name: 'register',
+				path: '/user/register',
+				name: 'Đăng ký',
 				component: './user/Register',
 			},
 			{
-				path: '/auth/verify-email/:token',
-				name: 'authentication',
-				component: './user/Auth',
+				path: '/user/verify-email/:token',
+				name: 'Xác minh Email',
+				component: './user/EmailVerification',
 			},
 			{
 				path: '/user',
