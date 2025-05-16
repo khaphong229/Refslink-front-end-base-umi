@@ -2,6 +2,7 @@ import axios from '@/utils/axios';
 import {
 	ip3,
 	ipNotif,
+	ipRoot,
 	keycloakClientID,
 	keycloakTokenEndpoint,
 	keycloakUserInfoEndpoint,
@@ -16,7 +17,8 @@ import type { ISetting } from './typing';
 // }
 
 export async function getUserInfo() {
-	return axios.get(keycloakUserInfoEndpoint);
+	// return axios.get(keycloakUserInfoEndpoint);
+	return axios.get(`${ipRoot}/auth/me`);
 }
 
 export async function adminlogin(payload: { username?: string; password?: string }) {

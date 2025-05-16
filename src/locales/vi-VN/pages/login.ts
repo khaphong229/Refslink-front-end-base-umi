@@ -10,6 +10,8 @@ export default {
 	'pages.register.success': 'Đăng ký thành công',
 	'pages.login.username.placeholder': 'Tài khoản',
 	'pages.login.username.required': 'Nhập tên đăng nhập',
+	'pages.login.email.placeholder': 'E-mail',
+	'pages.login.email.required': 'Nhập E-mail',
 	'pages.login.password.placeholder': 'Mật khẩu',
 	'pages.login.password.required': 'Nhập mật khẩu',
 	'pages.login.phoneLogin.tab': 'Phone Login',

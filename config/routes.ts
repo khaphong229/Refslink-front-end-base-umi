@@ -1,28 +1,40 @@
-import { layout } from '@/app';
-import component from '@/locales/en-US/component';
-
 export default [
+	// Admin
 	{
-		path: '/',
+		path: '/admin',
+		layout: '@/layouts/AdminLayout',
+		wrappers: ['@/components/AdminRoute'],
+		routes: [
+			{
+				path: '/admin/login',
+				component: './admin/Login',
+			},
+			{
+				path: '/admin/dashboard',
+				component: './admin/Dashboard',
+			},
+		],
+	},
+
+	// Client
+	{
+		path: '/user',
 		layout: false,
 		routes: [
 			{
-				path: '/login',
-				layout: false,
-				name: 'login',
+				path: '/user/login',
+				name: 'Đăng nhập',
 				component: './user/Login',
 			},
 			{
-				path: '/register',
-				layout: false,
-				name: 'register',
+				path: '/user/register',
+				name: 'Đăng ký',
 				component: './user/Register',
 			},
 			{
-				path: '/auth/verify-email/:token',
-				layout: false,
-				name: 'authentication',
-				component: './user/Auth',
+				path: '/user/verify-email/:token',
+				name: 'Xác minh Email',
+				component: './user/EmailVerification',
 			},
 			{
 				path: '/user',
@@ -35,27 +47,29 @@ export default [
 	// DEFAULT MENU
 	{
 		path: '/dashboard',
-		name: 'Rút gọn link mới',
-		component: './TrangChu',
-		icon: 'HomeOutlined',
-	},
-	{
-		path: '/dashboard',
 		name: 'Dashboard',
-		component: './TrangChu',
-		icon: 'HomeOutlined',
+		component: './ThongKe',
+		icon: 'PieChartOutlined',
 	},
 	{
-		path: '/gioi-thieu',
-		name: 'About',
-		component: './TienIch/GioiThieu',
-		hideInMenu: true,
+		path: '/api-web',
+		name: 'API Trang rút gọn',
+		component: './ApiWeb',
+		icon: 'GlobalOutlined',
 	},
+
+	// DANH MUC HE THONG
 	{
-		path: '/random-user',
-		name: 'RandomUser',
-		component: './RandomUser',
-		icon: 'ArrowsAltOutlined',
+		name: 'DanhMuc',
+		path: '/danh-muc',
+		icon: 'copy',
+		routes: [
+			{
+				name: 'ChucVu',
+				path: 'chuc-vu',
+				component: './DanhMuc/ChucVu',
+			},
+		],
 	},
 
 	{
@@ -82,6 +96,7 @@ export default [
 	},
 	{
 		path: '/',
+		component: './TrangChu',
 	},
 	{
 		path: '/403',

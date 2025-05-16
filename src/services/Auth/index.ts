@@ -1,33 +1,36 @@
-import axios from "axios"
+import { SuccessReponse } from '@/types/ResponseApi';
+import { ipRoot } from '@/utils/ip';
+import axios from 'axios';
 
+export type LoginResponse = SuccessReponse<{
+	access_token: string;
+	expire_in: number;
+	auth_type: string;
+}>;
 
-const API_URL = 'http://localhost:3111/auth'
+export type RegisterResponse = SuccessReponse<{
+	name: string;
+	email: string;
+	password: string;
+}>;
 
-export interface RegisterPayload {
-  name: string;
-  email: string;
-  password: string;
-
+export interface RegisterBody {
+	name: string;
+	email: string;
+	password: string;
 }
 
-export interface LoginRequest{
-  email: String,
-  password: String
+export const clientRegister = async (payload: RegisterBody) => {
+	const response = await axios.post(`${ipRoot}/auth/register`, payload);
+	return response?.data;
+};
 
-}
+export const clientLogin = async (payload: { email: string; password: string }): Promise<LoginResponse> => {
+	const response = await axios.post<LoginResponse>(`${ipRoot}/auth/login`, { ...payload });
+	return response?.data;
+};
 
-export interface LoginResponse {
-  access_token: string;
-  expire_in: number;
-  auth_type: string;
-}
-
-export const Register = async(data:RegisterPayload) => {
-  const response = await axios.post(`${API_URL}/register`,data)
-  return response.data
-}
-
-export const loginApi = async(data:LoginRequest): Promise<LoginResponse> =>{
-  const response = await axios.post<LoginResponse>(`${API_URL}/login`,data)
-  return response.data
+export async function adminlogin(payload: { email?: string; password?: string }) {
+	const response = axios.post(`${ipRoot}/admin/auth/login`, { ...payload, platform: 'Web' });
+	return (await response).data;
 }
