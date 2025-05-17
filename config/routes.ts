@@ -1,5 +1,10 @@
-﻿export default [
-	// Admin
+
+﻿import { layout } from '@/app';
+import component from '@/locales/en-US/component';
+import { icons } from 'antd/lib/image/PreviewGroup';
+import path from 'path';
+
+export default [
 	{
 		path: '/admin',
 		component: '@/layouts/AdminLayout',
@@ -36,6 +41,72 @@
 				path: '/user/verify-email/:token',
 				name: 'Xác minh Email',
 				component: './user/EmailVerification',
+				path: '/register',
+				layout: false,
+				name: 'register',
+				component: './user/Register',
+			},
+			{
+				path: '/auth/verify-email/:token',
+				layout: false,
+				name: 'authentication',
+				component: './user/Auth',
+			}
+			{
+				path: '/dashboard',
+				layout: false,
+				name: 'Bảng điều khiển',
+				component: './Dashboard',
+			},
+
+			{
+				path: '/links',
+				name: 'Quản lý link',
+				component: './LinkManagement',
+				layout: false,
+			},
+			{
+				path: '/popular-link',
+				name: 'Top link',
+				component: './Popular',
+				layout: false,
+			},
+			{
+				path: '/support',
+				name: 'Hỗ trợ',
+				component: './Support',
+				layout: false,
+			},
+			{
+				path:'/referrals',
+				name:'Referral',
+				component:'./Referral',
+				layout:false
+			},
+			{
+				path:'/withdraws',
+				name:"Rút gọn",
+				component:'./Withdraw',
+				layout:false
+			},
+
+			{
+				path: '/settings',
+				routes: [
+					{
+						path: 'profile',
+						name: 'Hồ sơ',
+						component: './user/Profile',
+						exact: true,
+					},
+					{
+						path: 'change-password',
+						name: 'Đổi mật khẩu',
+						component: './user/ChangePassword',
+						exact: true,
+					},
+					
+				],
 			},
 			{
 				path: '/user',
@@ -52,6 +123,15 @@
 		component: './ThongKe',
 		icon: 'PieChartOutlined',
 		wrappers: ['@/wrappers/auth'],
+		name: 'Thống kê',
+		component: './TrangChu',
+		icon: 'HomeOutlined',
+	},
+	{
+		path: '/links',
+		name: 'Quản lý link',
+		component: './LinkManagement',
+		icon: 'FormOutlined',
 	},
 	{
 		path: '/api-web',
@@ -63,18 +143,50 @@
 
 	// DANH MUC HE THONG
 	{
-		name: 'DanhMuc',
-		path: '/danh-muc',
-		icon: 'copy',
+	
+		path: '/popular-link',
+		name: 'Top link',
+		component: './Popular',
+		icon: 'BarChartOutlined',
+	},
+	{
+		path: '/withdraws',
+		name: 'Rút tiền',
+		component: './Withdraw',
+		icon: 'DollarOutlined',
+	},
+	{
+		path:'/referrals',
+		name:'Referral',
+		component:'./Referral',
+		icon:'GlobalOutlined'
+	},
+	{
+		path: '/settings',
+		name: 'Cài đặt',
+		component: './Setting',
+		icon: 'SettingOutlined',
 		routes: [
 			{
-				name: 'ChucVu',
-				path: 'chuc-vu',
-				component: './DanhMuc/ChucVu',
+				path: 'profile',
+				name: 'Hồ sơ',
+				component: './user/Profile',
+				exact: true,
+			},
+			{
+				path: 'change-password',
+				name: 'Đổi mật khẩu',
+				component: './user/ChangePassword',
+				exact: true,
 			},
 		],
 	},
-
+	{
+		path: '/support',
+		name: 'Hỗ trợ',
+		component: './Support',
+		icon: 'UserDeleteOutlined',
+	},
 
 	{
 		path: '/notification',
