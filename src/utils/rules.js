@@ -1,6 +1,6 @@
 import moment from 'moment';
 import _ from 'lodash';
-import { trim, removeHtmlTags, urlRegex } from '@/utils/utils';
+import { trim, removeHtmlTags } from '@/utils/utils';
 
 const allCharacters =
 	'a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹýếẾ';
@@ -40,6 +40,12 @@ const rules = {
 		{
 			whitespace: true,
 			message: 'Toàn kí tự trắng không hợp lệ',
+		},
+	],
+	urlApiWeb: [
+		{
+			pattern: new RegExp(`&url=$`),
+			message: 'Đường dẫn không đúng! Vui lòng nhập lại đường dẫn kết thúc bằng "&url="',
 		},
 	],
 
@@ -211,7 +217,7 @@ const rules = {
 	],
 	password: [
 		{
-			pattern: new RegExp('^[0-9a-zA-Z~!@#$%^&*(_)+/<>?}{:;",.=|]{4,}$'),
+			pattern: new RegExp('^[0-9a-zA-Z~!@#$%^&*(_)+/<>?}{:;",.=|]{6,}$'),
 			message: 'Độ dài ít nhất 4 kí tự, không sử dụng ký tự khoảng trắng',
 		},
 		// {

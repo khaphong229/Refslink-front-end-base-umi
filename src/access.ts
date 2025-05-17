@@ -7,8 +7,21 @@ import type { IInitialState } from './services/base/typing';
 export default function access(initialState: IInitialState) {
 	// const scopes = initialState.authorizedPermissions?.find((item) => item.rsname === currentRole)?.scopes;
 	const scopes = initialState.authorizedPermissions?.map((item) => item.scopes).flat();
+	const userRole = localStorage.getItem('user_role');
 
 	return {
+		isAdmin: () => userRole === 'admin',
+		isClient: () => userRole === 'client',
+
+		adminAccessFilter: (route: any) => {
+			if (userRole !== 'admin') return false;
+			return scopes?.includes(route?.maChucNang) || false;
+		},
+
+		clientAccessFilter: (route: any) => {
+			if (userRole !== 'client') return false;
+			return scopes?.includes(route?.maChucNang) || false;
+		},
 		// canBoQLKH: token && vaiTro && vaiTro === 'can_bo_qlkh',
 		// lanhDao: token && vaiTro && vaiTro === 'lanh_dao',
 		// sinhVienVaNhanVien: token && vaiTro && ['nhan_vien', 'sinh_vien'].includes(vaiTro),
@@ -27,8 +40,13 @@ export default function access(initialState: IInitialState) {
 		//     (vaiTro === 'Admin' || vaiTro === 'quan_tri' || vaiTro === 'nhan_vien')) ||
 		//   false,
 		// guest: (token && ((vaiTro && vaiTro === 'Guest') || !vaiTro)) || false,
+
+		// Kiểm tra quyền truy cập cho một route
 		accessFilter: (route: any) => scopes?.includes(route?.maChucNang) || false,
+
+		// Kiểm tra quyền truy cập cho nhiều route
 		manyAccessFilter: (route: any) => route?.listChucNang?.some((role: string) => scopes?.includes(role)) || false,
+
 		// adminAccessFilter: (route: any) =>
 		//   (token && vaiTro && vaiTro === 'Admin') ||
 		//   initialState?.phanNhom?.nhom_vai_tro?.includes(route?.maChucNang) ||

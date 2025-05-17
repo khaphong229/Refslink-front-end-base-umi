@@ -96,6 +96,8 @@ const useInitModel = <T,>(
 
 		try {
 			const response = await getService(payload, path ?? 'page', isAbsolutePath ?? false);
+			console.log(response, 'useinitModel');
+
 			const tempData: T[] = response?.data?.data?.result ?? [];
 			const tempTotal: number = response?.data?.data?.total ?? 0;
 

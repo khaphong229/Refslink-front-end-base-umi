@@ -1,31 +1,42 @@
-﻿
-﻿import { layout } from "@/app";
-import component from "@/locales/en-US/component";
-
-export default [
+﻿export default [
+	// Admin
 	{
-		path: '/',
+		path: '/admin',
+		component: '@/layouts/AdminLayout',
+		wrappers: ['@/components/AdminRoute'],
+		routes: [
+			{
+				path: '/admin/login',
+				component: './admin/Login',
+			},
+			{
+				path: '/admin/dashboard',
+				component: './admin/Dashboard',
+				wrappers: ['@/wrappers/auth'],
+			},
+		],
+	},
+
+	// Client
+	{
+		path: '/user',
 		layout: false,
 		routes: [
 			{
-				path: '/login',
-				layout: false,
-				name: 'login',
+				path: '/user/login',
+				name: 'Đăng nhập',
 				component: './user/Login',
 			},
 			{
-				path:'/register',
-				layout:false,
-				name:'register',
-				component:'./user/Register'
+				path: '/user/register',
+				name: 'Đăng ký',
+				component: './user/Register',
 			},
 			{
-				path:'/auth/verify-email/:token',
-				layout:false,
-				name:"authentication",
-				component:'./user/Auth'
-			}
-			,
+				path: '/user/verify-email/:token',
+				name: 'Xác minh Email',
+				component: './user/EmailVerification',
+			},
 			{
 				path: '/user',
 				redirect: '/user/login',
@@ -37,27 +48,31 @@ export default [
 	// DEFAULT MENU
 	{
 		path: '/dashboard',
-		name: 'Rút gọn link mới',
-		component: './TrangChu',
-		icon: 'HomeOutlined',
-	},
-	{
-		path: '/dashboard',
 		name: 'Dashboard',
-		component: './TrangChu',
-		icon: 'HomeOutlined',
+		component: './ThongKe',
+		icon: 'PieChartOutlined',
+		wrappers: ['@/wrappers/auth'],
 	},
 	{
-		path: '/gioi-thieu',
-		name: 'About',
-		component: './TienIch/GioiThieu',
-		hideInMenu: true,
+		path: '/api-web',
+		name: 'API Trang rút gọn',
+		component: './ApiWeb',
+		icon: 'GlobalOutlined',
+		wrappers: ['@/wrappers/auth'],
 	},
+
+	// DANH MUC HE THONG
 	{
-		path: '/random-user',
-		name: 'RandomUser',
-		component: './RandomUser',
-		icon: 'ArrowsAltOutlined',
+		name: 'DanhMuc',
+		path: '/danh-muc',
+		icon: 'copy',
+		routes: [
+			{
+				name: 'ChucVu',
+				path: 'chuc-vu',
+				component: './DanhMuc/ChucVu',
+			},
+		],
 	},
 
 
@@ -85,6 +100,7 @@ export default [
 	},
 	{
 		path: '/',
+		component: './TrangChu',
 	},
 	{
 		path: '/403',
