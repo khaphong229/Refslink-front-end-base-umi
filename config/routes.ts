@@ -2,7 +2,7 @@ export default [
 	// Admin
 	{
 		path: '/admin',
-		layout: '@/layouts/AdminLayout',
+		component: '@/layouts/AdminLayout',
 		wrappers: ['@/components/AdminRoute'],
 		routes: [
 			{
@@ -12,6 +12,7 @@ export default [
 			{
 				path: '/admin/dashboard',
 				component: './admin/Dashboard',
+				wrappers: ['@/wrappers/auth'],
 			},
 		],
 	},
@@ -50,12 +51,14 @@ export default [
 		name: 'Dashboard',
 		component: './ThongKe',
 		icon: 'PieChartOutlined',
+		wrappers: ['@/wrappers/auth'],
 	},
 	{
 		path: '/api-web',
 		name: 'API Trang rút gọn',
 		component: './ApiWeb',
 		icon: 'GlobalOutlined',
+		wrappers: ['@/wrappers/auth'],
 	},
 
 	// DANH MUC HE THONG

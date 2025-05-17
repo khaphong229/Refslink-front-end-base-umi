@@ -16,7 +16,7 @@ import NotFoundContent from './pages/exception/404';
 import type { IInitialState } from './services/base/typing';
 import './styles/global.less';
 import { currentRole } from './utils/ip';
-import { ROUTER_ADMIN } from '@/constants/router';
+import { PUBLIC_PATHS, ROUTER_ADMIN, ROUTER_CLIENT } from '@/constants/router';
 
 /**  loading */
 export const initialStateConfig = {
@@ -88,6 +88,11 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
 
 				const userRole = localStorage.getItem('user_role');
 				const isAdminRoute = location.pathname.startsWith('/admin');
+				const isPublicPath = PUBLIC_PATHS.includes(location.pathname);
+
+				if (!initialState?.currentUser && !isPublicPath) {
+					history.replace(userRole === 'admin' ? ROUTER_ADMIN.LOGIN : ROUTER_CLIENT.LOGIN);
+				}
 
 				if (isAdminRoute && userRole !== 'admin') {
 					history.replace(ROUTER_ADMIN.LOGIN);

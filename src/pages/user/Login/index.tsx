@@ -46,7 +46,7 @@ const Login: React.FC = () => {
 			defaultMessage: 'success',
 		});
 		message.success(defaultloginSuccessMessage);
-		history.push('/dashboard');
+		history.push(ROUTER_CLIENT.DASHBOARD);
 	};
 
 	const handleSubmit = async (values: { email: string; password: string; remember: string }) => {
