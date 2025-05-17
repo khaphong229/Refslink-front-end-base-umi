@@ -1,6 +1,7 @@
 import moment from 'moment';
 import _ from 'lodash';
-import { trim, removeHtmlTags } from '@/utils/utils';
+import { trim, removeHtmlTags, urlRegex } from '@/utils/utils';
+import message from '@/locales/vi-VN/global/message';
 
 const allCharacters =
 	'a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹýếẾ';
