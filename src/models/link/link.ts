@@ -1,63 +1,88 @@
 import { useEffect, useState } from 'react';
-import { LinkItem } from '@/services/ManagementLink/typing';
-import { getLinks,createShortLink } from '@/services/ManagementLink';
 import { message } from 'antd';
+import request from 'umi-request'; // hoặc axios
+import { LinkItem } from '@/services/ManagementLink/typing';
+import axios from 'axios';
+import { createShortLink } from '@/services/ManagementLink';
 
 export const useLinkManager = () => {
   const [data, setData] = useState<LinkItem[]>([]);
-  const [search, setSearch] = useState('');
+  const [searchTerm, setSearch] = useState<string>('');
+
+  const fetchLinks = async () => {
+    try {
+      const response = await axios.get('http://localhost:3111/shorten-link'); // <-- API thật của bạn
+      const list = response?.data.data.data || [];
+      const mapped: LinkItem[] = list.map((item: any) => ({
+        id: item._id,
+        originalUrl: item.original_link,
+        shortUrl: item.shorten_link,
+        createdAt: new Date(item.created_at).toLocaleDateString(),
+        visible: item.status === 'active',
+      }));
+
+      console.log(mapped)
+
+      setData(mapped);
+    } catch (error) {
+      message.error('Không thể tải dữ liệu link');
+    }
+  };
 
   useEffect(() => {
-    getLinks().then(setData);
+    fetchLinks();
   }, []);
 
-  const toggleVisibility = (id: string) => {
-    setData((prev) =>
-      prev.map((link) =>
-        link.id === id ? { ...link, visible: !link.visible } : link
-      )
-    );
-  };
+  // Search filter
+  const filteredData = data.filter((item) =>
+    item.originalUrl.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
+  // Actions
   const deleteLink = (id: string) => {
-    setData((prev) => prev.filter((link) => link.id !== id));
-  };
-
-  const hideAll = () => {
-    setData((prev) => prev.map((link) => ({ ...link, visible: false })));
-    message.success('Đã ẩn toàn bộ link');
-  };
-
-  const showAll = () => {
-    setData((prev) => prev.map((link) => ({ ...link, visible: true })));
-    message.success('Đã hiện toàn bộ link');
+    setData((prev) => prev.filter((item) => item.id !== id));
+    message.success('Đã xoá link!');
   };
 
   const deleteAll = () => {
     setData([]);
-    message.success('Đã xoá toàn bộ link');
+    message.success('Đã xoá tất cả link!');
+  };
+
+  const toggleVisibility = (id: string) => {
+    setData((prev) =>
+      prev.map((item) =>
+        item.id === id ? { ...item, visible: !item.visible } : item
+      )
+    );
+  };
+
+  const hideAll = () => {
+    setData((prev) => prev.map((item) => ({ ...item, visible: false })));
+  };
+
+  const showAll = () => {
+    setData((prev) => prev.map((item) => ({ ...item, visible: true })));
   };
 
   const createLink = async (originalUrl: string) => {
-    const newLink = await createShortLink(originalUrl);
-    setData((prev) => [newLink, ...prev]);
-    message.success('Tạo link thành công!');
+    try {
+      const newLink = await createShortLink(originalUrl);
+      setData((prev) => [...prev, newLink]);
+      message.success('Đã tạo link mới!');
+    } catch (error) {
+      message.error('Không thể tạo link mới');
+    }
   };
 
-  const filteredLinks = data.filter(
-    (link) =>
-      link.originalUrl.toLowerCase().includes(search.toLowerCase()) ||
-      link.shortUrl.toLowerCase().includes(search.toLowerCase())
-  );
-
   return {
-    data: filteredLinks,
+    data: filteredData,
     setSearch,
-    toggleVisibility,
+    createLink,
     deleteLink,
+    deleteAll,
+    toggleVisibility,
     hideAll,
     showAll,
-    deleteAll,
-    createLink,
   };
 };
