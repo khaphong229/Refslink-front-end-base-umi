@@ -4,6 +4,7 @@ import { UserOutlined, LockOutlined } from '@ant-design/icons';
 import { history } from 'umi';
 import { adminlogin } from '@/services/Auth';
 import styles from './style.less';
+import { ROUTER_ADMIN } from '@/constants/router';
 
 const AdminLogin: React.FC = () => {
 	const [submitting, setSubmitting] = useState(false);
@@ -23,7 +24,7 @@ const AdminLogin: React.FC = () => {
 				localStorage.setItem('user_role', 'admin');
 
 				message.success('Đăng nhập thành công');
-				history.push('/admin/dashboard');
+				history.push(ROUTER_ADMIN.DASHBOARD);
 			}
 		} catch (error) {
 			message.error('Đăng nhập thất bại');
