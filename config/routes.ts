@@ -52,6 +52,12 @@ export default [
 				layout: false,
 			},
 			{
+				path:'/referrals',
+				name:'Referral',
+				component:'./Referral',
+				layout:false
+			},
+			{
 				path:'/withdraws',
 				name:"Rút gọn",
 				component:'./Withdraw',
@@ -64,7 +70,7 @@ export default [
 					{
 						path: 'profile',
 						name: 'Hồ sơ',
-						component: './Support',
+						component: './user/Profile',
 						exact: true,
 					},
 					{
@@ -116,6 +122,12 @@ export default [
 		icon: 'DollarOutlined',
 	},
 	{
+		path:'/referrals',
+		name:'Referral',
+		component:'./Referral',
+		icon:'GlobalOutlined'
+	},
+	{
 		path: '/settings',
 		name: 'Cài đặt',
 		component: './Setting',
@@ -124,7 +136,7 @@ export default [
 			{
 				path: 'profile',
 				name: 'Hồ sơ',
-				component: './Support',
+				component: './user/Profile',
 				exact: true,
 			},
 			{

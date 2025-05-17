@@ -15,8 +15,8 @@ const SupportForm: React.FC = () => {
 
 	return (
 		<Card title='Gửi yêu cầu hỗ trợ'>
-			<Form form={form} layout='vertical' onFinish={handleSubmit}>
-				<Form.Item name='full_name' label='Họ và tên' rules={[...rules.required, ...rules.ten]}>
+			<Form form={form} layout='vertical' onFinish={handleSubmit} >
+				<Form.Item  name='full_name' label='Họ và tên' rules={[...rules.required, ...rules.ten]}>
 					<Input placeholder='Nguyễn Văn A' />
 				</Form.Item>
 

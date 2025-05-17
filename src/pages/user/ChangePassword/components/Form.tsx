@@ -8,13 +8,13 @@ const ChangePassForm: React.FC = () => {
 			<h2>Đổi mật khẩu</h2>
 			<Form layout="vertical">
                 <Col>
-                    <Form.Item label='Mật khẩu hiện tại' name='password'>
+                    <Form.Item label='Mật khẩu hiện tại' name='password' >
 					    <Input placeholder='Mật khẩu hiện tại' />
 				    </Form.Item>
-                    <Form.Item label="Mật khẩu mới" name="new-pass">
+                    <Form.Item label="Mật khẩu mới" name="new-pass" rules={[...rules.password,...rules.required]}>
                         <Input placeholder='Mật khẩu mới'/>
                     </Form.Item>
-                    <Form.Item label="Nhập lại mật khẩu" >
+                    <Form.Item label="Nhập lại mật khẩu" rules={[...rules.password,...rules.required]}>
                         <Input placeholder='Nhập lại mật khẩu mới'/>
                     </Form.Item>
                 </Col>
