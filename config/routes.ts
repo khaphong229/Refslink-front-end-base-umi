@@ -184,16 +184,10 @@ export default [
 		],
 	},
 	{
-		name: 'DanhMuc',
-		path: '/danh-muc',
-		icon: 'copy',
-		routes: [
-			{
-				name: 'ChucVu',
-				path: 'chuc-vu',
-				component: './DanhMuc/ChucVu',
-			},
-		],
+		path:'/support',
+		name:'Hỗ trợ',
+		component:'./Support',
+		icon:'UsergroupDeleteOutlined'
 	},
 
 	// Public Routes (Không cần xác thực)
