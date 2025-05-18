@@ -1,44 +1,32 @@
-import { LinkItem } from "./typing";
+// import axios from '@/utils/axios'; // dùng axios đã config sẵn token, error, v.v.
+import { LinkItem } from './typing';
+import axios from 'axios';
 
-export const getLinks = (): Promise<LinkItem[]> =>{
+const API_URL = 'http://localhost:3111';
 
-    return Promise.resolve([
-        {
-		id: '1',
-		originalUrl: 'https://modrinth.com/datapack/tool-trims/version/2.2.2',
-		shortUrl: 'https://link4m.com/9KUeRj',
-		createdAt: '10:29 18/01/2025',
-		clicks: 52,
-		visible: true,
-	},
-	{
-		id: '2',
-		originalUrl: 'https://anvaoday.blogspot.com/p/ealupae.html',
-		shortUrl: 'https://link4m.com/jPzhIV',
-		createdAt: '17:27 17/01/2025',
-		clicks: 33,
-		visible: true,
-	},
-	{
-		id: '3',
-		originalUrl: 'https://drive.google.com/drive/folders/abcxyz',
-		shortUrl: 'https://link4m.com/6TzTi98',
-		createdAt: '09:16 17/01/2025',
-		clicks: 88,
-		visible: false,
-	},
-    ])
-}
+export const getLinks = async () => {
+  const response = await axios.get(`${API_URL}/shorten_link`);
+  console.log(response.data); // 👈 log ra để xem đúng không
+  return response?.data?.data?.data;
+};
 
 
-export const createShortLink = async (originalUrl: string): Promise<LinkItem> =>{
-    const newLink: LinkItem = {
-        id: Date.now().toString(),
-        originalUrl,
-        shortUrl: `https://link4m.com/${Math.random().toString(36).substring(2, 8)}`,
-        createdAt: new Date().toLocaleString('vi-VN'),
-        clicks: 0,
-        visible: true,
-    }
-    return Promise.resolve(newLink)
-}
+export const createShortLink = async (originalUrl: string): Promise<LinkItem> => {
+  const response = await axios.post(`${API_URL}/shorten_link`, {
+    original_link: originalUrl,
+  });
+
+  const item = response?.data?.data;
+
+  const newLink: LinkItem = {
+    id: item._id,
+    originalUrl: item.original_link,
+    shortUrl: item.shorten_link,
+    createdAt: new Date(item.created_at).toLocaleString('vi-VN'),
+    clicks: item.click_count || 0,
+    visible: item.status === 'active',
+  };
+
+  return newLink;
+};
+
