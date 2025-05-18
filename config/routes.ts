@@ -193,7 +193,7 @@ export default [
 	// Public Routes (Không cần xác thực)
 	{
 		path: '/',
-		component: './TrangChu',
+		component: './Home',
 		layout: false,
 	},
 

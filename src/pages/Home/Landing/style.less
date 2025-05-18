@@ -1,0 +1,38 @@
+.landing-wrapper {
+  background: #fff;
+
+  .landing-text {
+    text-align: left;
+
+    .ant-typography {
+      margin-bottom: 16px;
+    }
+
+    .gradient-text {
+      background: linear-gradient(to right,#ff3800, #e34234);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      font-size: 60px;
+    }
+
+    .description {
+      font-size: 16px;
+      color: rgba(0, 0, 0, 0.65);
+      margin-bottom: 24px;
+    }
+  }
+
+  .landing-image {
+    text-align: center;
+
+    img {
+      width: 300px;
+
+      @media (min-width: 768px) {
+        width: 400px;
+      }
+
+      object-fit: cover;
+    }
+  }
+}
