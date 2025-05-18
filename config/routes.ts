@@ -1,4 +1,3 @@
-// config/routes.ts
 export default [
 	// Admin Routes
 	{
@@ -23,6 +22,7 @@ export default [
 	{
 		path: '/user',
 		layout: false,
+		wrappers: ['@/wrappers/auth'],
 		routes: [
 			{
 				path: '/user/login',
@@ -38,7 +38,15 @@ export default [
 				path: '/user/verify-email/:token',
 				name: 'Xác minh Email',
 				component: './user/EmailVerification',
+				layout: false,
 			},
+			{
+				path: '/auth/verify-email/:token',
+				layout: false,
+				name: 'authentication',
+				component: './user/Auth',
+			},
+
 			{
 				path: '/user',
 				redirect: '/user/login',
@@ -84,8 +92,15 @@ export default [
 	{
 		path: '/dashboard',
 		name: 'Dashboard',
-		component: './ThongKe',
+		component: './Dashboard',
 		icon: 'PieChartOutlined',
+		wrappers: ['@/wrappers/auth'],
+	},
+	{
+		path: '/links',
+		name: 'Quản lý link',
+		component: './LinkManagement',
+		icon: 'FormOutlined',
 		wrappers: ['@/wrappers/auth'],
 	},
 	{
@@ -95,7 +110,48 @@ export default [
 		icon: 'GlobalOutlined',
 		wrappers: ['@/wrappers/auth'],
 	},
-	// Danh mục hệ thống
+
+	{
+		path: '/popular-link',
+		name: 'Top link',
+		component: './Popular',
+		icon: 'BarChartOutlined',
+		wrappers: ['@/wrappers/auth'],
+	},
+	{
+		path: '/withdraws',
+		name: 'Rút tiền',
+		component: './Withdraw',
+		icon: 'DollarOutlined',
+		wrappers: ['@/wrappers/auth'],
+	},
+	{
+		path: '/referrals',
+		name: 'Referral',
+		component: './Referral',
+		icon: 'GlobalOutlined',
+		wrappers: ['@/wrappers/auth'],
+	},
+	{
+		path: '/settings',
+		name: 'Cài đặt',
+		icon: 'SettingOutlined',
+		wrappers: ['@/wrappers/auth'],
+		routes: [
+			{
+				path: 'profile',
+				name: 'Hồ sơ',
+				component: './user/Profile',
+				exact: true,
+			},
+			{
+				path: 'change-password',
+				name: 'Đổi mật khẩu',
+				component: './user/ChangePassword',
+				exact: true,
+			},
+		],
+	},
 	{
 		name: 'DanhMuc',
 		path: '/danh-muc',
