@@ -1,3 +1,5 @@
+import path from 'path';
+
 export default [
 	// Admin Routes
 	{
@@ -131,6 +133,35 @@ export default [
 		component: './Referral',
 		icon: 'GlobalOutlined',
 		wrappers: ['@/wrappers/auth'],
+	},
+	{
+		path: '/tools',
+		name: 'Công cụ',
+		icon: 'BarsOutlined',
+		wrappers: ['@/wrappers/auth'],
+		routes: [
+			{
+				path: 'quick',
+				name: 'Quick Link',
+				component: './Tool/QuickLink',
+			},
+			{
+				path: 'mass-shrinker',
+				name: 'Mass Shrinker',
+				component: './Tool/MassShrinker',
+			},
+			{
+				path: 'full-page-cript',
+				name: 'Full Page Script',
+				component: './Tool/FullPageScript',
+			},
+			{
+				path: 'developer-api',
+				name: 'Developers API',
+				component: './Tool/DeveloperAPI',
+			}
+
+		],
 	},
 	{
 		path: '/settings',
