@@ -14,7 +14,9 @@ const CreateLinkModal: React.FC<Props> = ({visible,onCancel, onCreate}) =>{
     const handleSubmit = () =>{
         form.validateFields().then(values =>{
             onCreate(values.originalUrl);
+            console.log(values.originalUrl);
             form.resetFields();
+            onCancel()
         });
     }
 

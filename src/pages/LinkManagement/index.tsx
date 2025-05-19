@@ -53,23 +53,23 @@ const LinkManagerPage: React.FC = () => {
       <div className="link-list">
         {data.length > 0 ? (
           data.map((link: LinkItem) => (
-            <Card key={link.id} className="link-item">
-              <Paragraph copyable={{ text: link.originalUrl }}>{link.originalUrl}</Paragraph>
-              <Text type="secondary">🗓 {link.createdAt}</Text>
+            <Card key={link._id} className="link-item">
+              <Paragraph copyable={{ text: link.original_link }}>{link.original_link}</Paragraph>
+              <Text type="secondary">🗓 {link.created_at}</Text>
               <Input
-                value={link.shortUrl}
+                value={link.shorten_link}
                 readOnly
                 addonAfter={
                   <Tooltip title="Sao chép">
-                    <Button icon={<CopyOutlined />} onClick={() => handleCopy(link.shortUrl)} type="text" />
+                    <Button icon={<CopyOutlined />} onClick={() => handleCopy(link.shorten_link)} type="text" />
                   </Tooltip>
                 }
               />
               <Space>
-                <Button type="primary" danger={!link.visible} onClick={() => toggleVisibility(link.id)}>
+                <Button type="primary" danger={!link.visible} onClick={() => toggleVisibility(link._id)}>
                   {link.visible ? 'Ẩn' : 'Hiện'}
                 </Button>
-                <Button danger onClick={() => deleteLink(link.id)}>Xoá</Button>
+                <Button danger onClick={() => deleteLink(link._id)}>Xoá</Button>
               </Space>
             </Card>
           ))

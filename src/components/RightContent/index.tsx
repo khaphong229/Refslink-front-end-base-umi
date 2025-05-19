@@ -2,8 +2,9 @@ import React from 'react';
 import { useModel } from 'umi';
 import AvatarDropdown from './AvatarDropdown';
 import styles from './index.less';
-
 export type SiderTheme = 'light' | 'dark';
+import { Button } from 'antd';
+import { PlusOutlined } from '@ant-design/icons';
 
 const GlobalHeaderRight: React.FC = () => {
 	const { initialState } = useModel('@@initialState');
@@ -15,7 +16,9 @@ const GlobalHeaderRight: React.FC = () => {
 	return (
 		<div className={styles.right}>
 			{/* <ModuleSwitch /> */}
-
+			<Button type='primary'>
+				Tạo Link
+			</Button>
 			{/* <NoticeIconView /> */}
 
 			{/* <Tooltip title='Giới thiệu chung' placement='bottom'>

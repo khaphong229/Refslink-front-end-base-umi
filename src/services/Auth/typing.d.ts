@@ -5,4 +5,8 @@ export interface User {
 	password: String,
 	
 }
+export interface ChangePasswordBody {
+	password:string,
+	new_password:string,
+}
 
