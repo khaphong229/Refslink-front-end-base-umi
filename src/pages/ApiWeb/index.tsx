@@ -1,7 +1,7 @@
 import TableBase from '@/components/Table';
 import { type IColumn } from '@/components/Table/typing';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Button, Popconfirm, Tooltip } from 'antd';
+import { Button, Popconfirm, Tag, Tooltip } from 'antd';
 import { useModel } from 'umi';
 import Form from './components/Form';
 import { ROUTER } from '@/constants/router';
@@ -44,6 +44,13 @@ const ApiWebPage = () => {
 					value: 'inactive',
 				},
 			],
+			render: (value, _) => {
+				if (value === 'inactive') {
+					<Tag color='red'>Tắt</Tag>;
+				} else {
+					<Tag color='green'>Bật</Tag>;
+				}
+			},
 		},
 		{
 			title: 'Tự động bật',
@@ -67,9 +74,6 @@ const ApiWebPage = () => {
 			fixed: 'right',
 			render: (record: ApiWeb.Record) => (
 				<>
-					<Tooltip title='Bật/tắt'>
-						<Button onClick={() => handleEdit(record)} type='link' icon={<EditOutlined />} />
-					</Tooltip>
 					<Tooltip title='Chỉnh sửa'>
 						<Button onClick={() => handleEdit(record)} type='link' icon={<EditOutlined />} />
 					</Tooltip>
@@ -95,7 +99,7 @@ const ApiWebPage = () => {
 			modelName='api_web'
 			// title={ROUTER.API_WEB}
 			Form={Form}
-			buttons={{ import: true }}
+			buttons={{ import: false, filter: false }}
 		/>
 	);
 };

@@ -24,12 +24,12 @@ export default [
 	{
 		path: '/user',
 		layout: false,
-		wrappers: ['@/wrappers/auth'],
 		routes: [
 			{
 				path: '/user/login',
 				name: 'Đăng nhập',
 				component: './user/Login',
+				wrappers: ['@/wrappers/auth'],
 			},
 			{
 				path: '/user/register',
@@ -93,9 +93,16 @@ export default [
 
 	{
 		path: '/dashboard',
-		name: 'Dashboard',
+		name: 'Thống kê',
 		component: './Dashboard',
 		icon: 'PieChartOutlined',
+		wrappers: ['@/wrappers/auth'],
+	},
+	{
+		path: '/api-web',
+		name: 'Quản lý API',
+		component: './ApiWeb',
+		icon: 'GlobalOutlined',
 		wrappers: ['@/wrappers/auth'],
 	},
 	{
@@ -106,14 +113,6 @@ export default [
 		wrappers: ['@/wrappers/auth'],
 	},
 	{
-		path: '/api-web',
-		name: 'API Trang rút gọn',
-		component: './ApiWeb',
-		icon: 'GlobalOutlined',
-		wrappers: ['@/wrappers/auth'],
-	},
-
-	{
 		path: '/popular-link',
 		name: 'Top link',
 		component: './Popular',
@@ -121,22 +120,8 @@ export default [
 		wrappers: ['@/wrappers/auth'],
 	},
 	{
-		path: '/withdraws',
-		name: 'Rút tiền',
-		component: './Withdraw',
-		icon: 'DollarOutlined',
-		wrappers: ['@/wrappers/auth'],
-	},
-	{
-		path: '/referrals',
-		name: 'Referral',
-		component: './Referral',
-		icon: 'GlobalOutlined',
-		wrappers: ['@/wrappers/auth'],
-	},
-	{
 		path: '/tools',
-		name: 'Công cụ',
+		name: 'Công cụ API',
 		icon: 'BarsOutlined',
 		wrappers: ['@/wrappers/auth'],
 		routes: [
@@ -159,9 +144,22 @@ export default [
 				path: 'developer-api',
 				name: 'Developers API',
 				component: './Tool/DeveloperAPI',
-			}
-
+			},
 		],
+	},
+	{
+		path: '/referrals',
+		name: 'Referral',
+		component: './Referral',
+		icon: 'GlobalOutlined',
+		wrappers: ['@/wrappers/auth'],
+	},
+	{
+		path: '/withdraws',
+		name: 'Rút tiền',
+		component: './Withdraw',
+		icon: 'DollarOutlined',
+		wrappers: ['@/wrappers/auth'],
 	},
 	{
 		path: '/settings',
@@ -184,10 +182,10 @@ export default [
 		],
 	},
 	{
-		path:'/support',
-		name:'Hỗ trợ',
-		component:'./Support',
-		icon:'UsergroupDeleteOutlined'
+		path: '/support',
+		name: 'Hỗ trợ',
+		component: './Support',
+		icon: 'UsergroupDeleteOutlined',
 	},
 
 	// Public Routes (Không cần xác thực)
