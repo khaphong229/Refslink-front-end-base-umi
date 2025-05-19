@@ -4,6 +4,7 @@ import request from 'umi-request'; // hoặc axios
 import { LinkItem } from '@/services/ManagementLink/typing';
 import axios from '@/utils/axios';
 import { createShortLink } from '@/services/ManagementLink';
+import { exportToExcel } from '@/utils/exportExcel';
 
 export const useLinkManager = () => {
   const [data, setData] = useState<LinkItem[]>([]);
@@ -14,7 +15,7 @@ export const useLinkManager = () => {
       const response = await axios.get('http://localhost:3111/shorten-link'); // <-- API thật của bạn
       const list = response?.data.data.data;
   
-
+      console.log(list)
       setData(list);
     } catch (error) {
       message.error('Không thể tải dữ liệu link');
@@ -24,6 +25,10 @@ export const useLinkManager = () => {
   useEffect(() => {
     fetchLinks();
   }, []);
+
+  const handleExport = () =>{
+    exportToExcel(data,"danh_sach")
+  }
 
   // Search filter
   const filteredData = data.filter((item) =>
