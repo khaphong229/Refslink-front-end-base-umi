@@ -6,7 +6,7 @@ const Settings: LayoutSettings & {
 	borderRadiusBase: string;
 	siderWidth: number;
 } = {
-	navTheme: 'light',
+	navTheme: 'dark',
 	primaryColor: process.env.APP_CONFIG_PRIMARY_COLOR,
 	borderRadiusBase: '2px',
 	layout: 'side',

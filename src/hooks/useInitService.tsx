@@ -9,7 +9,8 @@ const useInitService = (url: string, ip?: string) => {
 		const finalPath = `${finalIp}/${url}`;
 		console.log(finalPath, 'useinitService');
 
-		return axios.get(finalPath, { params: payload });
+		const response = axios.get(finalPath, { params: payload });
+		return response;
 	};
 
 	const postService = (payload: any) => {
