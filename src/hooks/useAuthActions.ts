@@ -9,10 +9,20 @@ export const useAuthActions = () => {
 	const auth = useAuth();
 
 	const handleLogout = () => {
+		const userRole = localStorage.getItem('user_role');
+
 		if (oneSignalRole.valueOf() === currentRole.valueOf()) {
 			OneSignal.getUserId((playerId) => deleteOneSignal({ playerId }));
 			OneSignal.setSubscription(false);
 		}
+
+		if (userRole === 'admin') {
+			localStorage.removeItem('admin_token');
+		} else {
+			localStorage.removeItem('token');
+		}
+
+		localStorage.removeItem('user_role');
 
 		auth
 			.signoutRedirect({

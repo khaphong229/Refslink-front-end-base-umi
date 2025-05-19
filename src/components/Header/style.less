@@ -1,0 +1,61 @@
+.custom-header {
+  position: sticky;
+  top: 0;
+  left: 0;
+  width: 100%;
+  backdrop-filter: blur(12px);
+  z-index: 1000;
+  padding: 16px;
+  background: rgba(255, 255, 255, 0.8); // hoặc dark theme nếu cần
+
+  .header-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .rounded-btn{
+    border-radius: 5px;
+  }
+
+  .logo {
+    font-weight: bold;
+    font-size: 30px;
+    cursor: pointer;
+
+    .text-gradient {
+      background: linear-gradient(to top right, #ff3800);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 16px;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  .auth-mode {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+
+    @media (max-width: 768px) {
+      display: none;
+    }
+  }
+
+  .menu-mobile {
+    display: none;
+
+    @media (max-width: 768px) {
+      display: block;
+    }
+  }
+}

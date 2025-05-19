@@ -1,16 +1,16 @@
 import axios from '@/utils/axios';
-import { ip3 } from '@/utils/ip';
+import { ipRoot } from '@/utils/ip';
 
 const useInitService = (url: string, ip?: string) => {
-	const finalIp = ip ?? ip3;
+	const finalIp = ip ?? ipRoot;
 
-	const getService = (
-		payload: { page?: number; limit?: number; condition?: any },
-		path?: string,
-		isAbsolutePath?: boolean,
-	) => {
-		const finalPath = isAbsolutePath ? `${finalIp}/${path}` : `${finalIp}/${url}/${path ?? ''}`;
-		return axios.get(finalPath, { params: payload });
+	const getService = (payload: { page?: number; limit?: number }, path?: string, isAbsolutePath?: boolean) => {
+		// const finalPath = isAbsolutePath ? `${finalIp}/${path}` : `${finalIp}/${url}/${path ?? ''}`;
+		const finalPath = `${finalIp}/${url}`;
+		console.log(finalPath, 'useinitService');
+
+		const response = axios.get(finalPath, { params: payload });
+		return response;
 	};
 
 	const postService = (payload: any) => {

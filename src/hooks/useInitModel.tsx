@@ -82,10 +82,10 @@ const useInitModel = <T,>(
 			page: paramPage || page,
 			limit: paramLimit || limit,
 			sort: sortParam || sort,
-			[fieldNameCondtion ?? 'condition']: {
-				...condition,
-				...paramCondition,
-			},
+			// [fieldNameCondtion ?? 'condition']: {
+			// 	...condition,
+			// 	...paramCondition,
+			// },
 			filters: [
 				...(filters?.filter((item) => item.active !== false)?.map(({ active, ...item }) => item) || []),
 				...(filterParams || []),
@@ -96,7 +96,9 @@ const useInitModel = <T,>(
 
 		try {
 			const response = await getService(payload, path ?? 'page', isAbsolutePath ?? false);
-			const tempData: T[] = response?.data?.data?.result ?? [];
+			console.log(response, 'useinitModel');
+
+			const tempData: T[] = response?.data?.data?.data ?? [];
 			const tempTotal: number = response?.data?.data?.total ?? 0;
 
 			if (tempData.length === 0 && tempTotal) {

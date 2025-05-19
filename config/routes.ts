@@ -1,22 +1,46 @@
-import { layout } from '@/app';
-import component from '@/locales/en-US/component';
+import path from 'path';
 
 export default [
+	// Admin Routes
 	{
-		path: '/',
+		path: '/admin',
+		component: '@/layouts/AdminLayout',
+		wrappers: ['@/components/AdminRoute'],
+		routes: [
+			{
+				path: '/admin/login',
+				component: './admin/Login',
+			},
+			{
+				path: '/admin/dashboard',
+				component: './admin/Dashboard',
+				wrappers: ['@/wrappers/auth'],
+			},
+			// Thêm các route admin khác ở đây
+		],
+	},
+
+	// Client Auth Routes (Login/Register)
+	{
+		path: '/user',
 		layout: false,
 		routes: [
 			{
-				path: '/login',
-				layout: false,
-				name: 'login',
+				path: '/user/login',
+				name: 'Đăng nhập',
 				component: './user/Login',
+				wrappers: ['@/wrappers/auth'],
 			},
 			{
-				path: '/register',
-				layout: false,
-				name: 'register',
+				path: '/user/register',
+				name: 'Đăng ký',
 				component: './user/Register',
+			},
+			{
+				path: '/user/verify-email/:token',
+				name: 'Xác minh Email',
+				component: './user/EmailVerification',
+				layout: false,
 			},
 			{
 				path: '/auth/verify-email/:token',
@@ -24,6 +48,7 @@ export default [
 				name: 'authentication',
 				component: './user/Auth',
 			},
+
 			{
 				path: '/user',
 				redirect: '/user/login',
@@ -31,35 +56,150 @@ export default [
 		],
 	},
 
-	///////////////////////////////////
-	// DEFAULT MENU
-	{
-		path: '/dashboard',
-		name: 'Rút gọn link mới',
-		component: './TrangChu',
-		icon: 'HomeOutlined',
-	},
-	{
-		path: '/dashboard',
-		name: 'Dashboard',
-		component: './TrangChu',
-		icon: 'HomeOutlined',
-	},
-	{
-		path: '/gioi-thieu',
-		name: 'About',
-		component: './TienIch/GioiThieu',
-		hideInMenu: true,
-	},
-	{
-		path: '/random-user',
-		name: 'RandomUser',
-		component: './RandomUser',
-		icon: 'ArrowsAltOutlined',
-	},
+	// Protected Client Routes
+	// {
+	// 	path: '/',
+	// 	// component: '@/layouts/BasicLayout',
+	// 	layout: true,
+	// 	wrappers: ['@/wrappers/auth'], // Thêm wrapper auth cho toàn bộ route client
+	// 	routes: [
+	// 		{
+	// 			path: '/dashboard',
+	// 			name: 'Dashboard',
+	// 			component: './ThongKe',
+	// 			icon: 'PieChartOutlined',
+	// 		},
+	// 		{
+	// 			path: '/api-web',
+	// 			name: 'API Trang rút gọn',
+	// 			component: './ApiWeb',
+	// 			icon: 'GlobalOutlined',
+	// 		},
+	// 		// Danh mục hệ thống
+	// 		{
+	// 			name: 'DanhMuc',
+	// 			path: '/danh-muc',
+	// 			icon: 'copy',
+	// 			routes: [
+	// 				{
+	// 					name: 'ChucVu',
+	// 					path: 'chuc-vu',
+	// 					component: './DanhMuc/ChucVu',
+	// 				},
+	// 			],
+	// 		},
+	// 	],
+	// },
 
 	{
+		path: '/dashboard',
+		name: 'Thống kê',
+		component: './Dashboard',
+		icon: 'PieChartOutlined',
+		wrappers: ['@/wrappers/auth'],
+	},
+	{
+		path: '/api-web',
+		name: 'Quản lý API',
+		component: './ApiWeb',
+		icon: 'GlobalOutlined',
+		wrappers: ['@/wrappers/auth'],
+	},
+	{
+		path: '/links',
+		name: 'Quản lý link',
+		component: './LinkManagement',
+		icon: 'FormOutlined',
+		wrappers: ['@/wrappers/auth'],
+	},
+	{
+		path: '/popular-link',
+		name: 'Top link',
+		component: './Popular',
+		icon: 'BarChartOutlined',
+		wrappers: ['@/wrappers/auth'],
+	},
+	{
+		path: '/tools',
+		name: 'Công cụ API',
+		icon: 'BarsOutlined',
+		wrappers: ['@/wrappers/auth'],
+		routes: [
+			{
+				path: 'quick',
+				name: 'Quick Link',
+				component: './Tool/QuickLink',
+			},
+			{
+				path: 'mass-shrinker',
+				name: 'Mass Shrinker',
+				component: './Tool/MassShrinker',
+			},
+			{
+				path: 'full-page-cript',
+				name: 'Full Page Script',
+				component: './Tool/FullPageScript',
+			},
+			{
+				path: 'developer-api',
+				name: 'Developers API',
+				component: './Tool/DeveloperAPI',
+			},
+		],
+	},
+	{
+		path: '/referrals',
+		name: 'Referral',
+		component: './Referral',
+		icon: 'GlobalOutlined',
+		wrappers: ['@/wrappers/auth'],
+	},
+	{
+		path: '/withdraws',
+		name: 'Rút tiền',
+		component: './Withdraw',
+		icon: 'DollarOutlined',
+		wrappers: ['@/wrappers/auth'],
+	},
+	{
+		path: '/settings',
+		name: 'Cài đặt',
+		icon: 'SettingOutlined',
+		wrappers: ['@/wrappers/auth'],
+		routes: [
+			{
+				path: 'profile',
+				name: 'Hồ sơ',
+				component: './user/Profile',
+				exact: true,
+			},
+			{
+				path: 'change-password',
+				name: 'Đổi mật khẩu',
+				component: './user/ChangePassword',
+				exact: true,
+			},
+		],
+	},
+	{
+		path: '/support',
+		name: 'Hỗ trợ',
+		component: './Support',
+		icon: 'UsergroupDeleteOutlined',
+	},
+
+	// Public Routes (Không cần xác thực)
+	{
+		path: '/',
+		component: './Home',
+		layout: false,
+	},
+
+	// Notification Routes
+	{
 		path: '/notification',
+		layout: false,
+		hideInMenu: true,
 		routes: [
 			{
 				path: './subscribe',
@@ -77,12 +217,9 @@ export default [
 				component: './ThongBao/NotifOneSignal',
 			},
 		],
-		layout: false,
-		hideInMenu: true,
 	},
-	{
-		path: '/',
-	},
+
+	// Error Pages
 	{
 		path: '/403',
 		component: './exception/403/403Page',
@@ -97,3 +234,121 @@ export default [
 		component: './exception/404',
 	},
 ];
+
+// export default [
+// 	// Admin
+// 	{
+// 		path: '/admin',
+// 		component: '@/layouts/AdminLayout',
+// 		wrappers: ['@/components/AdminRoute'],
+// 		routes: [
+// 			{
+// 				path: '/admin/login',
+// 				component: './admin/Login',
+// 			},
+// 			{
+// 				path: '/admin/dashboard',
+// 				component: './admin/Dashboard',
+// 				wrappers: ['@/wrappers/auth'],
+// 			},
+// 		],
+// 	},
+
+// 	// Client
+// 	{
+// 		path: '/user',
+// 		layout: false,
+// 		routes: [
+// 			{
+// 				path: '/user/login',
+// 				name: 'Đăng nhập',
+// 				component: './user/Login',
+// 			},
+// 			{
+// 				path: '/user/register',
+// 				name: 'Đăng ký',
+// 				component: './user/Register',
+// 			},
+// 			{
+// 				path: '/user/verify-email/:token',
+// 				name: 'Xác minh Email',
+// 				component: './user/EmailVerification',
+// 			},
+// 			{
+// 				path: '/user',
+// 				redirect: '/user/login',
+// 			},
+// 		],
+// 	},
+
+// 	///////////////////////////////////
+// 	// DEFAULT MENU
+// 	{
+// 		path: '/dashboard',
+// 		name: 'Dashboard',
+// 		component: './ThongKe',
+// 		icon: 'PieChartOutlined',
+// 		wrappers: ['@/wrappers/auth'],
+// 	},
+// 	{
+// 		path: '/api-web',
+// 		name: 'API Trang rút gọn',
+// 		component: './ApiWeb',
+// 		icon: 'GlobalOutlined',
+// 		wrappers: ['@/wrappers/auth'],
+// 	},
+
+// 	// DANH MUC HE THONG
+// 	{
+// 		name: 'DanhMuc',
+// 		path: '/danh-muc',
+// 		icon: 'copy',
+// 		routes: [
+// 			{
+// 				name: 'ChucVu',
+// 				path: 'chuc-vu',
+// 				component: './DanhMuc/ChucVu',
+// 			},
+// 		],
+// 	},
+
+// 	{
+// 		path: '/notification',
+// 		routes: [
+// 			{
+// 				path: './subscribe',
+// 				exact: true,
+// 				component: './ThongBao/Subscribe',
+// 			},
+// 			{
+// 				path: './check',
+// 				exact: true,
+// 				component: './ThongBao/Check',
+// 			},
+// 			{
+// 				path: './',
+// 				exact: true,
+// 				component: './ThongBao/NotifOneSignal',
+// 			},
+// 		],
+// 		layout: false,
+// 		hideInMenu: true,
+// 	},
+// 	{
+// 		path: '/',
+// 		component: './TrangChu',
+// 	},
+// 	{
+// 		path: '/403',
+// 		component: './exception/403/403Page',
+// 		layout: false,
+// 	},
+// 	{
+// 		path: '/hold-on',
+// 		component: './exception/DangCapNhat',
+// 		layout: false,
+// 	},
+// 	{
+// 		component: './exception/404',
+// 	},
+// ];
