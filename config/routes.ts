@@ -1,15 +1,13 @@
-import path from 'path';
-
 export default [
 	// Admin Routes
 	{
 		path: '/admin',
-		component: '@/layouts/AdminLayout',
-		wrappers: ['@/components/AdminRoute'],
+		// component: '@/layouts/AdminLayout',
+		// wrappers: ['@/components/AdminRoute'],
 		routes: [
 			{
 				path: '/admin/login',
-				component: './admin/Login',
+				component: './user/Login',
 			},
 			{
 				path: '/admin/dashboard',
@@ -58,42 +56,7 @@ export default [
 
 	//Public
 
-
 	// Protected Client Routes
-	// {
-	// 	path: '/',
-	// 	// component: '@/layouts/BasicLayout',
-	// 	layout: true,
-	// 	wrappers: ['@/wrappers/auth'], // Thêm wrapper auth cho toàn bộ route client
-	// 	routes: [
-	// 		{
-	// 			path: '/dashboard',
-	// 			name: 'Dashboard',
-	// 			component: './ThongKe',
-	// 			icon: 'PieChartOutlined',
-	// 		},
-	// 		{
-	// 			path: '/api-web',
-	// 			name: 'API Trang rút gọn',
-	// 			component: './ApiWeb',
-	// 			icon: 'GlobalOutlined',
-	// 		},
-	// 		// Danh mục hệ thống
-	// 		{
-	// 			name: 'DanhMuc',
-	// 			path: '/danh-muc',
-	// 			icon: 'copy',
-	// 			routes: [
-	// 				{
-	// 					name: 'ChucVu',
-	// 					path: 'chuc-vu',
-	// 					component: './DanhMuc/ChucVu',
-	// 				},
-	// 			],
-	// 		},
-	// 	],
-	// },
-
 	{
 		path: '/dashboard',
 		name: 'Thống kê',
@@ -184,6 +147,18 @@ export default [
 			},
 		],
 	},
+	//{
+	// 			name: 'DanhMuc',
+	// 			path: '/danh-muc',
+	// 			icon: 'copy',
+	// 			routes: [
+	// 				{
+	// 					name: 'ChucVu',
+	// 					path: 'chuc-vu',
+	// 					component: './DanhMuc/ChucVu',
+	// 				},
+	// 			],
+	// 		},
 	{
 		path: '/support',
 		name: 'Hỗ trợ',
@@ -234,15 +209,15 @@ export default [
 		layout: false,
 	},
 	{
-		path:'/:id',
+		path: '/:id',
 		component: './exception/404',
-		layout:false,
+		layout: false,
 	},
-		{
+	{
 		path: '/:id',
 		// name: 'Vượt Link',
 		component: './TrungGian',
-		layout: false
+		layout: false,
 	},
 ];
 

@@ -1,9 +1,8 @@
 import Footer from '@/components/Footer';
-import LoginWithKeycloak from '@/pages/user/Login/KeycloakLogin';
-import { adminlogin, getUserInfo } from '@/services/base/api';
+import { getUserInfo } from '@/services/base/api';
 import { keycloakAuthority } from '@/utils/ip';
 import rules from '@/utils/rules';
-import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
+import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, Tabs, message } from 'antd';
 import React, { useState } from 'react';
 // import Recaptcha from 'react-recaptcha';
