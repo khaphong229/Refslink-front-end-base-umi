@@ -1,11 +1,13 @@
 import TableBase from '@/components/Table';
 import { type IColumn } from '@/components/Table/typing';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Button, Popconfirm, Tag, Tooltip } from 'antd';
+import { Button, message, Popconfirm, Space, Switch, Tag, Tooltip } from 'antd';
 import { useModel } from 'umi';
 import Form from './components/Form';
-import { ROUTER } from '@/constants/router';
 import type ApiWeb from '@/services/WebApi/typings';
+import { STATUS } from '@/types/status';
+import moment from 'moment';
+import { changeStatus } from '@/services/WebApi';
 
 const ApiWebPage = () => {
 	const { getModel, page, limit, deleteModel, handleEdit } = useModel('api_web');
@@ -15,12 +17,17 @@ const ApiWebPage = () => {
 			title: 'Api',
 			dataIndex: 'name_api',
 			width: 150,
+			align: 'center',
+			render: (value) => {
+				return <span style={{ fontWeight: 'bold' }}>{value}</span>;
+			},
 		},
 		{
 			title: 'Số view tối đa',
 			dataIndex: 'max_view',
 			width: 120,
 			sortable: true,
+			align: 'center',
 		},
 		{
 			title: 'Ưu tiên',
@@ -34,38 +41,66 @@ const ApiWebPage = () => {
 			dataIndex: 'status',
 			width: 120,
 			filterType: 'select',
+			align: 'center',
 			filterData: [
 				{
 					label: 'Bật',
-					value: 'active',
+					value: STATUS.ACTIVE,
 				},
 				{
 					label: 'Tắt',
-					value: 'inactive',
+					value: STATUS.INACTIVE,
 				},
 			],
-			render: (value, _) => {
-				if (value === 'inactive') {
-					<Tag color='red'>Tắt</Tag>;
-				} else {
-					<Tag color='green'>Bật</Tag>;
-				}
-			},
+			render: (value, record) => (
+				<Switch
+					checked={value === STATUS.ACTIVE}
+					onChange={async (checked) => {
+						const res = await changeStatus(record._id, checked ? STATUS.ACTIVE : STATUS.INACTIVE);
+						if (res.status === 200) {
+							message.success(res.message);
+							getModel();
+						}
+					}}
+					checkedChildren='Bật'
+					unCheckedChildren='Tắt'
+				/>
+			),
 		},
 		{
 			title: 'Tự động bật',
 			dataIndex: 'timer_start',
 			width: 120,
+			align: 'center',
+			render: (value) => (value ? moment.utc(value).local().format('HH:mm:ss') : '-'),
 		},
 		{
 			title: 'Tự động tắt',
 			dataIndex: 'timer_end',
 			width: 120,
+			align: 'center',
+			render: (value) => (value ? moment.utc(value).local().format('HH:mm:ss') : '-'),
+		},
+		{
+			title: 'Chặn VPN',
+			dataIndex: 'block_vpn',
+			width: 120,
+			align: 'center',
+			render: (value) => (value === true ? 'Có' : 'Không'),
 		},
 		{
 			title: 'Quốc gia',
 			dataIndex: 'country_uses',
 			width: 120,
+			render: (value) => (
+				<Space wrap>
+					{value.map((val) => (
+						<Tag key={val} color='red'>
+							{val}
+						</Tag>
+					))}
+				</Space>
+			),
 		},
 		{
 			title: 'Thao tác',
