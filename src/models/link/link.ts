@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import { message } from 'antd';
-import request from 'umi-request'; // hoặc axios
 import { LinkItem } from '@/services/ManagementLink/typing';
 import axios from '@/utils/axios';
 import { createShortLink } from '@/services/ManagementLink';
@@ -26,9 +25,7 @@ export const useLinkManager = () => {
     fetchLinks();
   }, []);
 
-  const handleExport = () =>{
-    exportToExcel(data,"danh_sach")
-  }
+
 
   // Search filter
   const filteredData = data.filter((item) =>
@@ -53,6 +50,11 @@ export const useLinkManager = () => {
       )
     );
   };
+  const handleExport = () => {
+		exportToExcel(data, 'danh_sach',["alias","original_link","shorten_link","third_party_link","click_count"]);
+	};
+
+  
 
   const hideAll = () => {
     setData((prev) => prev.map((item) => ({ ...item, visible: false })));
@@ -73,6 +75,12 @@ export const useLinkManager = () => {
     }
    
   };
+  	const handleCopy = (text: string) => {
+		navigator.clipboard.writeText(text).then(() => {
+			message.success('Đã sao chép link!');
+		});
+	};
+
 
   return {
     data: filteredData,
@@ -83,5 +91,7 @@ export const useLinkManager = () => {
     toggleVisibility,
     hideAll,
     showAll,
+    handleExport,
+    handleCopy
   };
 };

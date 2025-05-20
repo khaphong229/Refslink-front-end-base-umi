@@ -56,6 +56,9 @@ export default [
 		],
 	},
 
+	//Public
+
+
 	// Protected Client Routes
 	// {
 	// 	path: '/',
@@ -231,7 +234,15 @@ export default [
 		layout: false,
 	},
 	{
+		path:'/:id',
 		component: './exception/404',
+		layout:false,
+	},
+		{
+		path: '/:id',
+		// name: 'Vượt Link',
+		component: './TrungGian',
+		layout: false
 	},
 ];
 

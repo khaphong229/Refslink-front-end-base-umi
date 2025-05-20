@@ -13,23 +13,17 @@ import CreateLinkModal from './components/Form';
 import { LinkItem } from '@/services/ManagementLink/typing';
 import './style.less';
 import { exportToExcel } from '@/utils/exportExcel';
+import dayjs from 'dayjs';
 
 const { Title, Paragraph, Text } = Typography;
 const { confirm } = Modal;
 
 const LinkManagerPage: React.FC = () => {
 	const [isModalOpen, setIsModalOpen] = useState(false);
-	const { data, setSearch, createLink, deleteAll, deleteLink, toggleVisibility, hideAll, showAll } = useLinkManager();
+	const { data, setSearch, createLink, deleteAll, deleteLink, toggleVisibility,handleExport,handleCopy } = useLinkManager();
 
-	const handleCopy = (text: string) => {
-		navigator.clipboard.writeText(text).then(() => {
-			message.success('Đã sao chép link!');
-		});
-	};
 
-	const handleExport = () => {
-		exportToExcel(data, 'danh_sach');
-	};
+	
 
 	return (
 		<div className='link-simple-manager'>
@@ -52,12 +46,7 @@ const LinkManagerPage: React.FC = () => {
 					style={{ width: 300 }}
 				/>
 				<Space>
-					<Button icon={<EyeInvisibleOutlined />} onClick={hideAll}>
-						Ẩn tất cả
-					</Button>
-					<Button icon={<EyeOutlined />} onClick={showAll}>
-						Hiện tất cả
-					</Button>
+				
 					<Button
 						danger
 						icon={<DeleteOutlined />}
@@ -79,7 +68,7 @@ const LinkManagerPage: React.FC = () => {
 					data.map((link: LinkItem) => (
 						<Card key={link._id} className='link-item'>
 							<Paragraph copyable={{ text: link.original_link }}>{link.original_link}</Paragraph>
-							<Text type='secondary'>🗓 {link.created_at}</Text>
+							<Text type='secondary'>🗓 {dayjs(link.created_at).format("DD/MM/YYYY HH:mm:ss")}</Text>
 							<Input
 								value={link.shorten_link}
 								readOnly
@@ -90,9 +79,6 @@ const LinkManagerPage: React.FC = () => {
 								}
 							/>
 							<Space>
-								<Button type='primary' danger={!link.visible} onClick={() => toggleVisibility(link._id)}>
-									{link.visible ? 'Ẩn' : 'Hiện'}
-								</Button>
 								<Button danger onClick={() => deleteLink(link._id)}>
 									Xoá
 								</Button>
