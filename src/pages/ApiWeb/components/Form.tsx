@@ -51,9 +51,21 @@ const FormApiWeb = (props: any) => {
 			priority: String(values.priority),
 			timer_start: timer_start?.format('HH:mm:ss'),
 			timer_end: timer_end?.format('HH:mm:ss'),
-			blocked_domains: !isArray(values.blocked_domains) ? values.blocked_domains.split(',') : values.blocked_domains,
-			allowed_domains: !isArray(values.allowed_domains) ? values.allowed_domains.split(',') : values.allowed_domains,
 		};
+
+		// Chỉ xử lý blocked_domains nếu nó tồn tại
+		if (values.blocked_domains) {
+			formData.blocked_domains = !isArray(values.blocked_domains)
+				? values.blocked_domains.split(',')
+				: values.blocked_domains;
+		}
+
+		// Chỉ xử lý allowed_domains nếu nó tồn tại
+		if (values.allowed_domains) {
+			formData.allowed_domains = !isArray(values.allowed_domains)
+				? values.allowed_domains.split(',')
+				: values.allowed_domains;
+		}
 		delete formData.time_range;
 
 		console.log(formData);
