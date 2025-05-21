@@ -21,7 +21,6 @@ export interface RegisterBody {
 	password: string;
 }
 
-
 export const clientRegister = async (payload: RegisterBody) => {
 	const response = await axios.post(`${ipRoot}/auth/register`, payload);
 	return response?.data;
@@ -33,8 +32,8 @@ export const clientLogin = async (payload: { email: string; password: string }):
 };
 
 export async function adminlogin(payload: { email?: string; password?: string }) {
-	const response = axios.post(`${ipRoot}/admin/auth/login`, { ...payload, platform: 'Web' });
-	return (await response).data;
+	const response = await axios.post(`${ipRoot}/admin/auth/login`, { ...payload });
+	return response?.data;
 }
 
 export const changePassword = async (data: ChangePasswordBody) => {
