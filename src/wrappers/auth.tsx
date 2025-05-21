@@ -1,5 +1,5 @@
 import { ROUTER_ADMIN, ROUTER_CLIENT } from '@/constants/router';
-import { getUserInfo } from '@/services/base/api';
+import { getAdminInfo, getUserInfo } from '@/services/base/api';
 import React, { useEffect } from 'react';
 import { Redirect, useModel } from 'umi';
 
@@ -19,12 +19,12 @@ const AuthWrapper: React.FC = ({ children }) => {
 	if (!token) {
 		return <Redirect to={isAdminRoute ? ROUTER_ADMIN.LOGIN : ROUTER_CLIENT.LOGIN} />;
 	}
-
+	console.log('test');
 	useEffect(() => {
 		const fetchUserInfo = async () => {
 			if (token && !initialState?.currentUser) {
 				try {
-					const info = await getUserInfo();
+					const info = isAdminRoute ? await getAdminInfo() : await getUserInfo();
 					setInitialState({
 						...initialState,
 						currentUser: info?.data?.data,
