@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 import { message } from 'antd';
 import { LinkItem } from '@/services/ManagementLink/typing';
 import axios from '@/utils/axios';
-import { createShortLink } from '@/services/ManagementLink';
+import { createShortLink, deleteShortLinkById } from '@/services/ManagementLink';
 import { exportToExcel } from '@/utils/exportExcel';
 
 export const useLinkManager = () => {
@@ -33,9 +33,16 @@ export const useLinkManager = () => {
   );
 
   // Actions
-  const deleteLink = (id: string) => {
-    setData((prev) => prev.filter((item) => item._id !== id));
-    message.success('Đã xoá link!');
+  const deleteLink = async (id: string) => {
+      try{
+        const deletedLink = await deleteShortLinkById(id);
+        console.log(deletedLink);
+        setData((prev)=>data.filter((item)=>item._id !== id));
+        message.success('Đã xoá link thành công!');
+      }
+      catch (error) {
+        message.error('Không thể xoá link');
+      }
   };
 
   const deleteAll = () => {

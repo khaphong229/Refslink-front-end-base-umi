@@ -10,16 +10,16 @@ export const getLinks = async () => {
 };
 
 
-
-
 export const createShortLink = async (originalUrl: string) => {
   const response = await axios.post(`${API_URL}/shorten-link`, {
     original_link: originalUrl,
   });
-  const item = response.data.data;
-  console.log(item); // 👈 log ra để xem đúng không
 
-
-  return item;
+  return response.data.data;
 };
 
+
+export const deleteShortLinkById = async (id:string) =>{
+  const response = await axios.delete(`${API_URL}/shorten-link/${id}`);
+  return response
+}

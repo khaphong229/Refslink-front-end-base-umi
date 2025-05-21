@@ -47,19 +47,7 @@ const LinkManagerPage: React.FC = () => {
 				/>
 				<Space>
 				
-					<Button
-						danger
-						icon={<DeleteOutlined />}
-						onClick={() =>
-							confirm({
-								title: 'Xác nhận xoá toàn bộ?',
-								onOk: deleteAll,
-								okType: 'danger',
-							})
-						}
-					>
-						Xoá tất cả
-					</Button>
+					
 				</Space>
 			</div>
 
