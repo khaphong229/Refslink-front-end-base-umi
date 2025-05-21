@@ -1,6 +1,7 @@
 import { SuccessReponse } from '@/types/ResponseApi';
 import { ipRoot } from '@/utils/ip';
 import axios from 'axios';
+import { ChangePasswordBody } from './typing';
 
 export type LoginResponse = SuccessReponse<{
 	access_token: string;
@@ -31,6 +32,10 @@ export const clientLogin = async (payload: { email: string; password: string }):
 };
 
 export async function adminlogin(payload: { email?: string; password?: string }) {
-	const response = axios.post(`${ipRoot}/admin/auth/login`, { ...payload, platform: 'Web' });
-	return (await response).data;
+	const response = await axios.post(`${ipRoot}/admin/auth/login`, { ...payload });
+	return response?.data;
 }
+
+export const changePassword = async (data: ChangePasswordBody) => {
+	return axios.patch(`http://localhost:3111/auth/change-password`, data);
+};

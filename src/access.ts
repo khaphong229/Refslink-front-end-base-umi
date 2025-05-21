@@ -22,6 +22,10 @@ export default function access(initialState: IInitialState) {
 			if (userRole !== 'client') return false;
 			return scopes?.includes(route?.maChucNang) || false;
 		},
+
+		canAccessAdminRoute: () => userRole === 'admin',
+		canAccessClientRoute: () => userRole === 'client',
+
 		// canBoQLKH: token && vaiTro && vaiTro === 'can_bo_qlkh',
 		// lanhDao: token && vaiTro && vaiTro === 'lanh_dao',
 		// sinhVienVaNhanVien: token && vaiTro && ['nhan_vien', 'sinh_vien'].includes(vaiTro),

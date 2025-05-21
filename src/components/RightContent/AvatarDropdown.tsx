@@ -44,18 +44,6 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 		// 		window.location.href = `${keycloakAuthEndpoint}?client_id=${AppModules[currentRole].clientId}&redirect_uri=${redirect}&response_type=code&scope=openid&kc_action=UPDATE_PASSWORD`;
 		// 	},
 		// },
-		{
-			key: 'office',
-			icon: <FileWordOutlined />,
-			label: 'Office 365',
-			onClick: () => window.open('https://office.com/'),
-		},
-		{
-			key: 'portal',
-			icon: <GlobalOutlined />,
-			label: APP_CONFIG_TITLE_LANDING ?? 'Cổng thông tin',
-			onClick: () => window.open(landingUrl),
-		},
 		{ type: 'divider', key: 'divider' },
 		{
 			key: 'logout',

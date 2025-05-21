@@ -21,6 +21,11 @@ export async function getUserInfo() {
 	return axios.get(`${ipRoot}/auth/me`);
 }
 
+export async function getAdminInfo() {
+	// return axios.get(keycloakUserInfoEndpoint);
+	return axios.get(`${ipRoot}/admin/auth/me`);
+}
+
 export async function adminlogin(payload: { username?: string; password?: string }) {
 	return axios.post(`${ip3}/auth/login`, { ...payload, platform: 'Web' });
 }

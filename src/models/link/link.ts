@@ -1,9 +1,9 @@
 import { useEffect, useState } from 'react';
 import { message } from 'antd';
-import request from 'umi-request'; // hoặc axios
 import { LinkItem } from '@/services/ManagementLink/typing';
-import axios from 'axios';
+import axios from '@/utils/axios';
 import { createShortLink } from '@/services/ManagementLink';
+import { exportToExcel } from '@/utils/exportExcel';
 
 export const useLinkManager = () => {
   const [data, setData] = useState<LinkItem[]>([]);
@@ -12,18 +12,10 @@ export const useLinkManager = () => {
   const fetchLinks = async () => {
     try {
       const response = await axios.get('http://localhost:3111/shorten-link'); // <-- API thật của bạn
-      const list = response?.data.data.data || [];
-      const mapped: LinkItem[] = list.map((item: any) => ({
-        id: item._id,
-        originalUrl: item.original_link,
-        shortUrl: item.shorten_link,
-        createdAt: new Date(item.created_at).toLocaleDateString(),
-        visible: item.status === 'active',
-      }));
-
-      console.log(mapped)
-
-      setData(mapped);
+      const list = response?.data.data.data;
+  
+      console.log(list)
+      setData(list);
     } catch (error) {
       message.error('Không thể tải dữ liệu link');
     }
@@ -33,14 +25,16 @@ export const useLinkManager = () => {
     fetchLinks();
   }, []);
 
+
+
   // Search filter
   const filteredData = data.filter((item) =>
-    item.originalUrl.toLowerCase().includes(searchTerm.toLowerCase())
+    item.original_link.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   // Actions
   const deleteLink = (id: string) => {
-    setData((prev) => prev.filter((item) => item.id !== id));
+    setData((prev) => prev.filter((item) => item._id !== id));
     message.success('Đã xoá link!');
   };
 
@@ -52,10 +46,15 @@ export const useLinkManager = () => {
   const toggleVisibility = (id: string) => {
     setData((prev) =>
       prev.map((item) =>
-        item.id === id ? { ...item, visible: !item.visible } : item
+        item._id === id ? { ...item, visible: !item.visible } : item
       )
     );
   };
+  const handleExport = () => {
+		exportToExcel(data, 'danh_sach',["alias","original_link","shorten_link","third_party_link","click_count"]);
+	};
+
+  
 
   const hideAll = () => {
     setData((prev) => prev.map((item) => ({ ...item, visible: false })));
@@ -66,14 +65,22 @@ export const useLinkManager = () => {
   };
 
   const createLink = async (originalUrl: string) => {
-    try {
+    try{
       const newLink = await createShortLink(originalUrl);
+      console.log(newLink);
       setData((prev) => [...prev, newLink]);
       message.success('Đã tạo link mới!');
     } catch (error) {
       message.error('Không thể tạo link mới');
     }
+   
   };
+  	const handleCopy = (text: string) => {
+		navigator.clipboard.writeText(text).then(() => {
+			message.success('Đã sao chép link!');
+		});
+	};
+
 
   return {
     data: filteredData,
@@ -84,5 +91,7 @@ export const useLinkManager = () => {
     toggleVisibility,
     hideAll,
     showAll,
+    handleExport,
+    handleCopy
   };
 };

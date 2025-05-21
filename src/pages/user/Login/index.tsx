@@ -1,16 +1,15 @@
 import Footer from '@/components/Footer';
-import LoginWithKeycloak from '@/pages/user/Login/KeycloakLogin';
-import { adminlogin, getUserInfo } from '@/services/base/api';
+import { getAdminInfo, getUserInfo } from '@/services/base/api';
 import { keycloakAuthority } from '@/utils/ip';
 import rules from '@/utils/rules';
-import { LockOutlined, MailOutlined, UserOutlined } from '@ant-design/icons';
+import { LockOutlined, MailOutlined } from '@ant-design/icons';
 import { Button, Checkbox, Form, Input, Tabs, message } from 'antd';
 import React, { useState } from 'react';
 // import Recaptcha from 'react-recaptcha';
 import { history, useIntl, useModel } from 'umi';
 import styles from './index.less';
 import LoginGoogle from '@/pages/user/Login/LoginGoogle';
-import { clientLogin } from '@/services/Auth';
+import { adminlogin, clientLogin } from '@/services/Auth';
 import { ROUTER_CLIENT } from '@/constants/router';
 
 const Login: React.FC = () => {
@@ -25,14 +24,21 @@ const Login: React.FC = () => {
 	const intl = useIntl();
 	const [form] = Form.useForm();
 
+	const currentPath = history.location.pathname;
+	const isAdminRoute = currentPath.includes('admin');
+
+	const callApiLogin = async (api, payload) => {
+		return await api(payload);
+	};
+
 	/**
 	 * Xử lý token, get info sau khi đăng nhập
 	 */
 	const handleRole = async (role: { access_token: string }) => {
-		localStorage.setItem('token', role?.access_token);
+		localStorage.setItem(isAdminRoute ? 'admin_token' : 'token', role?.access_token);
 
 		// const decoded = jwt_decode(role?.access_token) as any;
-		const info = await getUserInfo();
+		const info = !isAdminRoute ? await getUserInfo() : await getAdminInfo();
 		console.log(info, 'in4');
 
 		setInitialState({
@@ -52,16 +58,21 @@ const Login: React.FC = () => {
 	const handleSubmit = async (values: { email: string; password: string; remember: string }) => {
 		const { remember, ...payloadLogin } = values;
 		try {
-			// if (!isVerified) {
-			// 	message.error('Vui lòng xác thực Captcha');
-			// 	return;
-			// }
 			setSubmitting(true);
+			console.log(values);
 
-			const msg = await clientLogin({ ...payloadLogin });
+			// const msg = await clientLogin({ ...payloadLogin });
+			const msg = isAdminRoute
+				? await callApiLogin(adminlogin, { ...payloadLogin })
+				: await callApiLogin(clientLogin, { ...payloadLogin });
+			console.log(msg);
+
+			if (!msg) {
+				throw new Error('No response from server');
+			}
 
 			if (msg.status === 200 && msg?.data?.access_token) {
-				localStorage.setItem('user_role', 'client');
+				localStorage.setItem('user_role', !isAdminRoute ? 'client' : 'admin');
 				handleRole(msg?.data);
 				localStorage.removeItem('failed');
 			}
@@ -78,15 +89,11 @@ const Login: React.FC = () => {
 				id: 'pages.login.failure',
 				defaultMessage: 'failure',
 			});
+
 			message.error(defaultloginFailureMessage);
 		}
 		setSubmitting(false);
 	};
-
-	// const verifyCallback = (response: any) => {
-	// 	if (response) setIsverified(true);
-	// 	else setIsverified(false);
-	// };
 
 	const handleRegisterClick = () => {
 		history.push(ROUTER_CLIENT.REGISTER);
@@ -105,27 +112,32 @@ const Login: React.FC = () => {
 
 				<div className={styles.main}>
 					<Tabs activeKey={type} onChange={setType}>
-						<Tabs.TabPane
-							key='accountEmail'
-							tab={intl.formatMessage({
-								id: 'pages.lggin.accountLogin.emailTab',
-								defaultMessage: 'tab',
-							})}
-						/>
-						<Tabs.TabPane
-							key='accountGoogle'
-							tab={intl.formatMessage({
-								id: 'pages.login.accountLogin.googleTab',
-								defaultMessage: 'tab',
-							})}
-						/>
-						{/* <Tabs.TabPane
-							key='accountAdmin'
-							tab={intl.formatMessage({
-								id: 'pages.login.accountLoginAdmin.tab',
-								defaultMessage: 'tab',
-							})}
-						/> */}
+						{!isAdminRoute ? (
+							<>
+								<Tabs.TabPane
+									key='accountEmail'
+									tab={intl.formatMessage({
+										id: 'pages.lggin.accountLogin.emailTab',
+										defaultMessage: 'tab',
+									})}
+								/>
+								<Tabs.TabPane
+									key='accountGoogle'
+									tab={intl.formatMessage({
+										id: 'pages.login.accountLogin.googleTab',
+										defaultMessage: 'tab',
+									})}
+								/>
+							</>
+						) : (
+							<Tabs.TabPane
+								key='accountAdmin'
+								tab={intl.formatMessage({
+									id: 'pages.login.accountLoginAdmin.tab',
+									defaultMessage: 'tab',
+								})}
+							/>
+						)}
 					</Tabs>
 
 					{type === 'accountGoogle' ? (
