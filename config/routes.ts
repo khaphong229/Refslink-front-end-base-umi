@@ -1,16 +1,21 @@
 export default [
 	// Admin Routes
-	{
-		path: '/admin',
-		layout: false,
-		routes: [
-			{
-				path: '/admin/login',
-				component: './user/Login',
-			},
-		],
-	},
+	// {
+	// 	path: '/admin',
+	// 	layout: false,
+	// 	routes: [
+	// 		{
+	// 			path: '/admin/login',
+	// 			component: './user/Login',
+	// 		},
 
+	// 	],
+	// },
+	{
+		path: '/login/admin',
+		layout: false,
+		component: './user/Login',
+	},
 	// Protected Admin Routes
 	{
 		path: '/admin/dashboard',
@@ -18,16 +23,17 @@ export default [
 		component: './Dashboard',
 		icon: 'PieChartOutlined',
 		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
-		access: 'canAccessAdminRoute', 
+		access: 'canAccessAdminRoute',
 	},
 	{
-		path: '/adminn/user-management',
+		path: '/admin/user-management',
 		name: 'Quản lý người dùng',
 		component: './UserManagement',
 		icon: 'UserOutlined',
-		// wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
-		// access: 'canAccessAdminRoute',
+		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
+		access: 'canAccessAdminRoute',
 	},
+
 
 	// Client Auth Routes (Login/Register)
 	{
@@ -171,7 +177,7 @@ export default [
 		icon: 'UsergroupDeleteOutlined',
 		access: 'canAccessClientRoute',
 	},
-	
+
 	// Public Routes (Không cần xác thực)
 	{
 		path: '/',

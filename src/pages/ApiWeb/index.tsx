@@ -36,7 +36,7 @@ const ApiWebPage = () => {
 			align: 'center',
 			width: 120,
 			sortable: true,
-		},
+		}, 
 		{
 			title: 'Trạng thái',
 			dataIndex: 'status',
