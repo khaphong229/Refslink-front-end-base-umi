@@ -13,7 +13,7 @@ const TrangChu = () => {
         <IntroSection/>
         <ConnectSection/>
       </Card>
-      <Footer/>
+      {/* <Footer/> */}
     </>
   );
 };

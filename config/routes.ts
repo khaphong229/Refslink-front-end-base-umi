@@ -18,7 +18,15 @@ export default [
 		component: './Dashboard',
 		icon: 'PieChartOutlined',
 		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
-		access: 'canAccessAdminRoute',
+		access: 'canAccessAdminRoute', 
+	},
+	{
+		path: '/adminn/user-management',
+		name: 'Quản lý người dùng',
+		component: './UserManagement',
+		icon: 'UserOutlined',
+		// wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
+		// access: 'canAccessAdminRoute',
 	},
 
 	// Client Auth Routes (Login/Register)
@@ -163,7 +171,7 @@ export default [
 		icon: 'UsergroupDeleteOutlined',
 		access: 'canAccessClientRoute',
 	},
-
+	
 	// Public Routes (Không cần xác thực)
 	{
 		path: '/',
