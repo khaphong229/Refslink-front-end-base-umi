@@ -19,7 +19,6 @@ const AuthWrapper: React.FC = ({ children }) => {
 	if (!token) {
 		return <Redirect to={isAdminRoute ? ROUTER_ADMIN.LOGIN : ROUTER_CLIENT.LOGIN} />;
 	}
-	console.log('test');
 	useEffect(() => {
 		const fetchUserInfo = async () => {
 			if (token && !initialState?.currentUser) {
