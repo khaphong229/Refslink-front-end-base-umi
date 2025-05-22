@@ -11,7 +11,6 @@ const TrangChu = () => {
       <div style={{ padding: '0 40px'}}>
         <Header />
         <SnowBackground/>
-
         <Landing/>
         <IntroSection/>
         <ConnectSection/>

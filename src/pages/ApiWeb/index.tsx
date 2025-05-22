@@ -9,6 +9,7 @@ import { STATUS } from '@/types/status';
 import moment from 'moment';
 import { changeStatus } from '@/services/WebApi';
 import { get } from 'lodash';
+import ClientLayout from '@/layouts/ClientLayout';
 
 const ApiWebPage = () => {
 	const { getModel, page, limit, deleteModel, handleEdit } = useModel('api_web');
@@ -128,7 +129,8 @@ const ApiWebPage = () => {
 	];
 
 	return (
-		<TableBase
+		<ClientLayout title='Quản lý api web'>
+			<TableBase
 			columns={columns}
 			widthDrawer={800}
 			dependencies={[page, limit]}
@@ -137,6 +139,7 @@ const ApiWebPage = () => {
 			Form={Form}
 			buttons={{ import: false, filter: false }}
 		/>
+		</ClientLayout>
 	);
 };
 

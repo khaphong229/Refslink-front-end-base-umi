@@ -14,7 +14,7 @@ const SnowBackground = () => {
           zIndex:0,
           top: 0,
         }}
-        snowflakeCount={50} // Số bông tuyết
+        snowflakeCount={80} // Số bông tuyết
         color="#ff6b61" // Màu tuyết – bạn có thể dùng #fff nếu nền tối
       />
     </>
