@@ -12,3 +12,8 @@ export const createShortLink = async (values) => {
 
 	return response?.data;
 };
+
+export const deleteShortLinkById = async (id: string) => {
+	const response = await axios.delete(`${API_URL}/shorten-link/${id}`);
+	return response;
+};
