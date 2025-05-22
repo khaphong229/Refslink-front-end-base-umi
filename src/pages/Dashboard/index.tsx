@@ -54,7 +54,7 @@ const Dashboard = () => {
           <Card className="stat-card orange" bordered={false}>
             <EyeOutlined className="icon" />
             <div className="value">0</div>
-            <div>Total View</div>
+            <div>Tổng View</div>
           </Card>
         </Col>
         <Col span={6}>
