@@ -26,7 +26,7 @@ export default [
 		access: 'canAccessAdminRoute',
 	},
 	{
-		path: '/admin/user-management',
+		path: '/admin/users',
 		name: 'Quản lý người dùng',
 		component: './UserManagement',
 		icon: 'UserOutlined',

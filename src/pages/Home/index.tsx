@@ -4,16 +4,19 @@ import Card from 'antd/lib/card/Card';
 import Landing from './Landing';
 import IntroSection from './IntroduceSection';
 import ConnectSection from './ConnectSection';
+import SnowBackground from '@/components/SnowFall';
 const TrangChu = () => {
   return (
     <>
-      <Header />
-      <Card>
+      <div style={{ padding: '0 40px'}}>
+        <Header />
+        <SnowBackground/>
+
         <Landing/>
         <IntroSection/>
         <ConnectSection/>
-      </Card>
       {/* <Footer/> */}
+      </div>
     </>
   );
 };

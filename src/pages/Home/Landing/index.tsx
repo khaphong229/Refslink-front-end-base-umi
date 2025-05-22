@@ -16,9 +16,9 @@ export default function Landing() {
 				<Col xs={24} md={12}>
 					<div className='landing-text'>
 						<Title level={1}>
-							<span className='gradient-text'>Quản lý </span>
+							<span className='gradient-text text-color'>Quản lý </span>
 							link rút gọn cùng Ref
-							<span className='gradient-text'>slink</span>
+							<span className='text-color'>slink</span>
 						</Title>
 						<Paragraph className='description'>
 							RefLink là nền tảng rút gọn link nhanh chóng, tiện lợi, giúp bạn chia sẻ các đường dẫn dài một cách chuyên
