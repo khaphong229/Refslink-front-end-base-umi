@@ -1,42 +1,31 @@
 import React, { useState } from 'react';
 import { Typography, Input, Space, Button, Empty, Card, Tooltip, Modal, message } from 'antd';
-import {
-	CopyOutlined,
-	DeleteOutlined,
-	EyeOutlined,
-	EyeInvisibleOutlined,
-	PlusOutlined,
-	SearchOutlined,
-} from '@ant-design/icons';
+import { CopyOutlined, DeleteOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
 import { useLinkManager } from '@/models/link/link';
 import CreateLinkModal from './components/Form';
 import { LinkItem } from '@/services/ManagementLink/typing';
 import './style.less';
-import { exportToExcel } from '@/utils/exportExcel';
 import dayjs from 'dayjs';
+import ClientLayout from '@/layouts/ClientLayout';
 
-const { Title, Paragraph, Text } = Typography;
+const { Paragraph, Text } = Typography;
 const { confirm } = Modal;
 
 const LinkManagerPage: React.FC = () => {
-	const [isModalOpen, setIsModalOpen] = useState(false);
-	const { data, setSearch, createLink, deleteAll, deleteLink, toggleVisibility,handleExport,handleCopy } = useLinkManager();
-
-
-	
+	const {
+		data,
+		setSearch,
+		createLink,
+		deleteAll,
+		deleteLink,
+		handleExport,
+		handleCopy,
+		isPageModalOpen,
+		setIsPageModalOpen, // Sử dụng state riêng cho page modal
+	} = useLinkManager();
 
 	return (
-		<div className='link-simple-manager'>
-			<Title level={3}>Quản lý link</Title>
-			<div className='btn'>
-				<Button type='primary' icon={<PlusOutlined />} onClick={() => setIsModalOpen(true)}>
-					Tạo Link
-				</Button>
-				<Button onClick={handleExport} type='primary'>
-					Xuất file
-				</Button>
-			</div>
-
+		<ClientLayout title='Quản lý link'>
 			<div className='search-bar'>
 				<Input
 					placeholder='Tìm kiếm link'
@@ -46,9 +35,23 @@ const LinkManagerPage: React.FC = () => {
 					style={{ width: 300 }}
 				/>
 				<Space>
-				
-					
+					<Button
+						danger
+						icon={<DeleteOutlined />}
+						onClick={() =>
+							confirm({
+								title: 'Xác nhận xoá toàn bộ?',
+								onOk: deleteAll,
+								okType: 'danger',
+							})
+						}
+					>
+						Xoá tất cả
+					</Button>
 				</Space>
+				<Button onClick={handleExport} type='primary'>
+					Xuất file
+				</Button>
 			</div>
 
 			<div className='link-list'>
@@ -56,7 +59,7 @@ const LinkManagerPage: React.FC = () => {
 					data.map((link: LinkItem) => (
 						<Card key={link._id} className='link-item'>
 							<Paragraph copyable={{ text: link.original_link }}>{link.original_link}</Paragraph>
-							<Text type='secondary'>🗓 {dayjs(link.created_at).format("DD/MM/YYYY HH:mm:ss")}</Text>
+							<Text type='secondary'>{dayjs(link.created_at).format('DD/MM/YYYY HH:mm:ss')}</Text>
 							<Input
 								value={link.shorten_link}
 								readOnly
@@ -78,8 +81,9 @@ const LinkManagerPage: React.FC = () => {
 				)}
 			</div>
 
-			<CreateLinkModal visible={isModalOpen} onCancel={() => setIsModalOpen(false)} onCreate={createLink} />
-		</div>
+			{/* Modal riêng cho page */}
+			<CreateLinkModal onCreate={createLink} isModalOpen={isPageModalOpen} setIsModalOpen={setIsPageModalOpen} />
+		</ClientLayout>
 	);
 };
 

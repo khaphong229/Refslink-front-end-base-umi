@@ -1,12 +1,8 @@
 import React from 'react';
 import { Card, Col, Row, Table, Select } from 'antd';
-import {
-  EyeOutlined,
-  LockOutlined,
-  RetweetOutlined,
-  LineChartOutlined,
-} from '@ant-design/icons';
+import { EyeOutlined, LockOutlined, RetweetOutlined, LineChartOutlined } from '@ant-design/icons';
 import './style.less';
+import ClientLayout from '@/layouts/ClientLayout';
 
 const { Option } = Select;
 
@@ -21,21 +17,21 @@ const dataSource = [
 ];
 
 const columns = [
-  {
-    title: 'Link',
-    dataIndex: 'link',
-    key: 'link',
-  },
-  {
-    title: 'Lượt xem',
-    dataIndex: 'views',
-    key: 'views',
-  },
-  {
-    title: 'Thu nhập',
-    dataIndex: 'earnings',
-    key: 'earnings',
-  },
+	{
+		title: 'Link',
+		dataIndex: 'link',
+		key: 'link',
+	},
+	{
+		title: 'Lượt xem',
+		dataIndex: 'views',
+		key: 'views',
+	},
+	{
+		title: 'Thu nhập',
+		dataIndex: 'earnings',
+		key: 'earnings',
+	},
 ];
 
 const Dashboard: React.FC = () => {

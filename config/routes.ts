@@ -1,16 +1,5 @@
 export default [
 	// Admin Routes
-	// {
-	// 	path: '/admin',
-	// 	layout: false,
-	// 	routes: [
-	// 		{
-	// 			path: '/admin/login',
-	// 			component: './user/Login',
-	// 		},
-
-	// 	],
-	// },
 	{
 		path: '/login/admin',
 		layout: false,

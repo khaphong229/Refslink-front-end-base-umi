@@ -1,25 +1,19 @@
-// import axios from '@/utils/axios'; // dùng axios đã config sẵn token, error, v.v.
-import { LinkItem } from './typing';
 import axios from '@/utils/axios';
 const API_URL = 'http://localhost:3111';
 
 export const getLinks = async () => {
-  const response = await axios.get(`${API_URL}/shorten_link`);
-  console.log(response.data); // 👈 log ra để xem đúng không
-  return response?.data?.data?.data;
+	const response = await axios.get(`${API_URL}/shorten_link`);
+	return response?.data;
 };
 
+export const createShortLink = async (values) => {
+	const response = await axios.post(`${API_URL}/shorten-link`, values);
+	console.log(response.data);
 
-export const createShortLink = async (originalUrl: string) => {
-  const response = await axios.post(`${API_URL}/shorten-link`, {
-    original_link: originalUrl,
-  });
-
-  return response.data.data;
+	return response?.data;
 };
 
-
-export const deleteShortLinkById = async (id:string) =>{
-  const response = await axios.delete(`${API_URL}/shorten-link/${id}`);
-  return response
-}
+export const deleteShortLinkById = async (id: string) => {
+	const response = await axios.delete(`${API_URL}/shorten-link/${id}`);
+	return response;
+};
