@@ -1,19 +1,30 @@
 import axios from '@/utils/axios';
-const API_URL = 'http://localhost:3111';
+import { ipRoot } from '@/utils/ip';
 
-export const getLinks = async () => {
-	const response = await axios.get(`${API_URL}/shorten_link`);
+export interface PaginationParams {
+	page: number;
+	limit: number;
+	q?: string;
+}
+
+export const getLinks = async (params: PaginationParams) => {
+	const { page, limit, q } = params;
+	const response = await axios.get(`${ipRoot}/shorten-link`, {
+		params: {
+			page,
+			limit,
+			q,
+		},
+	});
 	return response?.data;
 };
 
 export const createShortLink = async (values) => {
-	const response = await axios.post(`${API_URL}/shorten-link`, values);
-	console.log(response.data);
-
+	const response = await axios.post(`${ipRoot}/shorten-link`, values);
 	return response?.data;
 };
 
 export const deleteShortLinkById = async (id: string) => {
-	const response = await axios.delete(`${API_URL}/shorten-link/${id}`);
+	const response = await axios.delete(`${ipRoot}/shorten-link/${id}`);
 	return response;
 };

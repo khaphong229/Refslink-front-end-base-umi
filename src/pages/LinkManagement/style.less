@@ -17,6 +17,7 @@
 }
 
 .link-item {
+	margin-bottom: 8px;
 	.link-header {
 		margin-bottom: 8px;
 	}
@@ -29,4 +30,64 @@
 		margin-top: 12px;
 		text-align: right;
 	}
+}
+
+/* Thêm vào file style.less của LinkManagerPage */
+
+.link-manager-pagination {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-top: 24px;
+	padding: 16px 0;
+	background: #fafafa;
+	border-top: 1px solid #f0f0f0;
+
+	.ant-pagination {
+		.ant-pagination-total-text {
+			color: #666;
+			font-size: 14px;
+		}
+
+		.ant-pagination-item-active {
+			border-color: #1890ff;
+
+			a {
+				color: #1890ff;
+			}
+		}
+
+		.ant-pagination-jump-prev,
+		.ant-pagination-jump-next {
+			.ant-pagination-item-container {
+				.ant-pagination-item-link-icon {
+					color: #1890ff;
+				}
+			}
+		}
+	}
+}
+
+/* Responsive cho mobile */
+@media (max-width: 768px) {
+	.link-manager-pagination {
+		padding: 12px;
+
+		.ant-pagination {
+			.ant-pagination-options {
+				display: none; /* Ẩn page size selector trên mobile */
+			}
+
+			.ant-pagination-jump-prev,
+			.ant-pagination-jump-next {
+				display: none; /* Ẩn quick jumper trên mobile */
+			}
+		}
+	}
+}
+
+/* Styling cho loading state */
+.ant-pagination.ant-pagination-disabled {
+	opacity: 0.6;
+	pointer-events: none;
 }

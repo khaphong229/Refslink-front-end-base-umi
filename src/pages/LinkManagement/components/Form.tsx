@@ -35,7 +35,7 @@ const CreateLinkForm: React.FC<Props> = ({ onCreate, isModalOpen, setIsModalOpen
 					<Input placeholder='Ví dụ: Link1' />
 				</Form.Item>
 
-				<Form.Item name='original_link' label='Nhập link gốc' rules={[...rules.required]}>
+				<Form.Item name='original_link' label='Nhập link gốc' rules={[...rules.required, ...rules.httpLink]}>
 					<Input placeholder='http://localhost:8000/links' />
 				</Form.Item>
 
