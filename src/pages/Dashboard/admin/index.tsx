@@ -24,23 +24,7 @@ const dataSource = [
   // Thêm các dòng dữ liệu khác...
 ];
 
-const columns = [
-  {
-    title: 'Link',
-    dataIndex: 'link',
-    key: 'link',
-  },
-  {
-    title: 'Lượt xem',
-    dataIndex: 'views',
-    key: 'views',
-  },
-  {
-    title: 'Thu nhập',
-    dataIndex: 'earnings',
-    key: 'earnings',
-  },
-];
+
 
 const Dashboard = () => {
   return (

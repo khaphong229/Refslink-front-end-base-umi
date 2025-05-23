@@ -3,6 +3,7 @@ import { Card, Col, Row, Table, Select } from 'antd';
 import { EyeOutlined, LockOutlined, RetweetOutlined, LineChartOutlined } from '@ant-design/icons';
 import './style.less';
 import ClientLayout from '@/layouts/ClientLayout';
+import LineChart from '@/components/Chart/LineChart';
 
 const { Option } = Select;
 
@@ -75,6 +76,23 @@ const Dashboard: React.FC = () => {
           </Card>
         </Col>
       </Row>
+
+     <LineChart
+        title="Thống kê lượt truy cập link"
+        xAxis={['Tháng 1', 'Tháng 2', 'Tháng 3', 'Tháng 4', 'Tháng 5', 'Tháng 6', 'Tháng 7', 'Tháng 8', 'Tháng 9', 'Tháng 10', 'Tháng 11', 'Tháng 12']}
+        yAxis={[[10, 20, 30, 500, 50, 60, 70, 30, 90, 50, 110, 120]]}
+        yLabel={['Lượt truy cập']}
+        height={300}
+        type="area"
+        colors={['#1f64ed']}
+        otherOptions={{
+          stroke: {
+            curve: 'smooth',
+          },
+        }}
+        formatY={(value: number) => `${value} lượt`}
+        />
+      
 
       <Card title="Top 10 link trong ngày" className="top-links">
         <Table

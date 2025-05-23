@@ -2,7 +2,6 @@ import React from 'react';
 import { Form, Input, Button } from 'antd';
 import rules from '@/utils/rules';
 import { useModel } from 'umi';
-import Support from '@/models/support';
 import { useEffect } from 'react';
 import { resetFieldsForm } from '@/utils/utils';
 
