@@ -100,14 +100,14 @@ export const layout: RunTimeLayoutConfig = ({ initialState }) => {
 				}
 
 				if (!isAdminRoute && userRole === 'admin') {
-					history.replace('/admin/dashboard');
+					history.replace(ROUTER_ADMIN.DASHBOARD);
 					return;
 				}
 
 				const isUncheckPath = unCheckPermissionPaths.some((path) => window.location.pathname.includes(path));
 
 				if (location.pathname === '/') {
-					history.replace(userRole === 'admin' ? '/admin/dashboard' : 'dashboard');
+					history.replace(userRole === 'admin' ? ROUTER_ADMIN.DASHBOARD : ROUTER_CLIENT.DASHBOARD);
 				} else if (
 					!isUncheckPath &&
 					currentRole &&

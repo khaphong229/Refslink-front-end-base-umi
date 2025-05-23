@@ -1,53 +1,52 @@
-import React from "react";
-
-import { Modal,Form,Input } from "antd";
+import React from 'react';
+import { Form, Input, Button, Modal } from 'antd';
+import rules from '@/utils/rules';
 
 interface Props {
-    visible: boolean,
-    onCancel:() => void,
-    onCreate:(originalUrl:string) => void
+	onCreate: (originalUrl: string) => void;
+	isModalOpen?: boolean; // Optional prop
+	setIsModalOpen?: (open: boolean) => void; // Optional prop
 }
 
-const CreateLinkModal: React.FC<Props> = ({visible,onCancel, onCreate}) =>{
-    const [form] = Form.useForm();
+const CreateLinkForm: React.FC<Props> = ({ onCreate, isModalOpen, setIsModalOpen }) => {
+	const [form] = Form.useForm();
 
-    const handleSubmit = () =>{
-        form.validateFields().then(values =>{
-            onCreate(values.originalUrl);
-            console.log(values.originalUrl);
-            form.resetFields();
-            onCancel()
-        });
-    }
+	const handleSubmit = () => {
+		form.validateFields().then((values) => {
+			onCreate(values);
+			form.resetFields();
+			if (setIsModalOpen) {
+				setIsModalOpen(false);
+			}
+		});
+	};
 
-    return (
-        <Modal
-            title="Tạo link rút gọn"
-            visible={visible}
-            onCancel={()=>{
-                form.resetFields()
-                onCancel();
-            }}
-              onOk={handleSubmit}
-                okText="Tạo"
-                cancelText="Hủy"
-        >
-            <Form form={form} layout="vertical" >
-                <Form.Item
-                    name="originalUrl"
-                    label="Nhập link gốc"
-                    rules={[
-                        {required:true, message:'Vui lòng nhập lại'},
-                        {type:'url', message:'Nhập lại url'}
-                    ]}
-                >   
-                    <Input placeholder="https://example.com"/>
+	const handleCancel = () => {
+		form.resetFields();
+		if (setIsModalOpen) {
+			setIsModalOpen(false);
+		}
+	};
 
-                </Form.Item>
+	return (
+		<Modal title='Tạo Link rút gọn' visible={isModalOpen} onCancel={handleCancel} footer={null}>
+			<Form form={form} layout='vertical'>
+				<Form.Item name='alias' label='Bí danh tùy chỉnh'>
+					<Input placeholder='Ví dụ: Link1' />
+				</Form.Item>
 
-            </Form>
-        </Modal>
-    )
-}
+				<Form.Item name='original_link' label='Nhập link gốc' rules={[...rules.required, ...rules.httpLink]}>
+					<Input placeholder='http://localhost:8000/links' />
+				</Form.Item>
 
-export default CreateLinkModal; 
+				<Form.Item>
+					<Button type='primary' style={{ width: '100%' }} onClick={handleSubmit}>
+						Tạo
+					</Button>
+				</Form.Item>
+			</Form>
+		</Modal>
+	);
+};
+
+export default CreateLinkForm;

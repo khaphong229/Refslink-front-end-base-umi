@@ -4,9 +4,12 @@ import AvatarDropdown from './AvatarDropdown';
 import styles from './index.less';
 export type SiderTheme = 'light' | 'dark';
 import { Button } from 'antd';
+import { useLinkManager } from '@/models/link/link';
+import CreateLinkForm from '@/pages/LinkManagement/components/Form';
 
 const GlobalHeaderRight: React.FC = () => {
 	const { initialState } = useModel('@@initialState');
+	const { createLink, isModalOpen, setIsModalOpen } = useLinkManager();
 
 	if (!initialState || !initialState.currentUser) {
 		return null;
@@ -16,7 +19,7 @@ const GlobalHeaderRight: React.FC = () => {
 	return (
 		<div className={styles.right}>
 			{!isAdminRoute && (
-				<Button type='primary' style={styles.btnCreate}>
+				<Button type='primary' style={styles.btnCreate} onClick={() => setIsModalOpen(true)}>
 					Tạo Link rút gọn
 				</Button>
 			)}
@@ -30,6 +33,11 @@ const GlobalHeaderRight: React.FC = () => {
 			</Tooltip> */}
 
 			<AvatarDropdown menu />
+
+			{/* Thêm CreateLinkForm component để render modal */}
+			{!isAdminRoute && (
+				<CreateLinkForm onCreate={createLink} isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+			)}
 		</div>
 	);
 };
