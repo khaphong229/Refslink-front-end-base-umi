@@ -22,13 +22,13 @@ const ChangePassForm: React.FC = () => {
 	return (
 		<Card>
 			<h2>Đổi mật khẩu</h2>
-			<Form layout='vertical' form={form} onFinish={onFinish}>
+			<Form layout='vertical' form={form} onFinish={onFinish}  >
 				<Col>
 					<Form.Item label='Mật khẩu hiện tại' name='password' rules={[...rules.password, ...rules.required]}>
-						<Input placeholder='Mật khẩu hiện tại' />
+						<Input.Password placeholder='Mật khẩu hiện tại' />
 					</Form.Item>
 					<Form.Item label='Mật khẩu mới' name='new_password' rules={[...rules.password, ...rules.required]}>
-						<Input placeholder='Mật khẩu mới' />
+						<Input.Password placeholder='Mật khẩu mới' />
 					</Form.Item>
 					<Form.Item
 						label='Nhập lại mật khẩu mới'

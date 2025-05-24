@@ -34,6 +34,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 			key: 'name',
 			icon: <UserOutlined />,
 			label: fullName,
+			
 		},
 		// {
 		// 	key: 'password',
@@ -69,8 +70,8 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 				<span className={`${styles.action} ${styles.account}`}>
 					<Avatar
 						className={styles.avatar}
-						src={initialState.currentUser?.picture ? <img src={initialState.currentUser?.picture} /> : undefined}
-						icon={!initialState.currentUser?.picture ? lastNameChar ?? <UserOutlined /> : undefined}
+						src={initialState.currentUser?.avatar ? <img src={initialState.currentUser?.avatar} /> : undefined}
+						icon={!initialState.currentUser?.avatar ? lastNameChar ?? <UserOutlined /> : undefined}
 						alt='avatar'
 					/>
 					<span className={`${styles.name}`}>{fullName}</span>

@@ -4,39 +4,160 @@
   left: 0;
   width: 100%;
   backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px); // Safari support
   z-index: 1000;
   padding: 16px;
-  background: rgba(255, 255, 255, 0.8); // hoặc dark theme nếu cần
+  background: rgba(255, 255, 255, 0.85);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+  transition: all 0.3s ease;
+  
+  // Dark theme support
+  &.dark-theme {
+    background: rgba(20, 20, 20, 0.85);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  
+  // Mobile optimizations
+  @media (max-width: 768px) {
+    padding: 12px 16px;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(8px);
+    
+    &.dark-theme {
+      background: rgba(20, 20, 20, 0.95);
+    }
+  }
+  
+  // Tablet optimizations
+  @media (min-width: 769px) and (max-width: 1024px) {
+    padding: 14px 20px;
+  }
 
   .header-container {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+    
+    // Mobile container adjustments
+    @media (max-width: 768px) {
+      flex-wrap: nowrap; // Prevent wrapping on mobile
+    }
   }
 
-  .rounded-btn{
-    border-radius: 5px;
+  .rounded-btn {
+    border-radius: 8px;
+    font-size: 15px;
+    font-weight: 500;
+    transition: all 0.3s ease;
+    height: 40px;
+    padding: 0 16px;
+    
+    &:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    }
+    
+    &:active {
+      transform: translateY(0);
+    }
+    
+    // Mobile button adjustments
+    @media (max-width: 768px) {
+      font-size: 14px;
+      height: 36px;
+      padding: 0 12px;
+      border-radius: 6px;
+    }
+    
+    // Tablet button adjustments
+    @media (min-width: 769px) and (max-width: 1024px) {
+      font-size: 14px;
+      height: 38px;
+      padding: 0 14px;
+    }
   }
 
   .logo {
     font-weight: bold;
-    font-size: 30px;
+    font-size: 32px;
     cursor: pointer;
+    transition: transform 0.3s ease;
+    user-select: none;
+    display: flex;
+    align-items: center;
+    gap: 2px;
+    
+    &:hover {
+      transform: scale(1.05);
+    }
+    
+    &:active {
+      transform: scale(0.98);
+    }
 
     .text-gradient {
       background: linear-gradient(to top right, #ff3800);
+      background-size: 200% 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
+      background-clip: text;
+      animation: gradientShift 3s ease-in-out infinite;
     }
     
+    // Mobile logo adjustments
+    @media (max-width: 768px) {
+      font-size: 24px;
+    }
+    
+    // Small mobile screens
+    @media (max-width: 480px) {
+      font-size: 20px;
+    }
+    
+    // Tablet logo adjustments
+    @media (min-width: 769px) and (max-width: 1024px) {
+      font-size: 28px;
+    }
   }
 
   .nav-links {
     display: flex;
-    gap: 16px;
-
-    @media (max-width: 768px) {
+    gap: 8px;
+    align-items: center;
+    
+    .ant-btn {
+      border: none;
+      background: transparent;
+      color: #333;
+      position: relative;
+      overflow: hidden;
+      
+      &::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, transparent, rgba(255, 56, 0, 0.1), transparent);
+        transition: left 0.5s ease;
+      }
+      
+      &:hover {
+        color: #ff3800;
+        background: rgba(255, 56, 0, 0.05);
+        
+        &::before {
+          left: 100%;
+        }
+      }
+    }
+    
+    // Hide on mobile and tablet
+    @media (max-width: 1024px) {
       display: none;
     }
   }
@@ -45,17 +166,190 @@
     display: flex;
     gap: 12px;
     align-items: center;
+    
+    .ant-btn-primary {
+            background: linear-gradient(to top right, #ff3800);
 
-    @media (max-width: 768px) {
+      border: none;
+      font-weight: 600;
+      box-shadow: 0 2px 8px rgba(255, 56, 0, 0.3);
+      
+      &:hover {
+        background: linear-gradient(135deg, #e6320e, #ff5722);
+        box-shadow: 0 4px 16px rgba(255, 56, 0, 0.4);
+        transform: translateY(-1px);
+      }
+      
+      &:active {
+        transform: translateY(0);
+      }
+    }
+    
+    // Hide on mobile and tablet
+    @media (max-width: 1024px) {
       display: none;
     }
   }
 
   .menu-mobile {
     display: none;
-
-    @media (max-width: 768px) {
+    
+    // Show on mobile and tablet
+    @media (max-width: 1024px) {
       display: block;
+    }
+    
+    .ant-btn {
+      background: rgba(255, 56, 0, 0.1);
+      border: 1px solid rgba(255, 56, 0, 0.2);
+      color: #ff3800;
+      
+      &:hover {
+        background: rgba(255, 56, 0, 0.15);
+        border-color: rgba(255, 56, 0, 0.3);
+        color: #e6320e;
+      }
+      
+      .anticon {
+        font-size: 16px;
+        
+        @media (max-width: 480px) {
+          font-size: 14px;
+        }
+      }
+    }
+    
+    // Dropdown menu styles
+    .ant-dropdown {
+      .ant-dropdown-menu {
+        background: rgba(255, 255, 255, 0.95);
+        backdrop-filter: blur(12px);
+        border-radius: 12px;
+        box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        border: 1px solid rgba(0, 0, 0, 0.06);
+        padding: 8px;
+        min-width: 200px;
+        
+        .ant-dropdown-menu-item {
+          border-radius: 8px;
+          margin: 2px 0;
+          padding: 10px 12px;
+          transition: all 0.3s ease;
+          
+          &:hover {
+            background: rgba(255, 56, 0, 0.08);
+            color: #ff3800;
+          }
+          
+          .ant-btn {
+            width: 100%;
+            text-align: left;
+            padding: 0;
+            height: auto;
+            background: transparent;
+            border: none;
+            color: inherit;
+            
+            &:hover {
+              background: transparent;
+              color: inherit;
+            }
+          }
+        }
+        
+        .ant-dropdown-menu-item-divider {
+          background: rgba(0, 0, 0, 0.06);
+          margin: 8px 0;
+        }
+      }
+    }
+  }
+}
+
+// Gradient animation keyframes
+@keyframes gradientShift {
+  0%, 100% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+}
+
+// Scroll effect - header becomes more opaque when scrolled
+.custom-header.scrolled {
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 2px 20px rgba(0, 0, 0, 0.1);
+  
+  &.dark-theme {
+    background: rgba(20, 20, 20, 0.95);
+    box-shadow: 0 2px 20px rgba(0, 0, 0, 0.3);
+  }
+}
+
+// High DPI display optimizations
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  .custom-header {
+    .logo {
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+  }
+}
+
+// Landscape mobile optimization
+@media (max-width: 768px) and (orientation: landscape) {
+  .custom-header {
+    padding: 8px 16px;
+    
+    .logo {
+      font-size: 20px;
+    }
+    
+    .rounded-btn {
+      height: 32px;
+      font-size: 13px;
+    }
+  }
+}
+
+// Extra small screens
+@media (max-width: 320px) {
+  .custom-header {
+    padding: 10px 12px;
+    
+    .header-container {
+      gap: 8px;
+    }
+    
+    .logo {
+      font-size: 18px;
+    }
+    
+    .rounded-btn {
+      height: 32px;
+      font-size: 12px;
+      padding: 0 8px;
+    }
+  }
+}
+
+// Print styles
+@media print {
+  .custom-header {
+    position: static;
+    background: white;
+    backdrop-filter: none;
+    box-shadow: none;
+    border-bottom: 1px solid #ccc;
+    
+    .menu-mobile,
+    .auth-mode {
+      display: none;
+    }
+    
+    .nav-links {
+      display: flex;
     }
   }
 }

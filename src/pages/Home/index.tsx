@@ -13,8 +13,9 @@ import AppFooter from '@/components/Footer';
 const TrangChu = () => {
   return (
     <>
-      <div style={{ padding: '0 40px'}}>
         <Header />
+
+      <div style={{ padding: '0 40px'}}>
         <SnowBackground/>
         <Landing/>
         {/* <IntroSection/> */}
