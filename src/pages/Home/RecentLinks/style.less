@@ -1,0 +1,62 @@
+.recent-links-section {
+  perspective: 1200px;
+  padding: 40px 20px;
+
+  .links-management-card {
+    transform: rotateY(-4deg) rotateX(1deg);
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+    border-radius: 16px;
+    overflow: hidden;
+    background: #fff;
+
+    &:hover {
+      transform: rotateY(0deg) rotateX(0deg) scale(1.01);
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding-bottom: 16px;
+      border-bottom: 1px solid #f0f0f0;
+    }
+
+    .search-input {
+      width: 250px;
+    }
+
+    .short-url-cell {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .truncate-text {
+      max-width: 300px;
+      display: inline-block;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .clicks-count {
+      font-weight: 500;
+    }
+
+    .ant-table {
+      .ant-table-thead > tr > th {
+        background-color: #fafafa;
+        font-weight: 600;
+      }
+    }
+  }
+
+  .footer-bottom {
+    text-align: center;
+    margin-top: 40px;
+    font-size: 14px;
+    color: #00000099;
+  }
+}

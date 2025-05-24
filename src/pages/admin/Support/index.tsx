@@ -3,7 +3,7 @@ import TableBase from "@/components/Table";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Button, message, Popconfirm, Space, Tooltip } from "antd";
 import { useModel } from "umi";
-import type sUPPORT from "@/services/Support/typing";
+// import support from "@/models/support";
 
 const Support = () => {
     const {getModel, page, limit, deleteModel, handleEdit} = useModel('support');
@@ -31,6 +31,12 @@ const Support = () => {
             width: 200,
             align: 'center',
         },
+         {
+            title: 'Chủ đề',
+            dataIndex: 'description',
+            width: 200,
+            align: 'center',
+        },
      
        
     ]
@@ -40,7 +46,7 @@ const Support = () => {
             columns={columns}
             widthDrawer={800}
             dependencies={[page,limit]}
-            modelName='user'
+            modelName='support'
             title="Quản lý HỖ TRỢ"
             buttons={{import: false, filter: false}}
         />

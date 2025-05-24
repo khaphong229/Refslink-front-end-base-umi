@@ -1,7 +1,7 @@
 import  useInitModel from '@/hooks/useInitModel';
 
 export default () =>{
-    const objInit = useInitModel<WebApi.Record>('support');
+    const objInit = useInitModel<Support.Record>('admin/supports');
     console.log('objInit', objInit);
     return {
         ...objInit,

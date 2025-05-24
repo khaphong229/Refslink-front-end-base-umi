@@ -5,6 +5,11 @@ import Landing from './Landing';
 import IntroSection from './IntroduceSection';
 import ConnectSection from './ConnectSection';
 import SnowBackground from '@/components/SnowFall';
+import HeroSlider from './SlideData';
+import {  PricingPlans,} from './PricingPlans';
+import RecentLinks from './RecentLinks';
+import {  FeaturesSection,  } from './FeaturesSection';
+import AppFooter from '@/components/Footer';
 const TrangChu = () => {
   return (
     <>
@@ -12,10 +17,17 @@ const TrangChu = () => {
         <Header />
         <SnowBackground/>
         <Landing/>
-        <IntroSection/>
+        {/* <IntroSection/> */}
+        <FeaturesSection/>
+        <RecentLinks/>
+        
+        <PricingPlans/>
         <ConnectSection/>
-      {/* <Footer/> */}
+
+
       </div>
+      <AppFooter/>
+
     </>
   );
 };
