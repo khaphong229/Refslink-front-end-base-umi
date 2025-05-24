@@ -26,7 +26,6 @@ const TrangChu = () => {
 
 
       </div>
-      <AppFooter/>
 
     </>
   );

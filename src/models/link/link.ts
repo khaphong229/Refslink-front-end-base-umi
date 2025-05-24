@@ -28,7 +28,7 @@ export const useLinkManager = () => {
 	}, []);
 
 	// Search filter
-	const filteredData = data.filter((item) => item.original_link.toLowerCase().includes(searchTerm.toLowerCase()));
+	const filteredData = data.filter((item) => item.original_link?.toLowerCase().includes(searchTerm.toLowerCase()));
 
 	// Actions
 	const deleteLink = async (id: string) => {
