@@ -42,7 +42,7 @@ const CreateLinkForm: React.FC<Props> = ({ onCreate, isModalOpen, setIsModalOpen
 	return (
 		<Modal title='Tạo Link rút gọn' visible={isModalOpen} onCancel={handleCancel} footer={null}>
 			<Form form={form} layout='vertical'>
-				<Form.Item name='alias' label='Bí danh tùy chỉnh'>
+				<Form.Item name='alias' label='Bí danh tùy chỉnh' rules={[...rules.alias]}>
 					<Input placeholder='Ví dụ: Link1' />
 				</Form.Item>
 

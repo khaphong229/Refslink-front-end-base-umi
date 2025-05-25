@@ -1,4 +1,6 @@
-﻿export default [
+﻿import path from 'path';
+
+export default [
 	// Admin Routes
 	{
 		path: '/login/admin',
@@ -22,7 +24,7 @@
 		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
 		access: 'canAccessAdminRoute',
 	},
-		{
+	{
 		path: '/admin/supports',
 		name: 'Quản lý hỗ trợ',
 		component: './admin/Support',
@@ -30,7 +32,6 @@
 		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
 		access: 'canAccessAdminRoute',
 	},
-
 
 	// Client Auth Routes (Login/Register)
 	{
@@ -182,6 +183,12 @@
 		layout: false,
 	},
 
+	{
+		path: '/st/:id',
+		component: './TrungGian',
+		layout: false,
+	},
+
 	// Notification Routes
 	{
 		path: '/notification',
@@ -220,12 +227,6 @@
 	{
 		path: '/:id',
 		component: './exception/404',
-		layout: false,
-	},
-	{
-		path: '/:id',
-		// name: 'Vượt Link',
-		component: './TrungGian',
 		layout: false,
 	},
 ];
