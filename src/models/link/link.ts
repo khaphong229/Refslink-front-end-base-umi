@@ -9,7 +9,7 @@ export const useLinkManager = () => {
 	const [data, setData] = useState<LinkItem[]>([]);
 	const [searchTerm, setSearch] = useState<string>('');
 	const [loading, setLoading] = useState<boolean>(false);
-	const [createLoading, setCreateLoading] = useState<boolean>(false); // Thêm loading cho create
+	const [createLoading, setCreateLoading] = useState<boolean>(false);
 	const [pagination, setPagination] = useState({
 		current: 1,
 		pageSize: 10,
@@ -17,6 +17,7 @@ export const useLinkManager = () => {
 	});
 	const [isModalOpen, setIsModalOpen] = useState(false); // Modal GlobalHeaderRight
 	const [isPageModalOpen, setIsPageModalOpen] = useState(false); // Modal LinkManagerPage
+	const [resultShorten, setResultShorten] = useState<LinkItem | null>(null);
 
 	const loadingRef = useRef(false);
 
@@ -35,7 +36,6 @@ export const useLinkManager = () => {
 				q: search || undefined,
 			};
 
-			console.log('Calling API with params:', params);
 			const response = await getLinks(params);
 			const { data: list, total } = response?.data || { data: [], total: 0 };
 
@@ -59,7 +59,7 @@ export const useLinkManager = () => {
 			const pageSize = newPagination.pageSize || pagination.pageSize;
 			fetchLinks(page, pageSize, searchTerm);
 		},
-		[fetchLinks, searchTerm], // Bỏ pagination ra khỏi dependency để tránh infinite loop
+		[fetchLinks, searchTerm],
 	);
 
 	const deleteLink = useCallback(
@@ -67,14 +67,13 @@ export const useLinkManager = () => {
 			try {
 				await deleteShortLinkById(id);
 				message.success('Đã xoá link thành công!');
-				// Refresh data sau khi xóa với trang hiện tại
 				fetchLinks(pagination.current, pagination.pageSize, searchTerm);
 			} catch (error) {
 				console.error('Error deleting link:', error);
 				message.error('Không thể xoá link');
 			}
 		},
-		[fetchLinks, pagination.current, pagination.pageSize, searchTerm], // Thêm đầy đủ dependencies
+		[fetchLinks, pagination.current, pagination.pageSize, searchTerm],
 	);
 
 	const deleteAll = useCallback(async () => {
@@ -95,7 +94,7 @@ export const useLinkManager = () => {
 				message.error('Không thể cập nhật trạng thái');
 			}
 		},
-		[fetchLinks, pagination.current, pagination.pageSize, searchTerm], // Thêm đầy đủ dependencies
+		[fetchLinks, pagination.current, pagination.pageSize, searchTerm],
 	);
 
 	const handleExport = useCallback(() => {
@@ -116,7 +115,7 @@ export const useLinkManager = () => {
 			console.error('Error hiding all links:', error);
 			message.error('Không thể ẩn tất cả link');
 		}
-	}, [fetchLinks, pagination.current, pagination.pageSize, searchTerm]); // Thêm đầy đủ dependencies
+	}, [fetchLinks, pagination.current, pagination.pageSize, searchTerm]);
 
 	const showAll = useCallback(async () => {
 		try {
@@ -126,25 +125,29 @@ export const useLinkManager = () => {
 			console.error('Error showing all links:', error);
 			message.error('Không thể hiển thị tất cả link');
 		}
-	}, [fetchLinks, pagination.current, pagination.pageSize, searchTerm]); // Thêm đầy đủ dependencies
+	}, [fetchLinks, pagination.current, pagination.pageSize, searchTerm]);
 
 	const createLink = useCallback(
 		async (values: { alias: string; original_link: string }) => {
-			setCreateLoading(true); // Bắt đầu loading
+			setCreateLoading(true);
 			try {
-				await createShortLink(values);
-				message.success('Đã tạo link mới!');
-				// Reset về trang 1 và refresh data
-				await fetchLinks(1, pagination.pageSize, searchTerm);
-				return true; // Trả về true khi thành công
+				const res = await createShortLink(values);
+				if (res?.data) {
+					console.log('Setting resultShorten:', res.data);
+					setResultShorten(res.data);
+					message.success('Đã tạo link mới!');
+					await fetchLinks(1, pagination.pageSize, searchTerm);
+					return res?.data;
+				}
+				return false;
 			} catch (error) {
 				message.error('Không thể tạo link mới');
 				throw error;
 			} finally {
-				setCreateLoading(false); // Kết thúc loading
+				setCreateLoading(false);
 			}
 		},
-		[fetchLinks, pagination.pageSize, searchTerm], // Thêm đầy đủ dependencies
+		[fetchLinks, pagination.pageSize, searchTerm],
 	);
 
 	const handleCopy = useCallback((text: string) => {
@@ -162,11 +165,12 @@ export const useLinkManager = () => {
 	return {
 		data,
 		loading,
-		createLoading, // Export createLoading
+		createLoading,
 		searchTerm,
 		pagination,
 		isModalOpen,
 		isPageModalOpen,
+		resultShorten,
 
 		setSearch,
 		setIsModalOpen,
