@@ -38,13 +38,13 @@ export default [
 				component: './user/Register',
 			},
 			{
-				path: '/user/verify-email/:token',
+				path: '/user/verify-account/:token',
 				name: 'Xác minh Email',
 				component: './user/EmailVerification',
 				layout: false,
 			},
 			{
-				path: '/auth/verify-email/:token',
+				path: '/auth/verify-account/:token',
 				layout: false,
 				name: 'authentication',
 				component: './user/Auth',
