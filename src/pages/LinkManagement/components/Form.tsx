@@ -1,28 +1,39 @@
-import React from 'react';
-import { Form, Input, Button, Modal } from 'antd';
+import React, { useState } from 'react';
+import { Form, Input, Button, Modal, Tooltip } from 'antd';
 import rules from '@/utils/rules';
+import { CopyOutlined } from '@ant-design/icons';
+import { primaryColor } from '@/services/base/constant';
+import { useLinkManager } from '@/models/link/link';
+import { LinkItem } from '@/services/ManagementLink/typing';
 
 interface Props {
-	onCreate: (originalUrl: string) => void;
-	isModalOpen?: boolean; // Optional prop
-	setIsModalOpen?: (open: boolean) => void; // Optional prop
+	onCreate: (values: { alias: string; original_link: string }) => Promise<boolean>;
+	isModalOpen?: boolean;
+	setIsModalOpen?: (open: boolean) => void;
 }
 
 const CreateLinkForm: React.FC<Props> = ({ onCreate, isModalOpen, setIsModalOpen }) => {
 	const [form] = Form.useForm();
+	const [statusShorten, setStatusShorten] = useState<boolean>(false);
+	const [resultShorten, setResultShorten] = useState(null);
+	const { handleCopy } = useLinkManager();
 
-	const handleSubmit = () => {
-		form.validateFields().then((values) => {
-			onCreate(values);
-			form.resetFields();
-			if (setIsModalOpen) {
-				setIsModalOpen(false);
+	const handleSubmit = async () => {
+		try {
+			const values = await form.validateFields();
+			const isCreate = await onCreate(values);
+			if (isCreate) {
+				setStatusShorten(true);
+				setResultShorten(isCreate.shorten_link);
 			}
-		});
+		} catch (error) {
+			console.error('Error creating link:', error);
+		}
 	};
 
 	const handleCancel = () => {
 		form.resetFields();
+		setStatusShorten(false);
 		if (setIsModalOpen) {
 			setIsModalOpen(false);
 		}
@@ -38,6 +49,26 @@ const CreateLinkForm: React.FC<Props> = ({ onCreate, isModalOpen, setIsModalOpen
 				<Form.Item name='original_link' label='Nhập link gốc' rules={[...rules.required, ...rules.httpLink]}>
 					<Input placeholder='http://localhost:8000/links' />
 				</Form.Item>
+
+				{statusShorten && resultShorten && (
+					<Form.Item label='Link rút gọn'>
+						<Input
+							value={resultShorten}
+							status='error'
+							readOnly
+							addonAfter={
+								<Tooltip title='Sao chép'>
+									<Button
+										icon={<CopyOutlined style={{ color: primaryColor }} />}
+										onClick={() => handleCopy(resultShorten)}
+										type='text'
+										size='small'
+									/>
+								</Tooltip>
+							}
+						/>
+					</Form.Item>
+				)}
 
 				<Form.Item>
 					<Button type='primary' style={{ width: '100%' }} onClick={handleSubmit}>

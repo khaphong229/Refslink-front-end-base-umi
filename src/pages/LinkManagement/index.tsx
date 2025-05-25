@@ -116,10 +116,10 @@ const LinkManagerPage: React.FC = () => {
 	};
 	const handleCreateLink = async (values: { alias: string; original_link: string }) => {
 		try {
-			await createLink(values);
-			return true; // Trả về true khi thành công
+			const res = await createLink(values);
+			return res;
 		} catch (error) {
-			return false; // Trả về false khi thất bại
+			return false;
 		}
 	};
 
