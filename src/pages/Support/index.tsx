@@ -1,11 +1,15 @@
 import React from "react";
 import SupportForm from "./components/Form";
+import ClientLayout from "@/layouts/ClientLayout";
+import { Card } from "antd";
 
 const SupportPage:React.FC = () =>{
     return (
-        <div>
-        <SupportForm/>
-        </div>
+        <ClientLayout title={'Hỗ trợ'}>
+           <Card>
+             <SupportForm/>
+           </Card>
+        </ClientLayout>
     )
 }
 

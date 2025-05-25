@@ -9,11 +9,20 @@ export default [
 	{
 		path: '/admin/dashboard',
 		name: 'Thống kê',
-		component: './Dashboard',
+		component: './Dashboard/admin',
 		icon: 'PieChartOutlined',
 		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
 		access: 'canAccessAdminRoute',
 	},
+	{
+		path: '/admin/users',
+		name: 'Quản lý người dùng',
+		component: './UserManagement',
+		icon: 'UserOutlined',
+		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
+		access: 'canAccessAdminRoute',
+	},
+
 
 	// Client Auth Routes (Login/Register)
 	{

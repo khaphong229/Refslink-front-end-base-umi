@@ -23,6 +23,8 @@ const FormApiWeb = (props: any) => {
 	const { record, setVisibleForm, edit, postModel, putModel, formSubmiting, visibleForm } = useModel('api_web');
 	const title = props?.title ?? '';
 
+	console.log(record, 'record');
+
 	useEffect(() => {
 		if (!visibleForm) {
 			resetFieldsForm(form);

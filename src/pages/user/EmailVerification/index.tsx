@@ -7,17 +7,20 @@ import './style.less';
 import { ipRoot } from '@/utils/ip';
 import { ROUTER_CLIENT } from '@/constants/router';
 
+
+type RouteParams = {
+  token: string;
+};
 function VerifyEmail() {
 	const [status, setStatus] = useState('loading');
 	const history = useHistory();
-	const { token } = useParams();
-
+	const { token } =useParams<RouteParams>()
 	useEffect(() => {
 		console.log(token, 'okee');
 
 		if (token && token.length > 10) {
 			axios
-				.post(`${ipRoot}/auth/verify-account/${token}`)
+				.post(`${ipRoot}/auth/verify-email/${token}`)
 				.then((response) => {
 					setStatus('active');
 					message.success('Xác minh thành công!');
