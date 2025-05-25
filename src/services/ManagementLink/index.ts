@@ -28,3 +28,8 @@ export const deleteShortLinkById = async (id: string) => {
 	const response = await axios.delete(`${ipRoot}/shorten-link/${id}`);
 	return response;
 };
+
+export const goLink = async (body) => {
+	const response = await axios.post(`${ipRoot}/shorten-link/go`, body);
+	return response.data;
+};
