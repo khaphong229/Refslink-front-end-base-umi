@@ -11,7 +11,7 @@ const ConnectSection = () => {
         <Link href="" target="_blank" className="community-link">
           Cộng đồng RefSlink
         </Link>
-        <Title level={2} className="title">
+        <Title level={3} className="title">
           Kết nối với <span className="gradient-text">Chúng tôi</span>
         </Title>
       </div>
