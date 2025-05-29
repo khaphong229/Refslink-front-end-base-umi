@@ -1,21 +1,31 @@
 import React from 'react';
-import { Card, Form, Input, message, Button } from 'antd';
+import { Form, Input, Button } from 'antd';
 import rules from '@/utils/rules';
+import { useModel } from 'umi';
+import { useEffect } from 'react';
+import { resetFieldsForm } from '@/utils/utils';
+
+// interface FormValues extends Support.Record {}
 
 const { TextArea } = Input;
 
-const SupportForm: React.FC = () => {
+const SupportForm: React.FC = (props:any) => {
 	const [form] = Form.useForm();
+	const {record,postModel}= useModel('support');
 
-	const handleSubmit = (values: any) => {
-		// call api
-		message.success('Gửi yêu cầu hỗ trợ thành công');
+	useEffect(() => {
+		
+	}, [record]);
+	
+
+	const handleSubmit = async(values: any) => {
+	
+        await postModel(values);
 		form.resetFields();
 	};
 
 	return (
-		<Card title='Gửi yêu cầu hỗ trợ'>
-			<Form form={form} layout='vertical' onFinish={handleSubmit} >
+			<Form form={form} style={{maxWidth:800}}   layout='vertical' onFinish={handleSubmit} >
 				<Form.Item  name='full_name' label='Họ và tên' rules={[...rules.required, ...rules.ten]}>
 					<Input placeholder='Nguyễn Văn A' />
 				</Form.Item>
@@ -24,7 +34,7 @@ const SupportForm: React.FC = () => {
 					<Input placeholder='nguyenvana@gmail.com'></Input>
 				</Form.Item>
 
-				<Form.Item label='Chủ đề ' name='subject' rules={[...rules.required, ...rules.text]}>
+				<Form.Item label='Chủ đề' name='subject' rules={[...rules.required, ...rules.text]}>
 					<Input placeholder='Ví dụ: Không thể rút gọn link' />
 				</Form.Item>
 
@@ -38,7 +48,6 @@ const SupportForm: React.FC = () => {
 					</Button>
 				</Form.Item>
 			</Form>
-		</Card>
 	);
 };
 

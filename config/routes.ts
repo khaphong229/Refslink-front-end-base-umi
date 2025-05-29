@@ -1,22 +1,34 @@
+﻿import path from 'path';
+
 export default [
 	// Admin Routes
 	{
-		path: '/admin',
+		path: '/login/admin',
 		layout: false,
-		routes: [
-			{
-				path: '/admin/login',
-				component: './user/Login',
-			},
-		],
+		component: './user/Login',
 	},
-
 	// Protected Admin Routes
 	{
 		path: '/admin/dashboard',
 		name: 'Thống kê',
-		component: './Dashboard',
+		component: './Dashboard/admin',
 		icon: 'PieChartOutlined',
+		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
+		access: 'canAccessAdminRoute',
+	},
+	{
+		path: '/admin/users',
+		name: 'Quản lý người dùng',
+		component: './UserManagement',
+		icon: 'UserOutlined',
+		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
+		access: 'canAccessAdminRoute',
+	},
+	{
+		path: '/admin/supports',
+		name: 'Quản lý hỗ trợ',
+		component: './admin/Support',
+		icon: 'UserOutlined',
 		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
 		access: 'canAccessAdminRoute',
 	},
@@ -171,6 +183,12 @@ export default [
 		layout: false,
 	},
 
+	{
+		path: '/st/:id',
+		component: './TrungGian',
+		layout: false,
+	},
+
 	// Notification Routes
 	{
 		path: '/notification',
@@ -209,12 +227,6 @@ export default [
 	{
 		path: '/:id',
 		component: './exception/404',
-		layout: false,
-	},
-	{
-		path: '/:id',
-		// name: 'Vượt Link',
-		component: './TrungGian',
 		layout: false,
 	},
 ];

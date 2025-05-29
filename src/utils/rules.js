@@ -17,6 +17,12 @@ const allCharacters =
 // CMND
 
 const rules = {
+	alias: [
+		{
+			min: 6,
+			message: 'Ít nhất 6 kí tự',
+		},
+	],
 	dacbiet: [
 		{
 			pattern: new RegExp(`^[0-9${allCharacters} \n]+$`),
@@ -186,11 +192,11 @@ const rules = {
 			message: 'Bắt buộc',
 		},
 	],
-	description:[
+	description: [
 		{
-			required:true,
-			message:'Vui lòng nhập mô tả'
-		}
+			required: true,
+			message: 'Vui lòng nhập mô tả',
+		},
 	],
 	requiredHtml: [
 		{

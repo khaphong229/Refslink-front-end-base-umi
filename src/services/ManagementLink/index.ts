@@ -1,25 +1,35 @@
-// import axios from '@/utils/axios'; // dùng axios đã config sẵn token, error, v.v.
-import { LinkItem } from './typing';
 import axios from '@/utils/axios';
-const API_URL = 'http://localhost:3111';
+import { ipRoot } from '@/utils/ip';
 
-export const getLinks = async () => {
-  const response = await axios.get(`${API_URL}/shorten_link`);
-  console.log(response.data); // 👈 log ra để xem đúng không
-  return response?.data?.data?.data;
+export interface PaginationParams {
+	page: number;
+	limit: number;
+	q?: string;
+}
+
+export const getLinks = async (params: PaginationParams) => {
+	const { page, limit, q } = params;
+	const response = await axios.get(`${ipRoot}/shorten-link`, {
+		params: {
+			page,
+			limit,
+			q,
+		},
+	});
+	return response?.data;
 };
 
-
-
-
-export const createShortLink = async (originalUrl: string) => {
-  const response = await axios.post(`${API_URL}/shorten-link`, {
-    original_link: originalUrl,
-  });
-  const item = response.data.data;
-  console.log(item); // 👈 log ra để xem đúng không
-
-
-  return item;
+export const createShortLink = async (values) => {
+	const response = await axios.post(`${ipRoot}/shorten-link`, values);
+	return response?.data;
 };
 
+export const deleteShortLinkById = async (id: string) => {
+	const response = await axios.delete(`${ipRoot}/shorten-link/${id}`);
+	return response;
+};
+
+export const goLink = async (body) => {
+	const response = await axios.post(`${ipRoot}/shorten-link/go`, body);
+	return response.data;
+};

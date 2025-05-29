@@ -111,7 +111,7 @@ const Login: React.FC = () => {
 				</div>
 
 				<div className={styles.main}>
-					<Tabs activeKey={type} onChange={setType}>
+					<Tabs activeKey={isAdminRoute ? 'accountAdmin' : type} onChange={setType}>
 						{!isAdminRoute ? (
 							<>
 								<Tabs.TabPane

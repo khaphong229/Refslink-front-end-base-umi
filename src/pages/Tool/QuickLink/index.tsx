@@ -5,9 +5,9 @@ import './style.less';
 const { Title, Paragraph } = Typography;
 
 const QuickLink: React.FC = () => {
-  const [tokens, setTokens] = useState<string[]>([
-    '677c9f2b90099e0e4532a53c',
-  ]);
+  const [tokens,setTokens] = useState<string[]>([])
+
+  
 
   const handleAddToken = () => {
     const newToken = Math.random().toString(36).substring(2, 34);
