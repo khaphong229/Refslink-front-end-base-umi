@@ -12,8 +12,7 @@ import { get } from 'lodash';
 import ClientLayout from '@/layouts/ClientLayout';
 
 const ApiWebPage = () => {
-	const { getModel, page, limit, deleteModel, handleEdit } = useModel('api_web');
-
+	const {getModel, page, limit, deleteModel, handleEdit } = useModel('api_web');
 	const columns: IColumn<ApiWeb.Record>[] = [
 		{
 			title: 'Api',

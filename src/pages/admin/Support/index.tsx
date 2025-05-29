@@ -3,11 +3,16 @@ import TableBase from "@/components/Table";
 import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
 import { Button, message, Popconfirm, Space, Tooltip } from "antd";
 import { useModel } from "umi";
+import { useEffect } from "react";
 // import support from "@/models/support";
 
 const Support = () => {
-    const {getModel, page, limit, deleteModel, handleEdit} = useModel('support');
+    const {getModel, page, limit,danhSach} = useModel('support');
 
+    useEffect(() => {   
+        getModel();
+    }
+    , [page, limit]);
 
     const columns: IColumn<Support.Record>[] = [
         {

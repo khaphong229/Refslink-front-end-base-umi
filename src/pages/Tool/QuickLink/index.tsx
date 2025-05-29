@@ -2,22 +2,20 @@ import React, { useEffect, useState } from 'react';
 import { Card, Button, Typography, Input, Space } from 'antd';
 import './style.less';
 import { getApiToken } from '@/services/APIToken';
+import { useModel } from 'umi';
 
 const { Title, Paragraph } = Typography;
 
 const QuickLink: React.FC = () => {
 	const [token, setToken] = useState<string>();
+	const {record, getModel,danhSach} = useModel('api_token')
 
-	const fetchToken = async () => {
-		const response = await getApiToken();
-		console.log(response.token);
-		setToken(response.token);
-	};
 	useEffect(() => {
-		fetchToken();
-		console.log(token);
-	}, []);
+		getModel();
+		setToken(record?.token);
+	}, [record]);
 
+	
 	return (
 		<div className='quick-link-wrapper'>
 			<Title level={3}>Quick Link</Title>

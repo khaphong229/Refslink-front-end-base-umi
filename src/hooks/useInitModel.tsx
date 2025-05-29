@@ -98,6 +98,18 @@ const useInitModel = <T,>(
 			const response = await getService(payload, path ?? 'page', isAbsolutePath ?? false);
 			console.log(response, 'useinitModel');
 
+			    if (response?.data?.success && response?.data?.token) {
+            const singleRecord = response.data as T; // Cast toàn bộ response.data thành T
+            const tempData: T[] = [singleRecord]; // Wrap thành array
+            const tempTotal: number = 1;
+
+            if (isSetDanhSach !== false) setDanhSach(tempData);
+            setTotal(tempTotal);
+            setRecord(singleRecord); // Set single record
+
+            return tempData;
+        }
+
 			const tempData: T[] = response?.data?.data?.data ?? [];
 			const tempTotal: number = response?.data?.data?.total ?? 0;
 
