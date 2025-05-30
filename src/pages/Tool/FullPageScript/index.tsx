@@ -1,53 +1,83 @@
-import React from 'react';
-import { Typography, Card } from 'antd';
+import React, { useState } from 'react';
+import { Typography, Card, Select, Input, Button, InputNumber } from 'antd';
 import './style.less';
+import { useGenerateScriptModel } from '@/models/script_page';
 
 const { Title, Paragraph } = Typography;
+const { Option } = Select;
+const { TextArea } = Input;
 
 const FullPageScript: React.FC = () => {
-  const script1 = `<script type="text/javascript">
-  var link4m_url = 'https://link4m.co/';
-  var link4m_api_token = '677c9f2b90099e0e4532a53c';
-  var link4m_advert = 2;
-  var link4m_domains = ['depositfiles.com', 'uploading.com', 'uploadable.ch'];
-</script>
-<script src='//link4m.co/js/full-script.js'></script>`;
+  const {
+    type,
+    setType,
+    domains,
+    setDomains,
 
-  const script2 = `<script type="text/javascript">
-  var link4m_url = 'https://link4m.co/';
-  var link4m_api_token = '677c9f2b90099e0e4532a53c';
-  var link4m_advert = 2;
-  var link4m_exclude_domains = ['example.com', 'yoursite.com'];
-</script>
-<script src='//link4m.co/js/full-script.js'></script>`;
+    handleSubmit,
+    result,
+    loading, 
+  } = useGenerateScriptModel();
 
   return (
-    <div className="fullpage-wrapper">
+    <div className="fullpage-script-wrapper">
       <Title level={3}>Full Page Script</Title>
-
       <Paragraph>
-        If you have a website with 100's or 1000's of links you want to change over to Link4m,
-        then please use the script below.
-      </Paragraph>
-      <Paragraph>
-        Simply copy-and-paste the code below on to your webpage or blog and the links will be
-        updated automatically!
-      </Paragraph>
-      <Paragraph>
-        You can add or remove any domains for the code that you use on your website.
+        Nếu bạn có 100 hay 1000 liên kết từ website và bạn muốn rút gọn liên kết kiếm tiền với,
+        hãy dùng mã sau trên website của bạn.
       </Paragraph>
 
-      <Card className="code-block">
-        <pre>{script1}</pre>
-      </Card>
+      <Card>
+        <Title level={4}>Trình tạo mã tập lệnh toàn trang</Title>
 
-      <Paragraph>
-        Or if you wish to change every link to Link4m on your website (without stating exactly which
-        domains), please use the following code.
-      </Paragraph>
+        <div className="form-group">
+          <label>Loại lựa chọn tên miền</label>
+          <Select
+            value={type}
+            onChange={(value) => setType(value)}
+            style={{ width: '100%' }}
+          >
+            <Option value="include">Bao gồm</Option>
+            <Option value="exclude">Loại trừ</Option>
+          </Select>
+          <Paragraph type="secondary" style={{ marginTop: 8 }}>
+            Bao gồm: Sử dụng tùy chọn này nếu bạn chỉ muốn rút ngắn các liên kết từ danh sách tên miền sau. <br />
+            Loại trừ: Sử dụng tùy chọn này nếu bạn muốn rút ngắn mọi liên kết trên trang web của mình nhưng
+            chỉ loại trừ các liên kết khỏi danh sách tên miền sau.
+          </Paragraph>
+        </div>
+        
 
-      <Card className="code-block">
-        <pre>{script2}</pre>
+
+        <div className="form-group">
+          <label>Domains</label>
+          <TextArea
+            rows={5}
+            value={domains}
+            onChange={(e) => setDomains(e.target.value)}
+            placeholder="mega.nz\n*.zippyshare.com\ndepositfiles.com"
+          />
+          <Paragraph type="secondary" style={{ marginTop: 8 }}>
+            Thêm từng tên miền vào một tên miền mới. Ngoài ra tên miền ký tự đại diện được cho phép. Vui lòng kiểm tra ví dụ sau: <br />
+            mega.nz<br />
+            *.zippyshare.com<br />
+            depositfiles.com
+          </Paragraph>
+        </div>
+
+        <Button type="primary" onClick={handleSubmit} loading={loading}>
+          Phát ra
+        </Button>
+        {result && (
+        <div className="form-group" style={{ marginTop: 24 }}>
+          <label>Đoạn mã đã tạo</label>
+          <TextArea
+            rows={10}
+            value={result}
+            readOnly
+          />
+        </div>
+      )}
       </Card>
     </div>
   );

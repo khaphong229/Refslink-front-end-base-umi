@@ -1,12 +1,21 @@
-import useInitModel from '@/hooks/useInitModel';
-import { ipRoot } from '@/utils/ip';
-import { useEffect } from 'react';
+import { getApiToken } from '@/services/APIToken';
+import { useState } from 'react';
 
 export default () => {
-	const objInit = useInitModel<ApiToken.Record>('api-token');
-	console.log('objInit', objInit);
+	const [apiToken, setApiToken] = useState<string>();
+
+	const getToken = async () => {
+	const res = await getApiToken();
+
+	if (res?.token) {
+		localStorage.setItem('apiToken', res.token); // Lưu token vào localStorage
+		setApiToken(res.token); // Cập nhật state
+	}
+};
+
 
 	return {
-		...objInit,
+		apiToken,
+		getToken,
 	};
 };

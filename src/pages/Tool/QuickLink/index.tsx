@@ -3,17 +3,17 @@ import { Card, Button, Typography, Input, Space } from 'antd';
 import './style.less';
 import { getApiToken } from '@/services/APIToken';
 import { useModel } from 'umi';
+import { get } from 'lodash';
 
 const { Title, Paragraph } = Typography;
 
 const QuickLink: React.FC = () => {
-	const [token, setToken] = useState<string>();
-	const {record, getModel,danhSach} = useModel('api_token')
+	const {apiToken, getToken} = useModel('api_token');
 
 	useEffect(() => {
-		getModel();
-		setToken(record?.token);
-	}, [record]);
+		getToken();
+	}, []);
+
 
 	
 	return (
@@ -22,7 +22,7 @@ const QuickLink: React.FC = () => {
 			<Card className='token-box'>
 				<Paragraph className='token-title'>API token của bạn:</Paragraph>
 				<Space direction='vertical' style={{ width: '100%' }}>
-					<Input readOnly value={token} />
+					<Input readOnly value={apiToken} />
 				</Space>
 			</Card>
 
@@ -35,7 +35,7 @@ const QuickLink: React.FC = () => {
 				Sao chép nó bất cứ nơi nào bạn muốn chia sẻ và bạn sẽ được trả tiền từ link đó.
 			</Paragraph>
 
-			<Input readOnly value={`https://link4m.co/st?api=${token}c&url=yourdestinationlink.com`} />
+			<Input readOnly value={`https://link4m.co/st?api=${apiToken}c&url=yourdestinationlink.com`} />
 		</div>
 	);
 };
