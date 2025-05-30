@@ -33,3 +33,8 @@ export const goLink = async (body) => {
 	const response = await axios.post(`${ipRoot}/shorten-link/go`, body);
 	return response.data;
 };
+
+export const goLinkValid = async (body) => {
+	const response = await axios.post(`${ipRoot}/shorten-link/go/link`, body);
+	return response.data;
+};
