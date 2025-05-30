@@ -26,8 +26,8 @@ const PricingPlans: React.FC = () => {
     },
     {
       name: 'Pro',
-      price: 99000,
-      yearlyPrice: 990000,
+      price: 49000,
+      yearlyPrice: 490000,
       icon: <RocketOutlined />,
       popular: true,
       features: [
@@ -43,8 +43,8 @@ const PricingPlans: React.FC = () => {
     },
     {
       name: 'Enterprise',
-      price: 299000,
-      yearlyPrice: 2990000,
+      price: 99000,
+      yearlyPrice: 990000,
       icon: <CrownOutlined />,
       popular: false,
       features: [

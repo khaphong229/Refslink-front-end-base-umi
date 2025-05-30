@@ -1,5 +1,5 @@
 declare module Support{
-    interface Record{
+    export interface Record{
         _id: string;
         full_name: string;
         email: string;

@@ -4,12 +4,12 @@ import { ipRoot } from '@/utils/ip';
 const useInitService = (url: string, ip?: string) => {
 	const finalIp = ip ?? ipRoot;
 
-	const getService = (payload: { page?: number; limit?: number }, path?: string, isAbsolutePath?: boolean) => {
+	const getService = async (payload: { page?: number; limit?: number }, path?: string, isAbsolutePath?: boolean) => {
 		// const finalPath = isAbsolutePath ? `${finalIp}/${path}` : `${finalIp}/${url}/${path ?? ''}`;
 		const finalPath = `${finalIp}/${url}`;
 		console.log(finalPath, 'useinitService');
 
-		const response = axios.get(finalPath, { params: payload });
+		const response = await axios.get(finalPath, { params: payload });
 		return response;
 	};
 

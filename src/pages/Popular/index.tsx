@@ -3,76 +3,55 @@ import { Table, Select, Typography, Card } from 'antd';
 import type { ColumnsType } from 'antd/es/table';
 import dayjs from 'dayjs';
 import './style.less';
+import { useModel } from 'umi';
+import { useEffect } from 'react';
+import TableBase from '@/components/Table';
 
 const { Title } = Typography;
 const { Option } = Select;
 
-interface LinkRecord {
-  id: string;
-  originalUrl: string;
-  shortUrl: string;
-  views: number;
-  earnings: number;
-}
 
-const mockData: LinkRecord[] = [
-  {
-    id: '1',
-    originalUrl: 'https://anvaoday.blogspot.com/p/ealupae.html',
-    shortUrl: 'https://link4m.com/jPzhIV',
-    views: 0,
-    earnings: 0,
-  },
-  {
-    id: '2',
-    originalUrl: 'https://modrinth.com/data/tool-trims',
-    shortUrl: 'https://link4m.com/9KUeRj',
-    views: 112,
-    earnings: 12000,
-  },
-];
 
 const PopularLinks: React.FC = () => {
   const [month, setMonth] = useState(dayjs().format('MM/YYYY'));
+  const {getModel,page,limit, record} = useModel('top_link');  
 
+
+  
+  
   const handleChangeMonth = (value: string) => {
     setMonth(value);
     // TODO: fetch data for that month
   };
 
-  const columns: ColumnsType<LinkRecord> = [
-    {
-      title: 'No',
-      dataIndex: 'id',
-      key: 'id',
-      render: (_text, _record, index) => index + 1,
-      width: 60,
-    },
+  useEffect(()=>{
+    getModel();
+  },[])
+
+  const columns: ColumnsType<TopLink.Record> = [
+  
     {
       title: 'Links',
-      dataIndex: 'originalUrl',
-      key: 'originalUrl',
-      render: url => <a href={url} target="_blank" rel="noreferrer">{url}</a>,
+      dataIndex: 'original_link',
+      key: 'original_link',
     },
     {
       title: 'Shorten Link',
-      dataIndex: 'shortUrl',
-      key: 'shortUrl',
-      render: url => <a href={url} target="_blank" rel="noreferrer">{url}</a>,
+      dataIndex: 'shorten_link',
+      key: 'shorten_link',
     },
     {
       title: 'View',
-      dataIndex: 'views',
-      key: 'views',
+      dataIndex: 'valid_clicks',
+      key: 'valid_clicks',
       align: 'center',
       width: 80,
     },
     {
       title: 'Link Earnings',
-      dataIndex: 'earnings',
-      key: 'earnings',
+      dataIndex: 'earned_amount',
+      key: 'earned_amount',
       align: 'right',
-      render: (amount: number) => `${amount.toLocaleString('vi-VN')}`,
     },
   ];
 
@@ -105,12 +84,14 @@ const PopularLinks: React.FC = () => {
         bordered
         headStyle={{ borderBottom: '2px solid #52c41a' }}
       >
-        <Table
-          columns={columns}
-          dataSource={mockData}
-          rowKey="id"
-          pagination={false}
-        />
+			<TableBase
+			columns={columns}
+			widthDrawer={800}
+			dependencies={[page, limit]}
+			modelName='top_link'
+			// title={ROUTER.API_WEB}
+			buttons={{ import: false, filter: false }}
+		/>
       </Card>
     </div>
   );
