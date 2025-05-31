@@ -1,13 +1,18 @@
 import {type IColumn } from "@/components/Table/typing";
 import TableBase from "@/components/Table";
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { Button, message, Popconfirm, Space, Tooltip } from "antd";
 import { useModel } from "umi";
+import { useEffect } from "react";
 // import support from "@/models/support";
 
 const Support = () => {
-    const {getModel, page, limit, deleteModel, handleEdit} = useModel('support');
+    const {getModel, page, limit,danhSach,record} = useModel('support');
 
+    useEffect(() => {   
+        getModel();
+    }
+    , [page, limit]);
 
     const columns: IColumn<Support.Record>[] = [
         {
@@ -37,6 +42,24 @@ const Support = () => {
             width: 200,
             align: 'center',
         },
+        {
+            title: "Hanh động",
+            width: 150,
+            align: 'center',
+            render: (_, record) => {
+                return (
+                    <Space>
+                 
+                        <Tooltip title="Chi tiết"></Tooltip>
+                            <Button type="primary" onClick={() => {
+                                
+                            }}
+                            icon={<EyeOutlined />} 
+                            >Chi tiết</Button>
+                    </Space>
+                );
+            }
+        }
      
        
     ]

@@ -60,7 +60,7 @@ const FeaturesSection: React.FC = () => {
 
   return (
     <>
-      <section className="features-section">
+      <section className="features-section" id=''>
         <div className="container">
           <div className="section-header">
             <h2>Tại sao chọn chúng tôi?</h2>
