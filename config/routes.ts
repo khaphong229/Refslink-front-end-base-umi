@@ -189,6 +189,12 @@ export default [
 		layout: false,
 	},
 
+	{
+		path: '/login-success/:id',
+		component: './user/Login/LoginSuccessGoogle',
+		layout: false,
+	},
+
 	// Notification Routes
 	{
 		path: '/notification',

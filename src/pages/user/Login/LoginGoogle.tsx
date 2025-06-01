@@ -1,12 +1,15 @@
 import { useAuthActions } from '@/hooks/useAuthActions';
-import { tenTruongVietTatTiengAnh } from '@/services/base/constant';
+import { googleCallback, loginSuccess } from '@/services/Auth';
+import { ipRoot } from '@/utils/ip';
 import { DeleteOutlined, GoogleOutlined } from '@ant-design/icons';
-import { Button } from 'antd';
+import { Button, message } from 'antd';
+import { useEffect } from 'react';
 import { useAuth } from 'react-oidc-context';
+import { useParams } from 'react-router';
 
 const LoginGoogle = () => {
 	const auth = useAuth();
-	const { isLoading, dangNhap } = useAuthActions();
+	const { isLoading } = useAuthActions();
 
 	const onClearCache = () => {
 		localStorage.clear();
@@ -14,6 +17,10 @@ const LoginGoogle = () => {
 		auth.removeUser();
 		window.location.href = '/';
 		// window.location.reload();
+	};
+
+	const handleLoginGG = () => {
+		window.open(`${ipRoot}/auth/google`, '_self');
 	};
 
 	if (isLoading) {
@@ -30,11 +37,10 @@ const LoginGoogle = () => {
 			</div>
 		);
 	}
-
 	return (
 		<div>
 			<Button
-				onClick={dangNhap}
+				onClick={handleLoginGG}
 				type='primary'
 				style={{
 					marginTop: 8,
