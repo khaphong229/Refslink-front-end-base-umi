@@ -1,9 +1,9 @@
-import  useInitModel from '@/hooks/useInitModel';
+import useInitModel from '@/hooks/useInitModel';
 
-export default () =>{
-    const objInit = useInitModel<Support.Record>('admin/supports');
-    console.log('objInit', objInit);
-    return {
-        ...objInit,
-    };
-}
+export default () => {
+	const objInit = useInitModel<Support.Record>('admin/supports');
+
+	return {
+		...objInit,
+	};
+};
