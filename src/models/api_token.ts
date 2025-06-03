@@ -5,14 +5,13 @@ export default () => {
 	const [apiToken, setApiToken] = useState<string>();
 
 	const getToken = async () => {
-	const res = await getApiToken();
+		const res = await getApiToken();
 
-	if (res?.token) {
-		localStorage.setItem('apiToken', res.token); // Lưu token vào localStorage
-		setApiToken(res.token); // Cập nhật state
-	}
-};
-
+		if (res?.token) {
+			localStorage.setItem('apiToken', res.token);
+			setApiToken(res.token);
+		}
+	};
 
 	return {
 		apiToken,
