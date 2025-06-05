@@ -134,7 +134,7 @@
 		path: '/referrals',
 		name: 'Referral',
 		component: './Referral',
-		icon: 'GlobalOutlined',
+		icon: 'TeamOutlined',
 		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
 		access: 'canAccessClientRoute',
 	},
@@ -171,7 +171,7 @@
 		path: '/support',
 		name: 'Hỗ trợ',
 		component: './Support',
-		icon: 'UsergroupDeleteOutlined',
+		icon: 'SolutionOutlined',
 		access: 'canAccessClientRoute',
 	},
 
