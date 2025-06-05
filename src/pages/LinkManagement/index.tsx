@@ -138,9 +138,9 @@ const LinkManagerPage: React.FC = () => {
 					<Button icon={<ReloadOutlined />} onClick={handleRefresh} loading={loading}>
 						Làm mới
 					</Button>
-					<Button icon={<DeleteOutlined />} danger onClick={handleDeleteAll} disabled={data.length === 0}>
+					{/* <Button icon={<DeleteOutlined />} danger onClick={handleDeleteAll} disabled={data.length === 0}>
 						Xoá tất cả ({data.length})
-					</Button>
+					</Button> */}
 					<Button onClick={handleExport} type='default' disabled={data.length === 0}>
 						Xuất file Excel
 					</Button>
