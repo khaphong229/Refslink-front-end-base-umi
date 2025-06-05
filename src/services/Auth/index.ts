@@ -21,6 +21,16 @@ export interface RegisterBody {
 	password: string;
 }
 
+export interface GoogleAuthResponse {
+  success: boolean;
+  data?: {
+    token: string;
+    user: any;
+    redirectUrl?: string;
+  };
+  errorMessage?: string;
+}
+
 export const clientRegister = async (payload: RegisterBody) => {
 	const response = await axios.post(`${ipRoot}/auth/register`, payload);
 	return response?.data;
@@ -38,4 +48,19 @@ export async function adminlogin(payload: { email?: string; password?: string })
 
 export const changePassword = async (data: ChangePasswordBody) => {
 	return axios.patch(`http://localhost:3111/auth/change-password`, data);
+};
+
+export const googleLogin = async () => {
+  const response = await axios.get<GoogleAuthResponse>('/auth/google', {
+    withCredentials: true
+  });
+  return response.data;
+};
+
+export const googleCallback = async (code: string) => {
+  const response = await axios.get<GoogleAuthResponse>('/auth/google/callback', {
+    params: { code },
+    withCredentials: true
+  });
+  return response.data;
 };

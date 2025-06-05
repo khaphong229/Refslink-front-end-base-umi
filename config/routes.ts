@@ -56,13 +56,6 @@ export default [
 				layout: false,
 			},
 			{
-				path: '/auth/verify-account/:token',
-				layout: false,
-				name: 'authentication',
-				component: './user/Auth',
-			},
-
-			{
 				path: '/user',
 				redirect: '/user/login',
 			},

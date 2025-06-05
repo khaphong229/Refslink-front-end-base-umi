@@ -9,6 +9,7 @@ import styles from '../Login/index.less';
 import { clientRegister } from '@/services/Auth';
 import rules from '@/utils/rules';
 import { ROUTER_CLIENT } from '@/constants/router';
+import { adminlogin, clientLogin } from '@/services/auth';
 
 const Register: React.FC = () => {
 	const [submitting, setSubmitting] = useState(false);

@@ -1,40 +1,26 @@
-import { useAuthActions } from '@/hooks/useAuthActions';
-import { tenTruongVietTatTiengAnh } from '@/services/base/constant';
-import { DeleteOutlined, GoogleOutlined } from '@ant-design/icons';
+import React from 'react';
 import { Button } from 'antd';
-import { useAuth } from 'react-oidc-context';
+import { GoogleOutlined } from '@ant-design/icons';
+import { googleLogin } from '@/services/Auth';
 
-const LoginGoogle = () => {
-	const auth = useAuth();
-	const { isLoading, dangNhap } = useAuthActions();
-
-	const onClearCache = () => {
-		localStorage.clear();
-		sessionStorage.clear();
-		auth.removeUser();
-		window.location.href = '/';
-		// window.location.reload();
+const LoginGoogle: React.FC = () => {
+	const handleGoogleLogin = async () => {
+		try {
+			const response = await googleLogin();
+			if (response.success && response.data?.redirectUrl) {
+				window.location.replace(response.data.redirectUrl);
+			} else {
+				console.error('No redirect URL received');
+			}
+		} catch (error) {
+			console.error('Google login error:', error);
+		}
 	};
-
-	if (isLoading) {
-		return <div>Đang chuyển tới trang đăng nhập...</div>;
-	}
-
-	if (auth.error) {
-		return (
-			<div>
-				Có lỗi xảy ra... <pre>{auth.error.message}</pre>
-				<Button icon={<DeleteOutlined />} onClick={onClearCache} type='link'>
-					Xóa bộ nhớ đệm
-				</Button>
-			</div>
-		);
-	}
 
 	return (
 		<div>
 			<Button
-				onClick={dangNhap}
+				onClick={handleGoogleLogin}
 				type='primary'
 				style={{
 					marginTop: 8,

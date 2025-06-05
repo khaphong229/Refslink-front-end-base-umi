@@ -2,7 +2,7 @@ import React from 'react';
 import rules from '@/utils/rules';
 import { Form, Input, Row, Col, Select, message, Button, Card } from 'antd';
 import axios from '@/utils/axios';
-import { changePassword } from '@/services/Auth';
+import { adminlogin, clientLogin } from '@/services/auth';
 
 const ChangePassForm: React.FC = () => {
 	const [form] = Form.useForm();
