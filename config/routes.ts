@@ -1,6 +1,4 @@
-﻿import path from 'path';
-
-export default [
+﻿export default [
 	// Admin Routes
 	{
 		path: '/login/admin',
@@ -28,7 +26,15 @@ export default [
 		path: '/admin/supports',
 		name: 'Quản lý hỗ trợ',
 		component: './admin/Support',
-		icon: 'UserOutlined',
+		icon: 'SnippetsOutlined',
+		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
+		access: 'canAccessAdminRoute',
+	},
+	{
+		path: '/admin/settings',
+		name: 'Quản lý cấu hình',
+		component: './admin/Setting',
+		icon: 'SettingOutlined',
 		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
 		access: 'canAccessAdminRoute',
 	},

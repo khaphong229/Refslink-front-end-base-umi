@@ -1,53 +1,50 @@
 .withdraws-container {
-  padding: 24px;
+	.stats-row {
+		margin-bottom: 24px;
+	}
 
-  .stats-row {
-    margin-bottom: 24px;
-  }
+	.stat-card {
+		color: white !important;
+		text-align: center;
+		border-radius: 8px;
 
-  .stat-card {
-    border-radius: 8px;
-    color: white !important;
-    text-align: center;
-    
+		h2 {
+			margin-bottom: 4px;
+			font-size: 32px;
+		}
 
-    h2 {
-      font-size: 32px;
-      margin-bottom: 4px;
-    }
+		&.available {
+			background-color: #00bfff;
+		}
 
-    &.available {
-      background-color: #00bfff;
-    }
+		&.processing {
+			background-color: #e74c3c;
+		}
 
-    &.processing {
-      background-color: #e74c3c;
-    }
+		&.total {
+			background-color: #2ecc71;
+		}
+	}
 
-    &.total {
-      background-color: #2ecc71;
-    }
-  }
+	.withdraw-button-wrapper {
+		display: flex;
+		justify-content: center;
+		margin-bottom: 24px;
 
-  .withdraw-button-wrapper {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 24px;
+		.withdraw-button {
+			padding: 8px 24px;
+			color: white;
+			font-weight: bold;
+			background-color: #9bd7a4;
+			border: none;
 
-    .withdraw-button {
-      background-color: #9bd7a4;
-      border: none;
-      color: white;
-      font-weight: bold;
-      padding: 8px 24px;
+			&:hover {
+				background-color: #7cc08b;
+			}
+		}
+	}
 
-      &:hover {
-        background-color: #7cc08b;
-      }
-    }
-  }
-
-  .info-card {
-    line-height: 1.7;
-  }
+	.info-card {
+		line-height: 1.7;
+	}
 }
