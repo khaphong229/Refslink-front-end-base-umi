@@ -1,33 +1,106 @@
-import { Card, Col, Form ,Row, Input} from "antd";
-import React from "react";
-import rules from "@/utils/rules";
+import { Card, Col, Form, Row, Input, Radio, Table, Button } from 'antd';
+import React from 'react';
+import rules from '@/utils/rules';
+import AvatarUpload from './Upload';
+
+const withdrawMethods = [
+	{ label: 'Paypal', value: 'paypal' },
+	{ label: 'Bank Transfer', value: 'bank' },
+	{ label: 'Momo', value: 'momo' },
+	{ label: 'Payeer', value: 'payeer' },
+];
+
+const minAmountData = [
+	{ key: '1', method: 'PayPal', amount: '$20' },
+	{ key: '2', method: 'Chuyển khoản Ngân hàng', amount: '$20' },
+	{ key: '3', method: 'Momo', amount: '$20' },
+];
 
 const ProfileForm: React.FC = () => {
-    return (
-        <Card>
-            <h2>Hồ sơ cá nhân</h2>
-            <Form layout="vertical" >
-                <Row>
-                    <Col span={10}>
-                        <Form.Item label="Họ tên" name="name" rules={[...rules.ten, ...rules.required]}>
-                            <Input placeholder="Họ tên"/>
-                        </Form.Item>
-                        <Form.Item label="Địa chỉ" name="address"  >
-                            <Input placeholder="Địa chỉ"/>
+	return (
+		<Card>
+			<h2>Hồ sơ cá nhân</h2>
+			<Form layout='vertical'>
+				<Row gutter={20}>
+                    <Col >
+                        <Form.Item label="Ảnh đại diện" name="avatar">
+                            <AvatarUpload/>
+
                         </Form.Item>
                     </Col>
-                     <Col span={10}>
-                        <Form.Item label="Số điện thoại" name="name" rules={[...rules.ten, ...rules.required]}>
-                            <Input placeholder="Số điện thoại"/>
-                        </Form.Item>
-                        <Form.Item label="Tỉnh thành" name="city"  >
-                            <Input placeholder="Tỉnh thành"/>
-                        </Form.Item>
-                    </Col>
-                </Row>
-            </Form>
-        </Card>
-    )
-}
+                    
+					<Col span={12 }>
+						<Form.Item label='Họ tên' name='name' rules={[...rules.ten, ...rules.required]}>
+							<Input placeholder='Họ tên' />
+						</Form.Item>
+						<Form.Item label='Địa chỉ' name='address'>
+							<Input placeholder='Địa chỉ' />
+						</Form.Item>
+					</Col>
+					<Col span={12 }>
+						<Form.Item label='Số điện thoại' name='name' rules={[...rules.ten, ...rules.required]}>
+							<Input placeholder='Số điện thoại' />
+						</Form.Item>
+						<Form.Item label='Quốc gia' name='country'>
+							<Input placeholder='Quốc gia' />
+						</Form.Item>
+					</Col>
+				</Row>
+                <h2>Địa chỉ Thanh toán </h2>
+				<Row gutter={20}>
+					<Col span={12}>
+						<Form.Item label='Nguồn lưu lượng' name='traffic_source'>
+							<Input.TextArea rows={4} />
+						</Form.Item>
+
+						<Form.Item label='Withdrawl Method' name='method'>
+							<Radio.Group options={withdrawMethods} optionType='button' />
+						</Form.Item>
+
+						<Form.Item label='Paypal Email' name='paypal_email'>
+							<Input />
+						</Form.Item>
+
+						<ul style={{ paddingLeft: 20 }}>
+							<li>Để nhận tiền qua Paypal, Payza, Skrill và Perfect Money, hãy điền Email của tài khoản đó.</li>
+							<li>Để nhận tiền qua Bitcoin, hãy điền địa chỉ wallet của bạn.</li>
+							<li>Để nhận tiền qua WebMoney, hãy điền Ví WMZ của bạn.</li>
+							<li>Để nhận tiền qua Payeer, hãy điền Email hoặc Số điện thoại đăng ký Payeer.</li>
+							<li>
+								Để nhận tiền qua Ngân hàng, hãy điền Số tài khoản, Tên chủ tài khoản, Tên ngân hàng, Chi nhánh của ngân
+								hàng, Số điện thoại liên hệ.
+							</li>
+						</ul>
+
+						<Button type='primary' htmlType='submit'>
+							Submit
+						</Button>
+					</Col>
+
+					<Col span={12}>
+						<Table
+							pagination={false}
+							dataSource={minAmountData}
+							columns={[
+								{
+									title: 'Phương thức rút tiền',
+									dataIndex: 'method',
+									key: 'method',
+								},
+								{
+									title: 'Minimum Withdrawal Amount',
+									dataIndex: 'amount',
+									key: 'amount',
+								},
+							]}
+							bordered
+							size='small'
+						/>
+					</Col>
+				</Row>
+			</Form>
+		</Card>
+	);
+};
 
 export default ProfileForm;

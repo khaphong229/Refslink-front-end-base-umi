@@ -56,7 +56,7 @@
 				component: './user/Register',
 			},
 			{
-				path: '/user/verify-account/:token',
+				path: '/user/verify-email/:token',
 				name: 'Xác minh Email',
 				component: './user/EmailVerification',
 				layout: false,
