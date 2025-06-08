@@ -1,7 +1,11 @@
-import { Card, Col, Form, Row, Input, Radio, Table, Button } from 'antd';
-import React from 'react';
+import { Card, Col, Form, Row, Input, Radio, Table, Button, message } from 'antd';
+import React, { useEffect } from 'react';
 import rules from '@/utils/rules';
 import AvatarUpload from './Upload';
+import { getProfile, updateProfile } from '@/services/User'; // Giả sử bạn có một hàm updateProfile trong services
+import { useModel } from 'umi';
+
+
 
 const withdrawMethods = [
 	{ label: 'Paypal', value: 'paypal' },
@@ -17,28 +21,63 @@ const minAmountData = [
 ];
 
 const ProfileForm: React.FC = () => {
+	const [form] = Form.useForm();
+	const { profile, getProfile } = useModel('profile'); // Giả sử bạn có một hàm getProfile trong services
+
+useEffect(() => {
+  const fetch = async () => {
+    const data = await getProfile(); // getProfile có return data
+    if (data) {
+      form.setFieldsValue(data); // Gán dữ liệu vào form
+    }
+  };
+  fetch();
+}, []);
+
+
+
+	const onFinish = async (values:any) => {
+		try {
+			await updateProfile({
+				avatar: values.avatar,
+				full_name: values.full_name,
+				name: values.name,
+				address: values.address,
+				phone: values.phone,
+				country: values.country,
+				method_withdraw: values.method_withdraw,
+				info_withdraw: values.info_withdraw,
+			});
+			message.success('Profile updated successfully');
+		} catch (error) {
+			console.error('Failed to update profile:', error);
+		}
+	};
+
 	return (
 		<Card>
 			<h2>Hồ sơ cá nhân</h2>
-			<Form layout='vertical'>
+			<Form layout='vertical' onFinish={onFinish} form={form}>
 				<Row gutter={20}>
-                    <Col >
-                        <Form.Item label="Ảnh đại diện" name="avatar">
-                            <AvatarUpload/>
-
-                        </Form.Item>
-                    </Col>
-                    
-					<Col span={12 }>
-						<Form.Item label='Họ tên' name='name' rules={[...rules.ten, ...rules.required]}>
-							<Input placeholder='Họ tên' />
-						</Form.Item>
-						<Form.Item label='Địa chỉ' name='address'>
-							<Input placeholder='Địa chỉ' />
+					<Col>
+						<Form.Item label='Ảnh đại diện' name='avatar'>
+							<AvatarUpload />
 						</Form.Item>
 					</Col>
-					<Col span={12 }>
-						<Form.Item label='Số điện thoại' name='name' rules={[...rules.ten, ...rules.required]}>
+
+					<Col span={12}>
+						<Form.Item label='Họ tên' name='name' rules={[...rules.ten, ...rules.required]}>
+							<Input placeholder='Họ tên' value={profile.name} />
+						</Form.Item>
+						<Form.Item label='Họ tên' name='full_name' rules={[...rules.ten, ...rules.required]}>
+							<Input placeholder='Họ tên' />
+						</Form.Item>
+						<Form.Item label='Địa chỉ' name='address' >
+							<Input placeholder='Địa chỉ' value={profile.address}/>
+						</Form.Item>
+					</Col>
+					<Col span={12}>
+						<Form.Item label='Số điện thoại' name='phone' rules={[...rules.soDienThoai, ...rules.required]}>
 							<Input placeholder='Số điện thoại' />
 						</Form.Item>
 						<Form.Item label='Quốc gia' name='country'>
@@ -46,18 +85,18 @@ const ProfileForm: React.FC = () => {
 						</Form.Item>
 					</Col>
 				</Row>
-                <h2>Địa chỉ Thanh toán </h2>
+				<h2>Địa chỉ Thanh toán </h2>
 				<Row gutter={20}>
 					<Col span={12}>
-						<Form.Item label='Nguồn lưu lượng' name='traffic_source'>
+						{/* <Form.Item label='Nguồn lưu lượng' name='traffic_source'>
 							<Input.TextArea rows={4} />
-						</Form.Item>
+						</Form.Item> */}
 
-						<Form.Item label='Withdrawl Method' name='method'>
+						<Form.Item label='Withdrawl Method' name='method_withdraw'>
 							<Radio.Group options={withdrawMethods} optionType='button' />
 						</Form.Item>
 
-						<Form.Item label='Paypal Email' name='paypal_email'>
+						<Form.Item label='Paypal Email' name='info_withdraw'>
 							<Input />
 						</Form.Item>
 
@@ -72,7 +111,7 @@ const ProfileForm: React.FC = () => {
 							</li>
 						</ul>
 
-						<Button type='primary' htmlType='submit'>
+						<Button type='primary' htmlType='submit' >
 							Submit
 						</Button>
 					</Col>

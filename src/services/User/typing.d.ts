@@ -8,6 +8,7 @@ declare module User {
 		avatar: string;
 		status: string;
 		method_withdraw: string;
+		info_withdraw: string;
 		total_earned: number;
 		balance: number;
 		createdAt: string;
