@@ -19,6 +19,7 @@ declare module Login {
 			// 	'default-roles-vwa',
 			// ];
 		};
+		ref_code: string;
 		name: string; // 'Administrator';
 		preferred_username: string; // 'admin';
 		given_name: string; // 'Administrator';

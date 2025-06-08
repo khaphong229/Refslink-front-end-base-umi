@@ -9,36 +9,14 @@ import styles from '../Login/index.less';
 import { clientRegister } from '@/services/Auth';
 import rules from '@/utils/rules';
 import { ROUTER_CLIENT } from '@/constants/router';
-import { adminlogin, clientLogin } from '@/services/auth';
 
 const Register: React.FC = () => {
 	const [submitting, setSubmitting] = useState(false);
 	const [type, setType] = useState<string>('accountEmail');
-	const { initialState, setInitialState } = useModel('@@initialState');
 	const intl = useIntl();
 	const [form] = Form.useForm();
 
-	/**
-	 * Xử lý token, get info sau khi đăng nhập
-	 */
-	const handleRole = async (role: { access_token: string }) => {
-		localStorage.setItem('token', role?.access_token);
-
-		const info = await getUserInfo();
-		console.log(info, 'in4');
-
-		setInitialState({
-			...initialState,
-			currentUser: info?.data?.data,
-		});
-
-		const defaultloginSuccessMessage = intl.formatMessage({
-			id: 'pages.login.success',
-			defaultMessage: 'success',
-		});
-		message.success(defaultloginSuccessMessage);
-		history.push('/dashboard');
-	};
+	const { ref } = history.location.query;
 
 	const handleSubmit = async (values: {
 		agreement: string;
@@ -50,11 +28,23 @@ const Register: React.FC = () => {
 		try {
 			setSubmitting(true);
 
-			const payload = {
+			let payload: {
+				name: string;
+				email: string;
+				password: string;
+				ref?: string;
+			} = {
 				name: values.name,
 				email: values.email,
 				password: values.password,
 			};
+
+			if (ref) {
+				payload = {
+					...payload,
+					ref: ref as string,
+				};
+			}
 
 			const res = await clientRegister(payload);
 

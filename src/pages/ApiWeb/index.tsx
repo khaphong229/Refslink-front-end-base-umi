@@ -1,18 +1,22 @@
 import TableBase from '@/components/Table';
 import { type IColumn } from '@/components/Table/typing';
 import { DeleteOutlined, EditOutlined } from '@ant-design/icons';
-import { Button, message, Popconfirm, Space, Switch, Tag, Tooltip } from 'antd';
+import { Button, Card, Image, message, Popconfirm, Space, Switch, Tag, Tooltip, Typography } from 'antd';
 import { useModel } from 'umi';
 import Form from './components/Form';
 import type ApiWeb from '@/services/WebApi/typings';
 import { STATUS } from '@/types/status';
 import moment from 'moment';
 import { changeStatus } from '@/services/WebApi';
-import { get } from 'lodash';
+
 import ClientLayout from '@/layouts/ClientLayout';
+import image_1 from '@/assets/api_web/1.png';
+import image_2 from '@/assets/api_web/2.png';
+
+const { Paragraph } = Typography;
 
 const ApiWebPage = () => {
-	const {getModel, page, limit, deleteModel, handleEdit } = useModel('api_web');
+	const { getModel, page, limit, deleteModel, handleEdit } = useModel('api_web');
 	const columns: IColumn<ApiWeb.Record>[] = [
 		{
 			title: 'Api',
@@ -36,7 +40,7 @@ const ApiWebPage = () => {
 			align: 'center',
 			width: 120,
 			sortable: true,
-		}, 
+		},
 		{
 			title: 'Trạng thái',
 			dataIndex: 'status',
@@ -130,14 +134,23 @@ const ApiWebPage = () => {
 	return (
 		<ClientLayout title='Quản lý api web'>
 			<TableBase
-			columns={columns}
-			widthDrawer={800}
-			dependencies={[page, limit]}
-			modelName='api_web'
-			// title={ROUTER.API_WEB}
-			Form={Form}
-			buttons={{ import: false, filter: false }}
-		/>
+				columns={columns}
+				widthDrawer={800}
+				dependencies={[page, limit]}
+				modelName='api_web'
+				// title={ROUTER.API_WEB}
+				Form={Form}
+				buttons={{ import: false, filter: false }}
+			/>
+			<br />
+			<Card title={'Hướng dẫn chi tiết'}>
+				<Paragraph strong>
+					Truy cập mục Quick Link của website Rút gọn link bạn muốn rồi copy link được hiển thị, như sau:
+				</Paragraph>
+				<Image src={image_1} width={800} />
+				<Paragraph strong>Dán link đã sao chép thêm vào form điền API trong web của chúng tôi.</Paragraph>
+				<Image src={image_2} width={800} />
+			</Card>
 		</ClientLayout>
 	);
 };
