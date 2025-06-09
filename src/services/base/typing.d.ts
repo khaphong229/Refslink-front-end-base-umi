@@ -19,7 +19,10 @@ declare module Login {
 			// 	'default-roles-vwa',
 			// ];
 		};
+		being_paid: string;
+		total_payment: string;
 		ref_code: string;
+		balance: string;
 		name: string; // 'Administrator';
 		preferred_username: string; // 'admin';
 		given_name: string; // 'Administrator';

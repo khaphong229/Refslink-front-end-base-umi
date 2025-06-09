@@ -1,5 +1,5 @@
 import { landingUrl } from '@/services/base/constant';
-import { FileWordOutlined, GlobalOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import { FileWordOutlined, GlobalOutlined, LogoutOutlined, SwapOutlined, UserOutlined } from '@ant-design/icons';
 import { Avatar, Menu, Spin } from 'antd';
 import { type ItemType } from 'antd/lib/menu/hooks/useItems';
 import React from 'react';
@@ -34,7 +34,34 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 			key: 'name',
 			icon: <UserOutlined />,
 			label: fullName,
-			
+		},
+		{ type: 'divider', key: 'divider' },
+		{
+			key: 'withdraw',
+			icon: <SwapOutlined />,
+			label: 'Rút tiền',
+			onClick: () => {
+				const redirect = window.location.href;
+				window.location.href = ``;
+			},
+		},
+		{
+			key: 'password',
+			icon: <SwapOutlined />,
+			label: 'Cài đặt',
+			onClick: () => {
+				const redirect = window.location.href;
+				window.location.href = ``;
+			},
+		},
+		{
+			key: 'support',
+			icon: <SwapOutlined />,
+			label: 'Hỗ trợ',
+			onClick: () => {
+				const redirect = window.location.href;
+				window.location.href = ``;
+			},
 		},
 		// {
 		// 	key: 'password',
