@@ -9,10 +9,16 @@ import { useModel } from 'umi';
 const { Option } = Select;
 
 const Dashboard: React.FC = () => {
-	const { data, isLoading, paramsData, setParamsData, fetchDataDashboard } = useModel('dashboard');
+	const { data, isLoading, paramsData, setParamsData, fetchDataDashboard, updateEarnings } = useModel('dashboard');
 
 	useEffect(() => {
 		fetchDataDashboard();
+
+		updateEarnings();
+
+		const intervalId = setInterval(updateEarnings, 2 * 60 * 60 * 1000);
+
+		return () => clearInterval(intervalId);
 	}, [paramsData]);
 
 	const handleMonthChange = (value: string) => {
@@ -96,30 +102,28 @@ const Dashboard: React.FC = () => {
 					<Col xs={12} sm={12} md={12} lg={6}>
 						<Card className='stat-card orange' bordered={false}>
 							<EyeOutlined className='icon' />
-							<div className='value'>{data?.total_views || 0}</div>
+							<div className='value'>{data?.total_valid_views || 0}</div>
 							<div>Tổng View</div>
 						</Card>
 					</Col>
 					<Col xs={12} sm={12} md={12} lg={6}>
 						<Card className='stat-card blue' bordered={false}>
 							<LockOutlined className='icon' />
-							<div className='value'>${data?.total_earned?.toFixed(2) || '0.00'}</div>
+							<div className='value'>${data?.total_earned || 0}</div>
 							<div>Tổng thu nhập</div>
 						</Card>
 					</Col>
 					<Col xs={12} sm={12} md={12} lg={6}>
 						<Card className='stat-card green' bordered={false}>
 							<RetweetOutlined className='icon' />
-							<div className='value'>
-								${data?.table_data?.reduce((sum, item) => sum + item.referral_earning, 0).toFixed(2) || '0.00'}
-							</div>
+							<div className='value'>${data?.total_earned_referral || 0}</div>
 							<div>Tổng thu nhập giới thiệu</div>
 						</Card>
 					</Col>
 					<Col xs={12} sm={12} md={12} lg={6}>
 						<Card className='stat-card red' bordered={false}>
 							<LineChartOutlined className='icon' />
-							<div className='value'>${data?.rate?.per_1000_views || 0}</div>
+							<div className='value'>${data?.rate?.cpm || 0}</div>
 							<div>CPM trung bình</div>
 						</Card>
 					</Col>

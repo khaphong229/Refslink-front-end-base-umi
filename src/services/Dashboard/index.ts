@@ -11,3 +11,8 @@ export const getData = async (params) => {
 	});
 	return response?.data;
 };
+
+export const updateEarningsAPI = async () => {
+	const response = await axios.get(`${ipRoot}/auth/update-earnings`);
+	return response;
+};
