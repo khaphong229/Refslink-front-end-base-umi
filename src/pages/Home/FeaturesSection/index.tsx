@@ -60,7 +60,7 @@ const FeaturesSection: React.FC = () => {
 
   return (
     <>
-      <section className="features-section" id=''>
+      <div className="features-section" id='feature'>
         <div className="container">
           <div className="section-header">
             <h2>Tại sao chọn chúng tôi?</h2>
@@ -114,10 +114,10 @@ const FeaturesSection: React.FC = () => {
             </div>
           </div>
         </div>
-      </section>
+      </div>
 
     </>
   );
 };
 
-export { FeaturesSection };
+export default FeaturesSection;

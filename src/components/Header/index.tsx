@@ -17,8 +17,8 @@ const Header = () => {
 	const menu = (
 		<Menu>
 			<Menu.Item onClick={() => history.push('/')}>Trang chủ</Menu.Item>
-			<Menu.Item key='introduce'>
-				<Button type='text' onClick={() => scrollToSection('introduce')}>
+			<Menu.Item key='fearures-section'>
+				<Button type='text' onClick={() => scrollToSection('feature')}>
 					Giới thiệu
 				</Button>
 			</Menu.Item>
@@ -45,7 +45,7 @@ const Header = () => {
 					<Button className='rounded-btn' type='link' onClick={() => history.push('/')}>
 						Trang chủ
 					</Button>
-					<Button className='rounded-btn' type='link' onClick={() => scrollToSection('introduce')}>
+					<Button className='rounded-btn' type='link' onClick={() => scrollToSection('feature')}>
 						Giới thiệu
 					</Button>
 					<Button className='rounded-btn' type='link' onClick={() => scrollToSection('connect')}>

@@ -6,7 +6,7 @@
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px); // Safari support
   z-index: 1000;
-  padding: 16px;
+  padding: 16px 0px;
   background: rgba(255, 255, 255, 0.85);
   border-bottom: 1px solid rgba(0, 0, 0, 0.06);
   transition: all 0.3s ease;
@@ -19,7 +19,7 @@
   
   // Mobile optimizations
   @media (max-width: 768px) {
-    padding: 12px 16px;
+    padding: 12px 0px;
     background: rgba(255, 255, 255, 0.95);
     backdrop-filter: blur(8px);
     
@@ -37,8 +37,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    max-width: 1200px;
-    margin: 0 auto;
+    margin: 0 ;
     position: relative;
     
     // Mobile container adjustments
@@ -99,7 +98,7 @@
     }
 
     .text-gradient {
-      background: linear-gradient(to top right, #ff3800);
+      background: linear-gradient(to top right, #e6320e);
       background-size: 200% 200%;
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
@@ -168,7 +167,7 @@
     align-items: center;
     
     .ant-btn-primary {
-            background: linear-gradient(to top right, #ff3800);
+            background: linear-gradient(to top right, #C00D00);
 
       border: none;
       font-weight: 600;
@@ -202,7 +201,7 @@
     .ant-btn {
       background: rgba(255, 56, 0, 0.1);
       border: 1px solid rgba(255, 56, 0, 0.2);
-      color: #ff3800;
+      color: #e6320e;
       
       &:hover {
         background: rgba(255, 56, 0, 0.15);

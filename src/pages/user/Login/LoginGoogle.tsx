@@ -5,20 +5,11 @@ import { googleLogin } from '@/services/Auth';
 
 const LoginGoogle: React.FC = () => {
 	const handleGoogleLogin = async () => {
-		try {
-			const response = await googleLogin();
-			if (response.success && response.data?.redirectUrl) {
-				window.location.replace(response.data.redirectUrl);
-			} else {
-				console.error('No redirect URL received');
-			}
-		} catch (error) {
-			console.error('Google login error:', error);
-		}
+		window.location.href = `${APP_CONFIG_IP_ROOT}/auth/google`;
 	};
 
 	return (
-		<div>
+		<div> 
 			<Button
 				onClick={handleGoogleLogin}
 				type='primary'

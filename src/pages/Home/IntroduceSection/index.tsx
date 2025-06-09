@@ -7,7 +7,7 @@ const { Title, Paragraph } = Typography;
 
 const IntroSection = () => {
   return (
-    <div className="intro-section" id="introduce">
+    <div className="intro-section" id="introduce-section">
       <div className="container">
         <Title level={2} className="title">Tại sao chọn nền tảng rút gọn link của chúng tôi?</Title>
         <Row gutter={[24, 24]}>
