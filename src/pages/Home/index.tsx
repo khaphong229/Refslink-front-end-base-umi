@@ -8,14 +8,15 @@ import SnowBackground from '@/components/SnowFall';
 import HeroSlider from './SlideData';
 import {  PricingPlans,} from './PricingPlans';
 import RecentLinks from './RecentLinks';
-import {  FeaturesSection,  } from './FeaturesSection';
 import AppFooter from '@/components/Footer';
+import FeaturesSection from './FeaturesSection';
 const TrangChu = () => {
   return (
     <>
-        <Header />
 
       <div style={{ padding: '0 40px'}}>
+        
+        <Header/>
         <SnowBackground/>
         <Landing/>
         {/* <IntroSection/> */}
