@@ -1,4 +1,4 @@
-import { getData } from '@/services/Dashboard';
+import { getData, updateEarningsAPI } from '@/services/Dashboard';
 import { useState } from 'react';
 
 export default () => {
@@ -20,11 +20,21 @@ export default () => {
 		}
 	};
 
+	const updateEarnings = async () => {
+		try {
+			await updateEarningsAPI();
+			console.log('Đã cập nhật earnings thành công');
+		} catch (error) {
+			console.error('Lỗi khi cập nhật earnings:', error);
+		}
+	};
+
 	return {
 		data,
 		isLoading,
 		paramsData,
 		setParamsData,
 		fetchDataDashboard,
+		updateEarnings,
 	};
 };

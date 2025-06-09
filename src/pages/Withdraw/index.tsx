@@ -15,7 +15,7 @@ const WithdrawsPage: React.FC = () => {
 					<Col span={8}>
 						<Card className='stat-card available'>
 							<Title level={1} style={{ color: '#fff' }}>
-								{initialState?.currentUser?.balance}$
+								${initialState?.currentUser?.balance}
 							</Title>
 							<Text strong>Số dư hiện có</Text>
 						</Card>
@@ -23,7 +23,7 @@ const WithdrawsPage: React.FC = () => {
 					<Col span={8}>
 						<Card className='stat-card processing'>
 							<Title level={1} style={{ color: '#fff' }}>
-								{initialState?.currentUser?.being_paid}$
+								${initialState?.currentUser?.being_paid}
 							</Title>
 							<Text strong>Đang thanh toán</Text>
 						</Card>
@@ -31,7 +31,7 @@ const WithdrawsPage: React.FC = () => {
 					<Col span={8}>
 						<Card className='stat-card total'>
 							<Title level={1} style={{ color: '#fff' }}>
-								{initialState?.currentUser?.total_payment}$
+								${initialState?.currentUser?.total_payment}
 							</Title>
 							<Text strong>Tổng thanh toán</Text>
 						</Card>

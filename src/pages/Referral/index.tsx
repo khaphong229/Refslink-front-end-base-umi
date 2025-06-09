@@ -1,10 +1,12 @@
 import React, { useEffect } from 'react';
-import { Card, Typography, Input, Button, Table, Space } from 'antd';
+import { Card, Typography, Input, Button, Table, Space, Tooltip } from 'antd';
 import { CopyOutlined } from '@ant-design/icons';
 import './style.less';
 import ClientLayout from '@/layouts/ClientLayout';
 import { useModel } from 'umi';
 import dayjs from 'dayjs';
+import { primaryColor } from '@/services/base/constant';
+import { useLinkManager } from '@/models/link/link';
 
 const { Text } = Typography;
 
@@ -18,6 +20,8 @@ const ReferralPage: React.FC = () => {
 		fetchReferralData,
 		copyToClipboard,
 	} = useModel('referal');
+
+	const { handleCopy } = useLinkManager();
 
 	useEffect(() => {
 		fetchReferralData();
@@ -40,7 +44,7 @@ const ReferralPage: React.FC = () => {
 			title: 'Hoa hồng',
 			dataIndex: 'total_earned',
 			key: 'total_earned',
-			render: (amount: number) => `${amount.toLocaleString()}$`,
+			render: (amount: number) => `$${amount.toLocaleString()}`,
 		},
 	];
 
@@ -48,19 +52,40 @@ const ReferralPage: React.FC = () => {
 		<ClientLayout title='Giới thiệu bạn bè'>
 			<div className='referral-page'>
 				<Card className='referral-card'>
-					<Text strong style={{ marginRight: 8 }}>
-						Mã giới thiệu của bạn:
-					</Text>
-					<Input value={initialState?.currentUser?.ref_code} readOnly className='referral-code' />
-					<Text strong className='referral-link-label'>
-						Link chia sẻ nhanh:
-					</Text>
-					<Space>
-						<Input value={referralLink} readOnly style={{ width: 400 }} />
-						<Button icon={<CopyOutlined />} onClick={copyToClipboard}>
-							Sao chép
-						</Button>
-					</Space>
+					<Input
+						value={initialState?.currentUser?.ref_code}
+						readOnly
+						style={{ marginBottom: 8 }}
+						addonBefore={'Mã giới thiệu của bạn'}
+						className='referral-code'
+						addonAfter={
+							<Tooltip title='Sao chép'>
+								<Button
+									icon={<CopyOutlined style={{ color: primaryColor }} />}
+									onClick={() => handleCopy(initialState?.currentUser?.ref_code)}
+									type='text'
+									size='small'
+								/>
+							</Tooltip>
+						}
+					/>
+					<Input
+						value={referralLink}
+						readOnly
+						style={{ marginBottom: 8 }}
+						addonBefore={'Link chia sẻ nhanh'}
+						className='referral-code'
+						addonAfter={
+							<Tooltip title='Sao chép'>
+								<Button
+									icon={<CopyOutlined style={{ color: primaryColor }} />}
+									onClick={() => handleCopy(referralLink)}
+									type='text'
+									size='small'
+								/>
+							</Tooltip>
+						}
+					/>
 				</Card>
 
 				<Card title='Lịch sử giới thiệu' className='referral-history'>

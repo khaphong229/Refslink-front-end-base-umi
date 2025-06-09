@@ -147,9 +147,9 @@ const ApiWebPage = () => {
 				<Paragraph strong>
 					Truy cập mục Quick Link của website Rút gọn link bạn muốn rồi copy link được hiển thị, như sau:
 				</Paragraph>
-				<Image src={image_1} width={800} />
+				<Image src={image_1} />
 				<Paragraph strong>Dán link đã sao chép thêm vào form điền API trong web của chúng tôi.</Paragraph>
-				<Image src={image_2} width={800} />
+				<Image src={image_2} />
 			</Card>
 		</ClientLayout>
 	);
