@@ -24,7 +24,7 @@ function VerifyEmail() {
 				.then((response) => {
 					setStatus('active');
 					message.success('Xác minh thành công!');
-				})
+				}) 
 				.catch((error) => {
 					setStatus('inactive');
 					message.error('Liên kết xác minh đã hết hạn hoặc không hợp lệ.');

@@ -62,6 +62,12 @@
 				layout: false,
 			},
 			{
+				path: '/user/login/success',
+				name: 'Login Success',
+				component: './user/LoginSuccess', 
+			},
+
+			{
 				path: '/user',
 				redirect: '/user/login',
 			},
