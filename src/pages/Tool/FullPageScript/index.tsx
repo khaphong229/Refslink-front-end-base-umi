@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Typography, Card, Select, Input, Button, InputNumber } from 'antd';
+import React from 'react';
+import { Typography, Card, Select, Input, Button } from 'antd';
 import './style.less';
 import { useGenerateScriptModel } from '@/models/script_page';
 import ClientLayout from '@/layouts/ClientLayout';
@@ -9,16 +9,8 @@ const { Option } = Select;
 const { TextArea } = Input;
 
 const FullPageScript: React.FC = () => {
-	const {
-		type,
-		setType,
-		domains,
-		setDomains,
-
-		handleSubmit,
-		result,
-		loading,
-	} = useGenerateScriptModel();
+	const { type, setType, domains, setDomains, handleSubmit, result, loading } = useGenerateScriptModel();
+	console.log(result);
 
 	return (
 		<ClientLayout title='Full Page Script'>
@@ -69,7 +61,7 @@ const FullPageScript: React.FC = () => {
 					{result && (
 						<div className='form-group' style={{ marginTop: 24 }}>
 							<label>Đoạn mã đã tạo</label>
-							<TextArea rows={10} value={result} readOnly />
+							<TextArea rows={10} value={result.data} readOnly />
 						</div>
 					)}
 				</Card>

@@ -3,25 +3,17 @@ import { Typography, Card, Button, Input, Space } from 'antd';
 import './style.less';
 import QuickLink from '../QuickLink';
 import ClientLayout from '@/layouts/ClientLayout';
+import { ipRoot } from '@/utils/ip';
 
-const { Title, Paragraph, Text } = Typography;
+const { Title, Paragraph } = Typography;
 
 const DevelopersApi: React.FC = () => {
-	const [tokens, setTokens] = useState<string[]>([
-		'677c9f2b90099e0e4532a53c',
-		'6826a351d5679210c6398a67',
-		'6826a353ed837201d5080806',
-	]);
+	const api = localStorage.getItem('apiToken');
 
-	const handleAddToken = () => {
-		const newToken = Math.random().toString(36).substring(2, 34);
-		setTokens([...tokens, newToken]);
-	};
-
-	const jsonResponse = `{"status":"success","shortenedUrl":"https:\\/\\/my.link4m.com\\/xxxxxx"}`;
+	const jsonResponse = `{"status":"success","shortenedUrl":"${ipRoot}/xxxxxx"}`;
 	const phpCode = `$long_url = urlencode('yourdestinationlink.com');
-$api_token = '677c9f2b90099e0e4532a53c';
-$api_url = "https://link4m.co/api-shorten/v2?api={$api_token}&url={$long_url}";
+$api_token = '${api}';
+$api_url = "${ipRoot}/api?api={$api_token}&url={$long_url}&alias=CustomAlias";
 $result = @json_decode(file_get_contents($api_url), TRUE);
 if($result["status"] !== 'success'){
     echo $result["message"];
@@ -33,21 +25,45 @@ if($result["status"] !== 'success'){
 		<ClientLayout title='Developers API'>
 			<div className='developers-api-wrapper'>
 				<QuickLink />
-				<Paragraph>You will get a JSON response like the following</Paragraph>
+				<div style={{ marginTop: 10 }}>
+					<Paragraph>
+						Dành cho nhà phát triển sử dụng <strong>API</strong> sẽ trả về phản hồi trong định dạng{' '}
+						<strong>JSON</strong>. Liên Kết giống mẫu bên dưới:
+					</Paragraph>
+					<Paragraph>Hiện tại chỉ có mộtcách mà bạn có thể dùng để rút ngắn liên kết của bạn. mẫu bên dưới:</Paragraph>
+					<Paragraph>
+						Tất cả những gì bạn cần làm là <strong>GỬI</strong> cầu với API và Liên Kết giống mẫu bên dưới:
+					</Paragraph>
 
-				<Card className='code-block'>
-					<code>{jsonResponse}</code>
-				</Card>
+					<Card className='code-block'>
+						<code>
+							{`${ipRoot}/api?api=`}
+							<span style={{ fontWeight: 'bold' }}>{api}</span>
+							{`&url=`}
+							<span style={{ fontWeight: 'bold' }}>yourdestinationlink.com</span>
+							{`&alias=`}
+							<span style={{ fontWeight: 'bold' }}>CustomAlias</span>
+						</code>
+					</Card>
 
-				<Title level={4}>Using the API in PHP</Title>
-				<Paragraph>
-					To use the API in your PHP application, you need to send a GET request via file_get_contents or cURL. Please
-					check the below sample examples using file_get_contents:
-				</Paragraph>
+					<Paragraph>Bạn sẽ nhận được phản hồi JSON như sau</Paragraph>
 
-				<Card className='code-block'>
-					<pre>{phpCode}</pre>
-				</Card>
+					<Card className='code-block'>
+						<code>{jsonResponse}</code>
+					</Card>
+
+					<Title level={4}>Sử dụng API trong PHP</Title>
+					<Paragraph>
+						Để sử dụng API trong ứng dụng PHP của bạn, bạn cần gửi một yêu cầu GET qua file_get_contents hoặc cURL. Vui
+						lòng kiểm tra ví dụ dưới đây bằng cách sử dụng file_get_contents
+					</Paragraph>
+
+					<Paragraph>Sử dụng phản hồi JSON</Paragraph>
+
+					<Card className='code-block'>
+						<code>{phpCode}</code>
+					</Card>
+				</div>
 			</div>
 		</ClientLayout>
 	);

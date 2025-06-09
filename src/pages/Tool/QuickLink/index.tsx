@@ -28,16 +28,20 @@ const QuickLink: React.FC = () => {
 					</Space>
 				</Card>
 
-				<Paragraph className='instructions'>
-					Mọi người đều có thể sử dụng cách ngắn nhất để rút gọn link với {tenTruongVietTatTiengAnh}.
-				</Paragraph>
-				<Paragraph>
-					Chỉ cần sao chép các liên kết bên dưới vào thanh địa chỉ trình duyệt của bạn, thay đổi{' '}
-					<code>yourdestinationlink.com</code> bằng link bạn muốn rút gọn và nhấn ENTER. {tenTruongVietTatTiengAnh} sẽ
-					tự động rút gọn link. Sao chép nó bất cứ nơi nào bạn muốn chia sẻ và bạn sẽ được trả tiền từ link đó.
-				</Paragraph>
+				{pathName === '/tools/quick' && (
+					<>
+						<Paragraph className='instructions'>
+							Mọi người đều có thể sử dụng cách ngắn nhất để rút gọn link với {tenTruongVietTatTiengAnh}.
+						</Paragraph>
+						<Paragraph>
+							Chỉ cần sao chép các liên kết bên dưới vào thanh địa chỉ trình duyệt của bạn, thay đổi{' '}
+							<code>yourdestinationlink.com</code> bằng link bạn muốn rút gọn và nhấn ENTER. {tenTruongVietTatTiengAnh}{' '}
+							sẽ tự động rút gọn link. Sao chép nó bất cứ nơi nào bạn muốn chia sẻ và bạn sẽ được trả tiền từ link đó.
+						</Paragraph>
 
-				<Input readOnly value={`${ipRoot}/st?token=${apiToken}&url=yourdestinationlink.com`} />
+						<Input readOnly value={`${ipRoot}/st?token=${apiToken}&url=yourdestinationlink.com`} />
+					</>
+				)}
 			</div>
 		</ClientLayout>
 	);

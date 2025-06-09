@@ -110,31 +110,31 @@
 		routes: [
 			{
 				path: 'quick',
-				name: 'Quick Link',
+				name: 'Quick Link - Liên kết nhanh',
 				component: './Tool/QuickLink',
 			},
 			{
 				path: 'mass-shrinker',
-				name: 'Mass Shrinker',
+				name: 'Mass Shrinker - Tạo 20 link 1 lần',
 				component: './Tool/MassShrinker',
 			},
 			{
 				path: 'full-page-cript',
-				name: 'Full Page Script',
+				name: 'Full Page Script - Dùng cho web',
 				component: './Tool/FullPageScript',
 			},
 			{
 				path: 'developer-api',
-				name: 'Developers API',
+				name: 'Developers API - Dùng cho web',
 				component: './Tool/DeveloperAPI',
 			},
 		],
 	},
 	{
 		path: '/referrals',
-		name: 'Referral',
+		name: 'Giới thiệu bạn bè',
 		component: './Referral',
-		icon: 'GlobalOutlined',
+		icon: 'TeamOutlined',
 		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
 		access: 'canAccessClientRoute',
 	},
@@ -171,7 +171,7 @@
 		path: '/support',
 		name: 'Hỗ trợ',
 		component: './Support',
-		icon: 'UsergroupDeleteOutlined',
+		icon: 'SolutionOutlined',
 		access: 'canAccessClientRoute',
 	},
 

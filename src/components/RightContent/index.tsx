@@ -3,9 +3,11 @@ import { history, useModel } from 'umi';
 import AvatarDropdown from './AvatarDropdown';
 import styles from './index.less';
 export type SiderTheme = 'light' | 'dark';
-import { Button } from 'antd';
+import { Button, Typography } from 'antd';
 import { useLinkManager } from '@/models/link/link';
 import CreateLinkForm from '@/pages/LinkManagement/components/Form';
+
+const { Paragraph } = Typography;
 
 const GlobalHeaderRight: React.FC = () => {
 	const { initialState } = useModel('@@initialState');
@@ -19,9 +21,14 @@ const GlobalHeaderRight: React.FC = () => {
 	return (
 		<div className={styles.right}>
 			{!isAdminRoute && (
-				<Button type='primary' style={styles.btnCreate} onClick={() => setIsModalOpen(true)}>
-					Tạo Link rút gọn
-				</Button>
+				<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+					<Button type='primary' style={styles.btnCreate} onClick={() => setIsModalOpen(true)}>
+						Tạo Link rút gọn
+					</Button>
+					<Paragraph strong style={{ margin: '0 10px' }}>
+						Số dư: {initialState.currentUser.balance}$
+					</Paragraph>
+				</div>
 			)}
 			{/* <ModuleSwitch /> */}
 			{/* <NoticeIconView /> */}

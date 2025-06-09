@@ -28,7 +28,7 @@ const MassShrinker: React.FC = () => {
 					placeholder='Dán các URL vào đây, mỗi dòng một link...'
 				/>
 				<Button type='primary' className='submit-button' onClick={handleSubmit} loading={isLoading}>
-					Submit
+					Rút gọn
 				</Button>
 			</Card>
 

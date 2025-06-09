@@ -1,14 +1,16 @@
 import TinyEditor from '@/components/TinyEditor';
 import rules from '@/utils/rules';
 import { resetFieldsForm } from '@/utils/utils';
-import { Button, Card, Form, Input, Select, Radio, TimePicker, Collapse, Switch } from 'antd';
+import { Button, Card, Form, Input, Select, Radio, TimePicker, Switch, Typography } from 'antd';
 import { useEffect } from 'react';
 import { useModel } from 'umi';
 import dayjs from 'dayjs';
 import { STATUS } from '@/types/status';
 import { COUNTRIES_USES } from '@/constants/contries';
 import { isArray } from 'lodash';
-import { changeStatus } from '@/services/WebApi';
+import style from './styles.less';
+import { Collapse } from 'antd';
+import { primaryColor } from '@/services/base/constant';
 
 interface FormValues extends Omit<WebApi.Record, 'max_view' | 'priority'> {
 	max_view: number;
@@ -17,6 +19,8 @@ interface FormValues extends Omit<WebApi.Record, 'max_view' | 'priority'> {
 	allowed_domains: string;
 	blocked_domains: string;
 }
+
+const { Paragraph } = Typography;
 
 const FormApiWeb = (props: any) => {
 	const [form] = Form.useForm();
@@ -89,7 +93,28 @@ const FormApiWeb = (props: any) => {
 	return (
 		<Card title={(edit ? 'Chỉnh sửa ' : 'Thêm mới ') + title?.toLowerCase()}>
 			<Form onFinish={onFinish} form={form} layout='vertical'>
-				<Form.Item name='api_url' label='API Quick link' rules={[...rules.required, ...rules.urlApiWeb]}>
+				<Form.Item
+					name='api_url'
+					label={
+						<div className={style.colapse_wrap}>
+							<span className={style.title}>API Quick link</span>
+							<Collapse ghost>
+								<Collapse.Panel
+									header={<span style={{ color: primaryColor, cursor: 'pointer' }}>xem giải thích</span>}
+									key='1'
+									showArrow={false}
+								>
+									<Paragraph>
+										Nhập link api rút gọn là dạng Quick Link / Liên Kết Nhanh có dạng
+										https://tenmien.com/st?api=XXXXX&url= Ví dụ như một số API mẫu sau:
+										https://123s.link/st?api=xxxx&url= https://api.1short.io/redirect-links?token=xxxx&url=
+									</Paragraph>
+								</Collapse.Panel>
+							</Collapse>
+						</div>
+					}
+					rules={[...rules.required, ...rules.urlApiWeb]}
+				>
 					<Input placeholder='https://tenmien.com/st?api=XXXXX&url=' />
 				</Form.Item>
 
