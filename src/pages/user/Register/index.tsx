@@ -65,6 +65,10 @@ const Register: React.FC = () => {
 		history.push(ROUTER_CLIENT.LOGIN);
 	};
 
+	const handleLoginGoogle = () =>{
+		window.location.href = `${APP_CONFIG_IP_ROOT}/auth/google`;
+	}
+
 	return (
 		<div className={styles.container}>
 			<div className={styles.content}>
@@ -193,6 +197,8 @@ const Register: React.FC = () => {
 								}}
 								size='large'
 								icon={<GoogleOutlined />}
+								onClick={handleLoginGoogle}
+
 							>
 								Đăng ký bằng Google
 							</Button>
