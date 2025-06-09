@@ -42,7 +42,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 			label: 'Rút tiền',
 			onClick: () => {
 				const redirect = window.location.href;
-				window.location.href = ``;
+				window.location.href = `/withdraws`;
 			},
 		},
 		{
@@ -51,7 +51,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 			label: 'Cài đặt',
 			onClick: () => {
 				const redirect = window.location.href;
-				window.location.href = ``;
+				window.location.href = `/settings/profile`;
 			},
 		},
 		{
@@ -60,7 +60,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 			label: 'Hỗ trợ',
 			onClick: () => {
 				const redirect = window.location.href;
-				window.location.href = ``;
+				window.location.href = `/support`;
 			},
 		},
 		// {

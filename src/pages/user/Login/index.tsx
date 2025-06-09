@@ -11,6 +11,7 @@ import styles from './index.less';
 import LoginGoogle from '@/pages/user/Login/LoginGoogle';
 import { adminlogin, clientLogin } from '@/services/Auth';
 import { ROUTER_CLIENT } from '@/constants/router';
+import logoreflink from '@/assets/logoreflink.png'
 
 const Login: React.FC = () => {
 	const [count, setCount] = useState<number>(Number(localStorage?.getItem('failed')) || 0);
@@ -105,7 +106,7 @@ const Login: React.FC = () => {
 				<div className={styles.top}>
 					<div className={styles.header}>
 						<div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-							<img alt='logo' className={styles.logo} src='/logo-full.svg' />
+							<img alt='logo' className={styles.logo} src={logoreflink} />
 						</div>
 					</div>
 				</div>
