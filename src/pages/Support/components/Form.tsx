@@ -1,9 +1,7 @@
 import React from 'react';
-import { Form, Input, Button } from 'antd';
+import { Form, Input, Button, message} from 'antd';
 import rules from '@/utils/rules';
 import { useModel } from 'umi';
-import { useEffect } from 'react';
-import { resetFieldsForm } from '@/utils/utils';
 
 // interface FormValues extends Support.Record {}
 
@@ -11,17 +9,18 @@ const { TextArea } = Input;
 
 const SupportForm: React.FC = (props:any) => {
 	const [form] = Form.useForm();
-	const {record,postModel}= useModel('support');
+	const { postModel } = useModel('support.user');
 
-	useEffect(() => {
-		
-	}, [record]);
 	
 
 	const handleSubmit = async(values: any) => {
-	
-        await postModel(values);
-		form.resetFields();
+		try {
+			await postModel(values)
+			form.resetFields();
+			message.success('Gửi yêu cầu thành công');
+		}	catch (error) {
+			console.error('Error submitting form:', error);
+		}
 	};
 
 	return (

@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import { useLinkManager } from '@/models/link/link';
 import type { LinkItem } from '@/services/ManagementLink/typing';
 import { primaryColor } from '@/services/base/constant';
+import QRCodeButton from '@/components/QRCodeButton';
 
 export default function CardLink({ link }: { link: LinkItem }) {
 	const { Text } = Typography;
@@ -27,14 +28,17 @@ export default function CardLink({ link }: { link: LinkItem }) {
 					strong
 					className='link-header__textTop'
 					style={{ color: primaryColor, display: 'block' }}
-				>{`${link.alias} - ${link.original_link}`}</Text>
+				>{`${link.alias} - ${link.original_link}`}      </Text>
+
 				<Text type='secondary' style={{ fontSize: '12px' }}>
 					{dayjs(link.created_at).format('HH:mm:ss - DD/MM/YYYY')}
 				</Text>
+
 			</div>
 
 			<div className='link-content'>
 				<div className='original-link'>
+
 					<Input
 						value={link.original_link}
 						readOnly
@@ -72,6 +76,8 @@ export default function CardLink({ link }: { link: LinkItem }) {
 					/>
 				</div>
 			</div>
+				<QRCodeButton link={link.shorten_link} />
+
 
 			<div className='link-actions' style={{ display: 'flex', justifyContent: 'space-between' }}>
 				{link.click_count !== undefined && (
@@ -85,6 +91,8 @@ export default function CardLink({ link }: { link: LinkItem }) {
 					</Button>
 				</Space>
 			</div>
+
+
 		</Card>
 	);
 }

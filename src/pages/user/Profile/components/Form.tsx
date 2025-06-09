@@ -5,8 +5,6 @@ import AvatarUpload from './Upload';
 import { getProfile, updateProfile } from '@/services/User'; // Giả sử bạn có một hàm updateProfile trong services
 import { useModel } from 'umi';
 
-
-
 const withdrawMethods = [
 	{ label: 'Paypal', value: 'paypal' },
 	{ label: 'Bank Transfer', value: 'bank' },
@@ -22,37 +20,23 @@ const minAmountData = [
 
 const ProfileForm: React.FC = () => {
 	const [form] = Form.useForm();
-	const { profile, getProfile } = useModel('profile'); // Giả sử bạn có một hàm getProfile trong services
+	const { profile, getProfile, updateProfile } = useModel('profile');
 
-useEffect(() => {
-  const fetch = async () => {
-    const data = await getProfile(); // getProfile có return data
-    if (data) {
-      form.setFieldsValue(data); // Gán dữ liệu vào form
-    }
-  };
-  fetch();
-}, []);
+	useEffect(() => {
+		const fetch = async () => {
+			const data = await getProfile();
+			if (data) {
+				form.setFieldsValue(data);
+			}
+		};
+		fetch();
+	}, []);
 
-
-
-	const onFinish = async (values:any) => {
-		try {
-			await updateProfile({
-				avatar: values.avatar,
-				full_name: values.full_name,
-				name: values.name,
-				address: values.address,
-				phone: values.phone,
-				country: values.country,
-				method_withdraw: values.method_withdraw,
-				info_withdraw: values.info_withdraw,
-			});
-			message.success('Profile updated successfully');
-		} catch (error) {
-			console.error('Failed to update profile:', error);
-		}
+	const onFinish = async (values: any) => {
+		await updateProfile(values);
 	};
+
+
 
 	return (
 		<Card>
@@ -66,14 +50,11 @@ useEffect(() => {
 					</Col>
 
 					<Col span={12}>
-						<Form.Item label='Họ tên' name='name' rules={[...rules.ten, ...rules.required]}>
-							<Input placeholder='Họ tên' value={profile.name} />
-						</Form.Item>
 						<Form.Item label='Họ tên' name='full_name' rules={[...rules.ten, ...rules.required]}>
 							<Input placeholder='Họ tên' />
 						</Form.Item>
-						<Form.Item label='Địa chỉ' name='address' >
-							<Input placeholder='Địa chỉ' value={profile.address}/>
+						<Form.Item label='Địa chỉ' name='address'>
+							<Input placeholder='Địa chỉ' value={profile.address} />
 						</Form.Item>
 					</Col>
 					<Col span={12}>
@@ -88,16 +69,15 @@ useEffect(() => {
 				<h2>Địa chỉ Thanh toán </h2>
 				<Row gutter={20}>
 					<Col span={12}>
-						{/* <Form.Item label='Nguồn lưu lượng' name='traffic_source'>
-							<Input.TextArea rows={4} />
-						</Form.Item> */}
-
+					
 						<Form.Item label='Withdrawl Method' name='method_withdraw'>
 							<Radio.Group options={withdrawMethods} optionType='button' />
 						</Form.Item>
-
-						<Form.Item label='Paypal Email' name='info_withdraw'>
-							<Input />
+						<Form.Item label='Thông tin rút tiền' name='info_withdraw' rules={[...rules.required]}>
+							<Input.TextArea
+								rows={4}
+								placeholder='Nhập thông tin rút tiền tùy theo phương thức bạn chọn (ví dụ: email Paypal, số tài khoản ngân hàng, SĐT Momo, v.v.)'
+							/>
 						</Form.Item>
 
 						<ul style={{ paddingLeft: 20 }}>
@@ -111,7 +91,7 @@ useEffect(() => {
 							</li>
 						</ul>
 
-						<Button type='primary' htmlType='submit' >
+						<Button type='primary' htmlType='submit'>
 							Submit
 						</Button>
 					</Col>
