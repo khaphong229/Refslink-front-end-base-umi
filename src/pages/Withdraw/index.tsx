@@ -1,19 +1,22 @@
-import React, { useEffect, useState } from 'react';
-import { Card, Row, Col, Typography, Button, Table, message } from 'antd';
+import React, { useEffect } from 'react';
+import { Card, Row, Col, Typography, Button, Table, Tag } from 'antd';
 import './style.less';
 import ClientLayout from '@/layouts/ClientLayout';
 import { useModel } from 'umi';
-import { getWithdraws, createWithdraw, withdraw, getWithdraw } from '@/services/Withdraw';
-import type { WithdrawItem } from '@/services/Withdraw/typing';
 import dayjs from 'dayjs';
 
 const { Title, Text, Paragraph } = Typography;
 
 const WithdrawsPage: React.FC = () => {
 	const { initialState } = useModel('@@initialState');
-	const [loading, setLoading] = useState(false);
-	const [data, setData] = useState<WithdrawItem[]>([]);
-	const [withdrawLoading, setWithdrawLoading] = useState(false);
+	const {
+		loading,
+		data,
+		withdrawLoading,
+
+		handleWithdraw,
+		fetchData,
+	} = useModel('withdraw');
 
 	const columns = [
 		{
@@ -22,84 +25,53 @@ const WithdrawsPage: React.FC = () => {
 			key: 'withdraw_code',
 		},
 		{
-			title: 'Amount',
+			title: 'Số tiền',
 			dataIndex: 'amount_money',
 			key: 'amount_money',
 			render: (amount: number) => `$${amount}`,
 		},
 		{
-			title: 'Method',
+			title: 'Phương thức',
 			dataIndex: 'payment_method',
 			key: 'payment_method',
 		},
 		{
-			title: 'Create date',
+			title: 'Ngày rút',
 			dataIndex: 'created_at',
 			key: 'created_at',
-			render: (date: string) => dayjs(date).format('YYYY-MM-DD HH:mm:ss'),
+			render: (date: string) => dayjs(date).format('DD/MM/YYYY'),
 		},
 		{
-			title: 'Scheduled Payment',
+			title: 'Ngày dự tính',
 			dataIndex: 'scheduled_payment',
 			key: 'scheduled_payment',
-			render: (date: string | null) => (date ? dayjs(date).format('YYYY-MM-DD HH:mm:ss') : '-'),
+			render: (date: string | null) => (date ? dayjs(date).format('DD/MM/YYYY') : '-'),
 		},
 		{
-			title: 'Paid',
+			title: 'Ngày thực tế',
 			dataIndex: 'paid_time',
 			key: 'paid_time',
-			render: (date: string) => (date ? dayjs(date).format('YYYY-MM-DD HH:mm:ss') : '-'),
+			render: (date: string) => (date ? dayjs(date).format('DD/MM/YYYY') : '-'),
 		},
 		{
-			title: 'Status',
+			title: 'Trạng thái',
 			dataIndex: 'status',
 			key: 'status',
 			render: (status: string) => (
-				<span
+				<Tag
 					style={{
 						color: status === 'completed' ? '#52c41a' : status === 'pending' ? '#faad14' : '#ff4d4f',
 					}}
 				>
 					{status.toUpperCase()}
-				</span>
+				</Tag>
 			),
 		},
 	];
 
-	const fetchData = async () => {
-		setLoading(true);
-		try {
-			const response = await getWithdraw();
-			setData(response.data);
-		} catch (error) {
-			console.error('Failed to fetch withdraws:', error);
-			message.error('Không thể tải lịch sử rút tiền');
-		}
-		setLoading(false);
-	};
-
 	useEffect(() => {
 		fetchData();
 	}, []);
-
-	const handleWithdraw = async () => {
-		const currentBalance = Number(initialState?.currentUser?.balance || 0);
-		if (currentBalance <= 0) {
-			message.error('Số dư không đủ để rút tiền');
-			return;
-		}
-
-		setWithdrawLoading(true);
-		try {
-			await withdraw();
-			message.success('Yêu cầu rút tiền đã được gửi thành công');
-			fetchData(); // Refresh the list
-		} catch (error) {
-			console.error('Failed to create withdraw:', error);
-			message.error('Không thể gửi yêu cầu rút tiền');
-		}
-		setWithdrawLoading(false);
-	};
 
 	return (
 		<ClientLayout title='Rút tiền'>
