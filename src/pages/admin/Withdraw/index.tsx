@@ -75,7 +75,7 @@ const Withdraw = () => {
 			columns={columns}
 			widthDrawer={600}
 			dependencies={[page, limit]}
-			modelName='withdraw'
+			modelName='withdraw_admin'
 			title='Danh sách rút tiền'
 			buttons={{ import: false, filter: false }}
 			Form={Form}

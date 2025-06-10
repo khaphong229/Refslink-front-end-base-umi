@@ -5,7 +5,7 @@ import { resetFieldsForm } from "@/utils/utils";
 
 const FormWithdraw = (props:any) => {    
     const [ form] = Form.useForm();
-    const { record,getModel, setVisibleForm, visibleForm } = useModel('withdraw');
+    const { record,getModel, setVisibleForm, visibleForm } = useModel('withdraw_admin');
 	const title = props?.title ?? 'Setting Form';
     console.log('record', record);
     
