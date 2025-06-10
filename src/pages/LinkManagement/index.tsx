@@ -79,20 +79,6 @@ const LinkManagerPage: React.FC = () => {
 		};
 	}, []);
 
-	const handleDeleteAll = () => {
-		if (data.length === 0) {
-			message.warning('Không có link nào để xóa');
-			return;
-		}
-
-		confirm({
-			title: 'Xác nhận xoá toàn bộ?',
-			content: `Bạn có chắc chắn muốn xoá tất cả ${data.length} link?`,
-			onOk: deleteAll,
-			okType: 'danger',
-		});
-	};
-
 	const handleRefresh = () => {
 		fetchLinks(pagination.current, pagination.pageSize, searchTerm);
 	};
