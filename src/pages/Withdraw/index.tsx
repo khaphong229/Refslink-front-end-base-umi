@@ -76,8 +76,8 @@ const WithdrawsPage: React.FC = () => {
 	return (
 		<ClientLayout title='Rút tiền'>
 			<div className='withdraws-container'>
-				<Row gutter={30} className='stats-row'>
-					<Col span={8}>
+				<Row gutter={[30, 30]} className='stats-row'>
+					<Col xs={24} sm={24} md={8}>
 						<Card className='stat-card available'>
 							<Title level={1} style={{ color: '#fff' }}>
 								${initialState?.currentUser?.balance}
@@ -85,7 +85,7 @@ const WithdrawsPage: React.FC = () => {
 							<Text strong>Số dư hiện có</Text>
 						</Card>
 					</Col>
-					<Col span={8}>
+					<Col xs={24} sm={24} md={8}>
 						<Card className='stat-card processing'>
 							<Title level={1} style={{ color: '#fff' }}>
 								${initialState?.currentUser?.being_paid}
@@ -93,7 +93,7 @@ const WithdrawsPage: React.FC = () => {
 							<Text strong>Đang thanh toán</Text>
 						</Card>
 					</Col>
-					<Col span={8}>
+					<Col xs={24} sm={24} md={8}>
 						<Card className='stat-card total'>
 							<Title level={1} style={{ color: '#fff' }}>
 								${initialState?.currentUser?.total_payment}
