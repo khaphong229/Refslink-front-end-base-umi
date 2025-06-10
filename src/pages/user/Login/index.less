@@ -26,7 +26,6 @@
 
 .top {
 	text-align: center;
-	// min-height: 300px;
 }
 
 .header {
@@ -41,6 +40,7 @@
 	width: 100%;
 	max-width: 400px;
 	vertical-align: top;
+	// height: 100px;
 }
 
 .title2 {
@@ -86,44 +86,7 @@
 	padding: 24px;
 	background: #fff;
 	border-radius: 4px;
-
 	box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
-
-	// &::before {
-	// 	position: absolute;
-	// 	top: -65px;
-	// 	left: -424px;
-	// 	z-index: -1;
-	// 	width: 600px;
-	// 	height: 300px;
-	// 	background-image: url('/frame1.svg');
-	// 	background-size: 100%;
-	// 	content: '';
-	// }
-
-	// &::after {
-	// 	position: absolute;
-	// 	top: -56px;
-	// 	right: -443px;
-	// 	z-index: -1;
-	// 	width: 600px;
-	// 	height: 300px;
-	// 	background-image: url('/frame2.svg');
-	// 	background-repeat: no-repeat;
-	// 	background-size: 100%;
-	// 	content: '';
-	// }
-
-	// @media screen and (max-width: @screen-sm) {
-	// 	max-width: 100%;
-	// 	&::before {
-	// 		display: none;
-	// 	}
-	// 	&::after {
-	// 		top: 300px;
-	// 		right: -66px;
-	// 	}
-	// }
 
 	:global {
 		.@{ant-prefix}-tabs-nav-list {
@@ -161,18 +124,26 @@
 	}
 }
 
+.optionWrap {
+	display: flex;
+	justify-content: space-between;
+}
+
+/* Desktop Large (≥1200px) */
 @media screen and (max-width: @screen-xl) {
 	.title2 {
 		font-size: 25px;
 	}
 }
 
+/* Desktop (≥992px) */
 @media screen and (max-width: @screen-lg) {
 	.title2 {
 		font-size: 20px;
 	}
 }
 
+/* Tablet (≤899px) */
 @media screen and (max-width: 899px) {
 	.title1 {
 		font-size: 22px;
@@ -184,16 +155,199 @@
 	.title3 {
 		font-size: 22px;
 	}
-}
-
-@media screen and (max-width: 695px) {
-	.header {
-		margin-bottom: 30px;
+	
+	.main {
+		width: 90%;
+		max-width: 400px;
+		margin-top: 24px;
+		padding: 20px;
 	}
 }
 
-@media screen and (max-width: 377px) {
+/* Mobile Large (≤695px) */
+@media screen and (max-width: 695px) {
 	.header {
-		margin-bottom: 80px;
+		margin-top: 30px;
+		margin-bottom: 20px;
+	}
+	
+	.content {
+		padding: 20px 8px;
+	}
+	
+	.main {
+		width: 95%;
+		max-width: 350px;
+		margin-top: 16px;
+		padding: 16px;
+		
+		:global {
+			.@{ant-prefix}-tabs-nav-list {
+				font-size: 14px;
+			}
+		}
+	}
+	
+	.logo {
+		max-width: 280px;
+	}
+	
+	.title1, .title2, .title3 {
+		font-size: 20px;
+	}
+}
+
+/* Mobile Medium (≤480px) */
+@media screen and (max-width: 480px) {
+	.content {
+		padding: 16px 4px;
+	}
+	
+	.header {
+		margin-top: 20px;
+		margin-bottom: 16px;
+	}
+	
+	.main {
+		width: 98%;
+		max-width: 320px;
+		margin-top: 12px;
+		padding: 12px;
+		border-radius: 8px;
+	}
+	
+	.logo {
+		max-width: 240px;
+	}
+	
+	.title1, .title2, .title3 {
+		font-size: 18px;
+		line-height: 24px;
+	}
+	
+	.optionWrap {
+		flex-direction: column;
+		gap: 8px;
+		align-items: flex-start;
+		
+		:global(.ant-btn-link) {
+			padding: 0;
+			height: auto;
+			font-size: 14px;
+		}
+	}
+}
+
+/* Mobile Small (≤400px) */
+@media screen and (max-width: 400px) {
+	.content {
+		padding: 12px 10px;
+	}
+	
+	.header {
+		margin-top: 16px;
+		margin-bottom: 12px;
+	}
+	
+	.main {
+		width: 100%;
+		max-width: 300px;
+		margin-top: 8px;
+		padding: 8px;
+	}
+	
+	.logo {
+		max-width: 200px;
+	}
+	
+	.title1, .title2, .title3 {
+		font-size: 16px;
+		line-height: 20px;
+	}
+}
+
+/* iPhone 5/SE and smaller (≤320px) */
+@media screen and (max-width: 320px) {
+	.container {
+		min-height: 100vh;
+	}
+	
+	.content {
+		padding: 8px 5px;
+	}
+	
+	.header {
+		margin-top: 12px;
+		margin-bottom: 8px;
+		line-height: 40px;
+	}
+	
+	.main {
+		width: 100%;
+		max-width: 300px;
+		margin-top: 4px;
+		padding: 6px;
+		border-radius: 6px;
+		
+		:global {
+			.@{ant-prefix}-tabs-nav-list {
+				font-size: 12px;
+			}
+			
+			.@{ant-prefix}-input-affix-wrapper,
+			.@{ant-prefix}-input {
+				font-size: 14px;
+			}
+			
+			.@{ant-prefix}-btn {
+				font-size: 14px;
+				height: 36px;
+			}
+			
+			.@{ant-prefix}-checkbox-wrapper {
+				font-size: 12px;
+			}
+		}
+	}
+	
+	.logo {
+		max-width: 160px;
+	}ơp
+	
+	.title1, .title2, .title3 {
+		font-size: 14px;
+		line-height: 18px;
+	}
+	
+	.optionWrap {
+		flex-direction: column;
+		gap: 4px;
+		
+		:global(.ant-btn-link) {
+			font-size: 12px;
+			padding: 0;
+		}
+	}
+	
+	.prefixIcon {
+		font-size: 12px;
+		margin-right: 4px;
+	}
+}
+
+/* Very Small Devices (≤280px) */
+@media screen and (max-width: 280px) {
+	.main {
+		max-width: 260px;
+		padding: 4px;
+	}
+	
+	.logo {
+		max-width: 140px;
+	}
+	
+	.title1, .title2, .title3 {
+		font-size: 12px;
+		line-height: 16px;
 	}
 }

@@ -1,5 +1,12 @@
 import { landingUrl } from '@/services/base/constant';
-import { FileWordOutlined, GlobalOutlined, LogoutOutlined, UserOutlined } from '@ant-design/icons';
+import {
+	SettingOutlined,
+	SolutionOutlined,
+	LogoutOutlined,
+	SwapOutlined,
+	UserOutlined,
+	DollarOutlined,
+} from '@ant-design/icons';
 import { Avatar, Menu, Spin } from 'antd';
 import { type ItemType } from 'antd/lib/menu/hooks/useItems';
 import React from 'react';
@@ -29,33 +36,52 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 		: initialState.currentUser?.name ?? (initialState.currentUser?.preferred_username || '');
 	const lastNameChar = fullName.split(' ')?.at(-1)?.[0]?.toUpperCase();
 
+	const userRole = localStorage.getItem('user_role');
+
 	const items: ItemType[] = [
 		{
 			key: 'name',
 			icon: <UserOutlined />,
 			label: fullName,
 		},
-		// {
-		// 	key: 'password',
-		// 	icon: <SwapOutlined />,
-		// 	label: 'Đổi mật khẩu',
-		// 	onClick: () => {
-		// 		const redirect = window.location.href;
-		// 		window.location.href = `${keycloakAuthEndpoint}?client_id=${AppModules[currentRole].clientId}&redirect_uri=${redirect}&response_type=code&scope=openid&kc_action=UPDATE_PASSWORD`;
-		// 	},
-		// },
-		{
-			key: 'office',
-			icon: <FileWordOutlined />,
-			label: 'Office 365',
-			onClick: () => window.open('https://office.com/'),
+		{ type: 'divider', key: 'divider' },
+		
+	];
+
+	if (userRole === 'client'){
+		items.push(
+			{
+			key: 'withdraw',
+			icon: <DollarOutlined />,
+			label: 'Rút tiền',
+			onClick: () => {
+				const redirect = window.location.href;
+				window.location.href = `/withdraws`;
+			},
 		},
 		{
-			key: 'portal',
-			icon: <GlobalOutlined />,
-			label: APP_CONFIG_TITLE_LANDING ?? 'Cổng thông tin',
-			onClick: () => window.open(landingUrl),
+			key: 'password',
+			icon: <SettingOutlined />,
+			label: 'Cài đặt',
+			onClick: () => {
+				const redirect = window.location.href;
+				window.location.href = `/settings/profile`;
+			},
 		},
+		{
+			key: 'support',
+			icon: <SolutionOutlined />,
+			label: 'Hỗ trợ',
+			onClick: () => {
+				const redirect = window.location.href;
+				window.location.href = `/support`;
+			},
+		},
+		)
+	}
+
+
+	items.push(
 		{ type: 'divider', key: 'divider' },
 		{
 			key: 'logout',
@@ -64,16 +90,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 			onClick: loginOut,
 			danger: true,
 		},
-	];
-
-	if (menu && !initialState.currentUser.realm_access?.roles?.includes('QUAN_TRI_VIEN')) {
-		// items.splice(1, 0, {
-		//   key: 'center',
-		//   icon: <UserOutlined />,
-		//   label: 'Trang cá nhân',
-		//   onClick: () => history.push('/account/center'),
-		// });
-	}
+	);
 
 	return (
 		<>
@@ -81,8 +98,8 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 				<span className={`${styles.action} ${styles.account}`}>
 					<Avatar
 						className={styles.avatar}
-						src={initialState.currentUser?.picture ? <img src={initialState.currentUser?.picture} /> : undefined}
-						icon={!initialState.currentUser?.picture ? lastNameChar ?? <UserOutlined /> : undefined}
+						src={initialState.currentUser?.avatar ? <img src={initialState.currentUser?.avatar} /> : undefined}
+						icon={!initialState.currentUser?.avatar ? lastNameChar ?? <UserOutlined /> : undefined}
 						alt='avatar'
 					/>
 					<span className={`${styles.name}`}>{fullName}</span>

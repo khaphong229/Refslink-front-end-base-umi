@@ -13,7 +13,7 @@ export default () => {
 			const res = await getData();
 			localStorage.setItem('data', JSON.stringify(res?.data ?? []));
 			setData(res?.data ?? []);
-			return;
+			return; 
 		}
 		setData(dataLocal);
 	};

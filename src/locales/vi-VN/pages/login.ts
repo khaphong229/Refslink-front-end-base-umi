@@ -1,6 +1,7 @@
 export default {
 	'pages.layouts.userLayout.title': 'HỆ THỐNG ĐÀO TẠO TRỰC TUYẾN',
-	'pages.login.accountLogin.tab': 'Tài khoản người dùng',
+	'pages.lggin.accountLogin.emailTab': 'Tài khoản E-mail',
+	'pages.login.accountLogin.googleTab': 'Tài khoản Google',
 	'pages.login.accountLoginAdmin.tab': 'Tài khoản quản trị viên',
 	'pages.login.accountRegister.tab': 'Đăng ký tài khoản',
 	'pages.login.accountLogin.errorMessage': 'Incorrect username/password（admin/ant.design)',
@@ -9,6 +10,8 @@ export default {
 	'pages.register.success': 'Đăng ký thành công',
 	'pages.login.username.placeholder': 'Tài khoản',
 	'pages.login.username.required': 'Nhập tên đăng nhập',
+	'pages.login.email.placeholder': 'E-mail',
+	'pages.login.email.required': 'Nhập E-mail',
 	'pages.login.password.placeholder': 'Mật khẩu',
 	'pages.login.password.required': 'Nhập mật khẩu',
 	'pages.login.phoneLogin.tab': 'Phone Login',

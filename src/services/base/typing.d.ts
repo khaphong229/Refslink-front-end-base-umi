@@ -19,11 +19,15 @@ declare module Login {
 			// 	'default-roles-vwa',
 			// ];
 		};
+		being_paid: string;
+		total_payment: string;
+		ref_code: string;
+		balance: string;
 		name: string; // 'Administrator';
 		preferred_username: string; // 'admin';
 		given_name: string; // 'Administrator';
 		family_name: string; // '';
-		picture: string; // 'https://images2.thanhnien.vn/528068263637045248/2023/10/14/ronaldo-1697254043939678025874.jpeg';
+		avatar: string; // 'https://images2.thanhnien.vn/528068263637045248/2023/10/14/ronaldo-1697254043939678025874.jpeg';
 	}
 
 	export interface IPermission {

@@ -1,6 +1,7 @@
 import moment from 'moment';
 import _ from 'lodash';
 import { trim, removeHtmlTags, urlRegex } from '@/utils/utils';
+import message from '@/locales/vi-VN/global/message';
 
 const allCharacters =
 	'a-zA-ZÀÁÂÃÈÉÊÌÍÒÓÔÕÙÚĂĐĨŨƠàáâãèéêìíòóôõùúăđĩũơƯĂẠẢẤẦẨẪẬẮẰẲẴẶẸẺẼỀỀỂưăạảấầẩẫậắằẳẵặẹẻẽềềểỄỆỈỊỌỎỐỒỔỖỘỚỜỞỠỢỤỦỨỪễệỉịọỏốồổỗộớờởỡợụủứừỬỮỰỲỴÝỶỸửữựỳỵỷỹýếẾ';
@@ -16,6 +17,12 @@ const allCharacters =
 // CMND
 
 const rules = {
+	alias: [
+		{
+			min: 6,
+			message: 'Ít nhất 6 kí tự',
+		},
+	],
 	dacbiet: [
 		{
 			pattern: new RegExp(`^[0-9${allCharacters} \n]+$`),
@@ -40,6 +47,12 @@ const rules = {
 		{
 			whitespace: true,
 			message: 'Toàn kí tự trắng không hợp lệ',
+		},
+	],
+	urlApiWeb: [
+		{
+			pattern: new RegExp(`&url=$`),
+			message: 'Đường dẫn không đúng! Vui lòng nhập lại đường dẫn kết thúc bằng "&url="',
 		},
 	],
 
@@ -179,6 +192,12 @@ const rules = {
 			message: 'Bắt buộc',
 		},
 	],
+	description: [
+		{
+			required: true,
+			message: 'Vui lòng nhập mô tả',
+		},
+	],
 	requiredHtml: [
 		{
 			validator: (__, value, callback) => {
@@ -211,7 +230,7 @@ const rules = {
 	],
 	password: [
 		{
-			pattern: new RegExp('^[0-9a-zA-Z~!@#$%^&*(_)+/<>?}{:;",.=|]{4,}$'),
+			pattern: new RegExp('^[0-9a-zA-Z~!@#$%^&*(_)+/<>?}{:;",.=|]{6,}$'),
 			message: 'Độ dài ít nhất 4 kí tự, không sử dụng ký tự khoảng trắng',
 		},
 		// {

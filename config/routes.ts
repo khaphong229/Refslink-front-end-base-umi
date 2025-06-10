@@ -1,14 +1,80 @@
 ﻿export default [
+	// Admin Routes
+	{
+		path: '/login/admin',
+		layout: false,
+		component: './user/Login',
+	},
+	// Protected Admin Routes
+	{
+		path: '/admin/dashboard',
+		name: 'Thống kê',
+		component: './Dashboard/admin',
+		icon: 'PieChartOutlined',
+		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
+		access: 'canAccessAdminRoute',
+	},
+	{
+		path: '/admin/users',
+		name: 'Quản lý người dùng',
+		component: './UserManagement',
+		icon: 'UserOutlined',
+		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
+		access: 'canAccessAdminRoute',
+	},
+	{
+		path: '/admin/supports',
+		name: 'Quản lý hỗ trợ',
+		component: './admin/Support',
+		icon: 'SnippetsOutlined',
+		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
+		access: 'canAccessAdminRoute',
+	},
+	{
+		path: '/admin/settings',
+		name: 'Quản lý cấu hình',
+		component: './admin/Setting',
+		icon: 'SettingOutlined',
+		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
+		access: 'canAccessAdminRoute',
+	},
+	{
+		path: '/admin/withdraws',
+		name: 'Quản lý đơn rút tiền',
+		component: './admin/Withdraw',
+		icon: 'DollarOutlined',
+		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
+		access: 'canAccessAdminRoute',
+	},
+
+	// Client Auth Routes (Login/Register)
 	{
 		path: '/user',
 		layout: false,
 		routes: [
 			{
 				path: '/user/login',
-				layout: false,
-				name: 'login',
+				name: 'Đăng nhập',
 				component: './user/Login',
+				wrappers: ['@/wrappers/auth'],
 			},
+			{
+				path: '/user/register',
+				name: 'Đăng ký',
+				component: './user/Register',
+			},
+			{
+				path: '/user/verify-email/:token',
+				name: 'Xác minh Email',
+				component: './user/EmailVerification',
+				layout: false,
+			},
+			{
+				path: '/user/login/success',
+				name: 'Login Success',
+				component: './user/LoginSuccess', 
+			},
+
 			{
 				path: '/user',
 				redirect: '/user/login',
@@ -16,49 +82,131 @@
 		],
 	},
 
-	///////////////////////////////////
-	// DEFAULT MENU
+	// Protected Client Routes
 	{
 		path: '/dashboard',
-		name: 'Rút gọn link mới',
-		component: './TrangChu',
-		icon: 'HomeOutlined',
+		name: 'Thống kê',
+		component: './Dashboard',
+		icon: 'PieChartOutlined',
+		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
+		access: 'canAccessClientRoute',
 	},
 	{
-		path: '/dashboard',
-		name: 'Dashboard',
-		component: './TrangChu',
-		icon: 'HomeOutlined',
+		path: '/api-web',
+		name: 'Quản lý API',
+		component: './ApiWeb',
+		icon: 'GlobalOutlined',
+		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
+		access: 'canAccessClientRoute',
 	},
 	{
-		path: '/gioi-thieu',
-		name: 'About',
-		component: './TienIch/GioiThieu',
-		hideInMenu: true,
+		path: '/links',
+		name: 'Quản lý link',
+		component: './LinkManagement',
+		icon: 'FormOutlined',
+		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
+		access: 'canAccessClientRoute',
 	},
 	{
-		path: '/random-user',
-		name: 'RandomUser',
-		component: './RandomUser',
-		icon: 'ArrowsAltOutlined',
+		path: '/popular-link',
+		name: 'Top link',
+		component: './Popular',
+		icon: 'BarChartOutlined',
+		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
+		access: 'canAccessClientRoute',
+	},
+	{
+		path: '/tools',
+		name: 'Công cụ API',
+		icon: 'BarsOutlined',
+		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
+		access: 'canAccessClientRoute',
+		routes: [
+			{
+				path: 'quick',
+				name: 'Quick Link - Liên kết nhanh',
+				component: './Tool/QuickLink',
+			},
+			{
+				path: 'mass-shrinker',
+				name: 'Mass Shrinker - Tạo 20 link 1 lần',
+				component: './Tool/MassShrinker',
+			},
+			{
+				path: 'full-page-cript',
+				name: 'Full Page Script - Dùng cho web',
+				component: './Tool/FullPageScript',
+			},
+			{
+				path: 'developer-api',
+				name: 'Developers API - Dùng cho web',
+				component: './Tool/DeveloperAPI',
+			},
+		],
+	},
+	{
+		path: '/referrals',
+		name: 'Giới thiệu bạn bè',
+		component: './Referral',
+		icon: 'TeamOutlined',
+		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
+		access: 'canAccessClientRoute',
+	},
+	{
+		path: '/withdraws',
+		name: 'Rút tiền',
+		component: './Withdraw',
+		icon: 'DollarOutlined',
+		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
+		access: 'canAccessClientRoute',
+	},
+	{
+		path: '/settings',
+		name: 'Cài đặt',
+		icon: 'SettingOutlined',
+		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
+		access: 'canAccessClientRoute',
+		routes: [
+			{
+				path: 'profile',
+				name: 'Hồ sơ',
+				component: './user/Profile',
+				exact: true,
+			},
+			{
+				path: 'change-password',
+				name: 'Đổi mật khẩu',
+				component: './user/ChangePassword',
+				exact: true,
+			},
+		],
+	},
+	{
+		path: '/support',
+		name: 'Hỗ trợ',
+		component: './Support',
+		icon: 'SolutionOutlined',
+		access: 'canAccessClientRoute',
 	},
 
-	// DANH MUC HE THONG
-	// {
-	// 	name: 'DanhMuc',
-	// 	path: '/danh-muc',
-	// 	icon: 'copy',
-	// 	routes: [
-	// 		{
-	// 			name: 'ChucVu',
-	// 			path: 'chuc-vu',
-	// 			component: './DanhMuc/ChucVu',
-	// 		},
-	// 	],
-	// },
+	// Public Routes (Không cần xác thực)
+	{
+		path: '/',
+		component: './Home',
+		layout: false,
+	},
 
+	{
+		path: '/st/:id',
+		component: './TrungGian',
+		layout: false,
+	},
+
+	// Notification Routes
 	{
 		path: '/notification',
+		layout: false,
+		hideInMenu: true,
 		routes: [
 			{
 				path: './subscribe',
@@ -76,12 +224,9 @@
 				component: './ThongBao/NotifOneSignal',
 			},
 		],
-		layout: false,
-		hideInMenu: true,
 	},
-	{
-		path: '/',
-	},
+
+	// Error Pages
 	{
 		path: '/403',
 		component: './exception/403/403Page',
@@ -93,6 +238,8 @@
 		layout: false,
 	},
 	{
+		path: '/:id',
 		component: './exception/404',
+		layout: false,
 	},
 ];

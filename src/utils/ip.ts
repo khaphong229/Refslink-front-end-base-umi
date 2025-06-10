@@ -2,6 +2,8 @@ import { AppModules, EModuleKey } from '@/services/base/constant';
 
 const ipRoot = APP_CONFIG_IP_ROOT; // ip dev
 
+const ipClient = APP_CONFIG_IP_CLIENT;
+
 // Ip Chính => Mặc định dùng trong các useInitModel
 const ip3 = ipRoot + 'slink'; // ip dev
 
@@ -23,6 +25,8 @@ const sentryDSN = APP_CONFIG_SENTRY_DSN;
 const oneSignalClient = APP_CONFIG_ONE_SIGNAL_ID;
 
 export {
+	ipRoot,
+	ipClient,
 	ip3,
 	ipNotif,
 	ipSlink,

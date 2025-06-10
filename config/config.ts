@@ -42,7 +42,13 @@ export default defineConfig({
 	esbuild: {},
 	title: false,
 	ignoreMomentLocale: true,
-	// proxy: proxy[REACT_APP_ENV || 'dev'],
+	proxy: {
+		'/auth': {
+			target: 'http://localhost:3111',
+			changeOrigin: true,
+			pathRewrite: { '^/auth': '/auth' },
+		},
+	},
 	manifest: {
 		basePath: '/',
 	},

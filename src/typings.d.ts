@@ -18,6 +18,7 @@ declare let ANT_DESIGN_PRO_ONLY_DO_NOT_USE_IN_YOUR_PRODUCTION: 'site' | undefine
 declare const REACT_APP_ENV: 'test' | 'dev' | 'pre' | false;
 
 declare const APP_CONFIG_IP_ROOT: string;
+declare const APP_CONFIG_IP_CLIENT: string;
 declare const APP_CONFIG_ONE_SIGNAL_ID: string;
 declare const APP_CONFIG_SENTRY_DSN: string;
 declare const APP_CONFIG_KEYCLOAK_AUTHORITY: string;

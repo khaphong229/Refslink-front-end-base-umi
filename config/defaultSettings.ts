@@ -6,17 +6,17 @@ const Settings: LayoutSettings & {
 	borderRadiusBase: string;
 	siderWidth: number;
 } = {
-	navTheme: 'light',
+	navTheme: 'dark',
 	primaryColor: process.env.APP_CONFIG_PRIMARY_COLOR,
 	borderRadiusBase: '2px',
-	layout: 'mix',
+	layout: 'side',
 	contentWidth: 'Fluid',
 	fixedHeader: false,
 	fixSiderbar: true,
 	colorWeak: false,
 	title: 'REFSLINK',
 	pwa: false,
-	logo: '/logo.png',
+	logo: '/logoUrl.png',
 	iconfontUrl: '',
 	headerTheme: 'light',
 	headerHeight: 60,
