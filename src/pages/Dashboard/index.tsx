@@ -9,16 +9,22 @@ import { useModel } from 'umi';
 const { Option } = Select;
 
 const Dashboard: React.FC = () => {
-	const { data, isLoading, paramsData, setParamsData, fetchDataDashboard, updateEarnings } = useModel('dashboard');
+	const { data, isLoading, paramsData, setParamsData, fetchDataDashboard, updateEarnings, logReferrals } =
+		useModel('dashboard');
 
 	useEffect(() => {
 		fetchDataDashboard();
 
 		updateEarnings();
+		logReferrals();
 
-		const intervalId = setInterval(updateEarnings, 2 * 60 * 60 * 1000);
+		const earningsIntervalId = setInterval(updateEarnings, 2 * 60 * 60 * 1000);
+		const referralsIntervalId = setInterval(logReferrals, 6 * 60 * 60 * 1000);
 
-		return () => clearInterval(intervalId);
+		return () => {
+			clearInterval(earningsIntervalId);
+			clearInterval(referralsIntervalId);
+		};
 	}, [paramsData]);
 
 	const handleMonthChange = (value: string) => {

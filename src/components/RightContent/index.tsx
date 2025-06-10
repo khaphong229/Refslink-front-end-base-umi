@@ -6,12 +6,15 @@ export type SiderTheme = 'light' | 'dark';
 import { Button, Typography } from 'antd';
 import { useLinkManager } from '@/models/link/link';
 import CreateLinkForm from '@/pages/LinkManagement/components/Form';
+import { PlusOutlined } from '@ant-design/icons';
+import useIsMobile from '@/hooks/useIsMobile';
 
 const { Paragraph } = Typography;
 
 const GlobalHeaderRight: React.FC = () => {
 	const { initialState } = useModel('@@initialState');
 	const { createLink, isModalOpen, setIsModalOpen } = useLinkManager();
+	const isMobile = useIsMobile();
 
 	if (!initialState || !initialState.currentUser) {
 		return null;
@@ -22,8 +25,13 @@ const GlobalHeaderRight: React.FC = () => {
 		<div className={styles.right}>
 			{!isAdminRoute && (
 				<div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-					<Button type='primary' style={styles.btnCreate} onClick={() => setIsModalOpen(true)}>
-						Tạo Link rút gọn
+					<Button
+						type='primary'
+						style={styles.btnCreate}
+						onClick={() => setIsModalOpen(true)}
+						{...(isMobile ? { icon: <PlusOutlined /> } : {})}
+					>
+						{isMobile ? '' : 'Tạo Link rút gọn'}
 					</Button>
 					<Paragraph strong style={{ margin: '0 10px' }}>
 						Số dư: {initialState.currentUser.balance}$
