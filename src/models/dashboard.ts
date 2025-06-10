@@ -1,4 +1,5 @@
 import { getData, updateEarningsAPI } from '@/services/Dashboard';
+import { logReferral } from '@/services/Referal';
 import { useState } from 'react';
 
 export default () => {
@@ -29,6 +30,15 @@ export default () => {
 		}
 	};
 
+	const logReferrals = async () => {
+		try {
+			await logReferral();
+			console.log('Đã cập nhật earnings thành công');
+		} catch (error) {
+			console.error('Lỗi khi cập nhật earnings:', error);
+		}
+	};
+
 	return {
 		data,
 		isLoading,
@@ -36,5 +46,6 @@ export default () => {
 		setParamsData,
 		fetchDataDashboard,
 		updateEarnings,
+		logReferrals,
 	};
 };
