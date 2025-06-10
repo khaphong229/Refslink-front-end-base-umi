@@ -38,6 +38,14 @@
 		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
 		access: 'canAccessAdminRoute',
 	},
+	{
+		path: '/admin/withdraws',
+		name: 'Quản lý đơn rút tiền',
+		component: './admin/Withdraw',
+		icon: 'DollarOutlined',
+		wrappers: ['@/wrappers/auth', '@/wrappers/roleCheck'],
+		access: 'canAccessAdminRoute',
+	},
 
 	// Client Auth Routes (Login/Register)
 	{

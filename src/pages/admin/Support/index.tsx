@@ -37,29 +37,12 @@ const Support = () => {
             align: 'center',
         },
          {
-            title: 'Chủ đề',
+            title: 'Mô tả',
             dataIndex: 'description',
             width: 200,
             align: 'center',
         },
-        {
-            title: "Hanh động",
-            width: 150,
-            align: 'center',
-            render: (_, record) => {
-                return (
-                    <Space>
-                 
-                        <Tooltip title="Chi tiết"></Tooltip>
-                            <Button type="primary" onClick={() => {
-                                
-                            }}
-                            icon={<EyeOutlined />} 
-                            >Chi tiết</Button>
-                    </Space>
-                );
-            }
-        }
+   
      
        
     ]
