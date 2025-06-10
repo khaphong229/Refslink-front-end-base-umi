@@ -9,7 +9,8 @@ import { updateStatusWithdraw } from '@/services/Withdraw';
 import Form from './components/Form';
 
 const Withdraw = () => {
-	const { getModel, page, limit, danhSach, record ,setVisibleForm,visibleForm,handleView} = useModel('withdraw');
+	const { getModel, page, limit, danhSach, record, setVisibleForm, visibleForm, handleView } =
+		useModel('withdraw_admin');
 
 	useEffect(() => {
 		getModel();
@@ -21,7 +22,6 @@ const Withdraw = () => {
 		{ label: <span style={{ color: 'orange' }}>Đang chờ</span>, value: 'pending' },
 	];
 
- 
 	const columns: IColumn<WithdrawItem>[] = [
 		{
 			title: 'Phương thức thanh toán',
@@ -59,15 +59,15 @@ const Withdraw = () => {
 			),
 		},
 		{
-            title: 'Chi tiết',
-            width: 200,
-            align: 'center',
-            render: (value, record:WithdrawItem) => (
-                <Button color="primary" onClick={() => handleView(record)} >
-                    Xem chi tiết
-                </Button>
-            ),
-        }
+			title: 'Chi tiết',
+			width: 200,
+			align: 'center',
+			render: (value, record: WithdrawItem) => (
+				<Button color='primary' onClick={() => handleView(record)}>
+					Xem chi tiết
+				</Button>
+			),
+		},
 	];
 
 	return (
@@ -78,7 +78,7 @@ const Withdraw = () => {
 			modelName='withdraw'
 			title='Danh sách rút tiền'
 			buttons={{ import: false, filter: false }}
-            Form={ Form }
+			Form={Form}
 		/>
 	);
 };
