@@ -1,5 +1,12 @@
 import { landingUrl } from '@/services/base/constant';
-import { FileWordOutlined, GlobalOutlined, LogoutOutlined, SwapOutlined, UserOutlined } from '@ant-design/icons';
+import {
+	SettingOutlined,
+	SolutionOutlined,
+	LogoutOutlined,
+	SwapOutlined,
+	UserOutlined,
+	DollarOutlined,
+} from '@ant-design/icons';
 import { Avatar, Menu, Spin } from 'antd';
 import { type ItemType } from 'antd/lib/menu/hooks/useItems';
 import React from 'react';
@@ -29,6 +36,8 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 		: initialState.currentUser?.name ?? (initialState.currentUser?.preferred_username || '');
 	const lastNameChar = fullName.split(' ')?.at(-1)?.[0]?.toUpperCase();
 
+	const userRole = localStorage.getItem('user_role');
+
 	const items: ItemType[] = [
 		{
 			key: 'name',
@@ -36,9 +45,14 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 			label: fullName,
 		},
 		{ type: 'divider', key: 'divider' },
-		{
+		
+	];
+
+	if (userRole === 'client'){
+		items.push(
+			{
 			key: 'withdraw',
-			icon: <SwapOutlined />,
+			icon: <DollarOutlined />,
 			label: 'Rút tiền',
 			onClick: () => {
 				const redirect = window.location.href;
@@ -47,7 +61,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 		},
 		{
 			key: 'password',
-			icon: <SwapOutlined />,
+			icon: <SettingOutlined />,
 			label: 'Cài đặt',
 			onClick: () => {
 				const redirect = window.location.href;
@@ -56,22 +70,18 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 		},
 		{
 			key: 'support',
-			icon: <SwapOutlined />,
+			icon: <SolutionOutlined />,
 			label: 'Hỗ trợ',
 			onClick: () => {
 				const redirect = window.location.href;
 				window.location.href = `/support`;
 			},
 		},
-		// {
-		// 	key: 'password',
-		// 	icon: <SwapOutlined />,
-		// 	label: 'Đổi mật khẩu',
-		// 	onClick: () => {
-		// 		const redirect = window.location.href;
-		// 		window.location.href = `${keycloakAuthEndpoint}?client_id=${AppModules[currentRole].clientId}&redirect_uri=${redirect}&response_type=code&scope=openid&kc_action=UPDATE_PASSWORD`;
-		// 	},
-		// },
+		)
+	}
+
+
+	items.push(
 		{ type: 'divider', key: 'divider' },
 		{
 			key: 'logout',
@@ -80,16 +90,7 @@ const AvatarDropdown: React.FC<GlobalHeaderRightProps> = ({ menu }) => {
 			onClick: loginOut,
 			danger: true,
 		},
-	];
-
-	if (menu && !initialState.currentUser.realm_access?.roles?.includes('QUAN_TRI_VIEN')) {
-		// items.splice(1, 0, {
-		//   key: 'center',
-		//   icon: <UserOutlined />,
-		//   label: 'Trang cá nhân',
-		//   onClick: () => history.push('/account/center'),
-		// });
-	}
+	);
 
 	return (
 		<>
